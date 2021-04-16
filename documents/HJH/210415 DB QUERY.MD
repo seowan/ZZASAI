@@ -154,6 +154,7 @@ CREATE TABLE `room` (
   `code` varchar(45) NOT NULL,
   `room_user_id` int NOT NULL,
   `manitto` int NOT NULL,
+  `type` int NOT NULL,
   PRIMARY KEY (`rid`),
   KEY `uid_idx` (`room_user_id`),
   CONSTRAINT `room_user_id` FOREIGN KEY (`room_user_id`) REFERENCES `user` (`uid`)
