@@ -14,9 +14,9 @@ export default {
 
 <style>
 body {
-  /* background-image: url('~@/assets/bgs/create_hall.png');
+  background-image: url('~@/assets/bgs/create_hall.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  opacity: 0.5; */
+  opacity: 0.5;
 }
 </style>

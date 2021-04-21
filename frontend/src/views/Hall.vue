@@ -3,7 +3,7 @@
   <div id="hall">
     <h3> 메인 홀 </h3>
     <div class="test">
-      test
+      <h2>test</h2>
     </div>
     <b-button variant="success">Button</b-button>
   </div>
@@ -17,11 +17,11 @@ export default {
 
 <style>
 body {
-  /* background-image: url('~@/assets/bgs/hall.png'); */
-  /* background-repeat: no-repeat; */
-  /* background-size: 100% 100%; */
-  /* background-size: cover; */
-  /* opacity: 0.5; */
+  background-image: url('~@/assets/bgs/hall.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-size: cover;
+  opacity: 0.5;
 }
 
 
@@ -32,7 +32,7 @@ body {
     position: relative;
     max-width: 500px;
     h2 {
-      color: white;
+      color: black;
       margin-top: 0;
       text-align: center;
       text-transform: uppercase;
