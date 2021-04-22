@@ -10,8 +10,8 @@
       id="canvas"
     ></canvas>
     <div
-      v-for="(color, i) in colors"
-      :key="i"
+      v-for="color in colors"
+      :key="color"
       class="colorPicker"
       :class="color"
       @click="strokeColorHandler(color)"
