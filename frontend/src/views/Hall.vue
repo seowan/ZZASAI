@@ -48,8 +48,8 @@ export default {
 </script>
 
 <style>
-/* Google Font - Cute Font */
-@import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+/* Google Font - Single Day */
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
 
 body {
   background-image: url('~@/assets/bgs/hall.jpg');
@@ -111,7 +111,7 @@ body {
   margin-top: 0;
   text-align: center;
   text-transform: uppercase;
-  font-weight: bold;
-  font-family: 'Cute Font', cursive;
+  /* font-weight: bold; */
+  font-family: 'Single Day', cursive;
 }
 </style>
