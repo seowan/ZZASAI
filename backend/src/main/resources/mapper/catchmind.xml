@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.icebreaking.model.mapper.CatchmindMapper">
+
+	<select id="countQuestions" resultType="Integer">
+		select count(*) from drawquestion
+	</select>
+	
+	<select id="findAnswer" parameterType = "Integer" resultType="String">
+		select word from drawquestion where id=#{target}
+	</select>
+</mapper>

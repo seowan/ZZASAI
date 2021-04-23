@@ -9,13 +9,15 @@
       @mouseleave="stopPainting"
       id="canvas"
     ></canvas>
-    <div
-      v-for="(color, i) in colors"
-      :key="i"
-      class="colorPicker"
-      :class="color"
-      @click="strokeColorHandler(color)"
-    ></div>
+    <div>
+      <div
+        v-for="color in colors"
+        :key="color"
+        class="colorPicker"
+        :class="color"
+        @click="strokeColorHandler(color)"
+      ></div>
+    </div>
     <div v-for="i in 3" :key="i" @click="strokeSizeHandler(i)">
       {{ i }}번째 크기
     </div>
@@ -95,6 +97,7 @@ export default {
 .colorPicker {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 .black {
   background-color: black;
