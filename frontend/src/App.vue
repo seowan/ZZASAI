@@ -17,7 +17,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap');
 
 html {
-  height: 100%;
+  /* height: 100%; */
 }
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */

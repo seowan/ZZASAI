@@ -4,32 +4,38 @@
     <div class="h3"> 홀 & 게임 세팅 </div>
 
     <!-- OrderBlock -->
-    <div class="info">
-      <div id="title">PUZZLE</div>
-      <div id="rest">Drag and drop the colored pieces on the puzzle below. (better images are on their way) </div>
-      <div id="rest2">You can put multiple pieces in the same area but you can't interchange them, only the last one you put will be accessible.</div>
-    </div>
+  <div class="info">
+    <div id="title">PUZZLE</div>
+    <div id="rest">Drag and drop the colored pieces on the puzzle below. (better images are on their way) </div>
+    <div id="rest2">You can put multiple pieces in the same area but you can't interchange them, only the last one you put will be accessible.</div>
+  </div>
+  
+  <div id="images">
+    <div id="drag4" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag5" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag6" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag7" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag8" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag9" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag10" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag11" draggable="true" @ondragstart="drag(event)"></div>
+    <div id="drag12" draggable="true" @ondragstart="drag(event)"></div>
+  </div>
+  
+  <div id="text">
+    <div id="div1" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div2" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div3" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div4" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div5" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div6" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div7" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div8" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+    <div id="div9" @ondrop="drop(event)" @ondragover="allowDrop(event)"></div>
+  </div>
+  
+  <div class="info"><p>Congratulations if you finished!</p></div>
 
-    <div id="images">
-      <div id="drag4" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag5" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag6" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag7" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag8" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag9" draggable="true" ondragstart="drag(event)"></div>
-    </div>
-
-    <div id="text">
-      <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    </div>
 
     <!-- HelpIcon -->
     <HelpIcon />
@@ -47,19 +53,20 @@ export default {
     HelpIcon,
   },
   methods: {
-    allowDrop(ev) {
-      ev.preventDefault();
+    allowDrop: function (ev) {
+        ev.preventDefault();
     },
 
-    drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
+    drag: function (ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
     },
 
-    drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
+    drop: function (ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
     },
+
   },
 }
 </script>
@@ -72,7 +79,7 @@ body {
   /* opacity: 0.5; */
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .create-hall {
   margin: 0;
@@ -160,5 +167,17 @@ img {
 
 #drag9 {
   background: linear-gradient(orange, yellow);
+}
+
+#drag10 {
+  background: linear-gradient(to right, orange, yellow);
+}
+
+#drag11 {
+  background: linear-gradient(red, orange);
+}
+
+#drag12 {
+  background: linear-gradient(to right, red,orange);
 }
 </style>
