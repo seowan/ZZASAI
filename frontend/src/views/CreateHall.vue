@@ -4,36 +4,20 @@
     <div class="h3"> 홀 & 게임 세팅 </div>
 
     <!-- OrderBlock -->
-    <div class="row">
-      <div class="col-3">
-        <h3>Draggable 1</h3>
-        <draggable class="list-group" :list="list1" group="people" @change="log">
-          <div
-            class="list-group-item"
-            v-for="(element, index) in list1"
-            :key="element.name"
-          >
-            {{ element.name }} {{ index }}
-          </div>
-        </draggable>
+    <div class="about">
+      <div class="container">
+        <div class="left">
+          <div ref="left" id="drag-elements">
+            <div>Element 1</div>
+            <div>Element 2</div>
+            <div>Element 3</div> 
+          </div> 
+          <div ref="right" id="drop-target"></div>
+        </div> 
+        <div class="right"> 
+          <div id="display" ref="display1">Display</div> 
+        </div>
       </div>
-
-      <div class="col-3">
-        <h3>Draggable 2</h3>
-        <draggable class="list-group" :list="list2" group="people" @change="log">
-          <div
-            class="list-group-item"
-            v-for="(element, index) in list2"
-            :key="element.name"
-          >
-            {{ element.name }} {{ index }}
-          </div>
-        </draggable>
-      </div>
-
-      <rawDisplayer class="col-3" :value="list1" title="List 1" />
-
-      <rawDisplayer class="col-3" :value="list2" title="List 2" />
     </div>
 
     <!-- HelpIcon -->
@@ -44,51 +28,44 @@
 </template>
 
 <script>
-// Vue.Draggable https://github.com/SortableJS/Vue.Draggable
-import draggable from 'vuedraggable'
+import dragula from 'dragula'
 import HelpIcon from '@/components/HelpIcon'
 
 export default {
   name: 'CreateHall',
   components: {
-    draggable,
     HelpIcon,
   },
   data() {
     return {
-      list1: [
-        { name: "John", id: 1 },
-        { name: "Joao", id: 2 },
-        { name: "Jean", id: 3 },
-        { name: "Gerard", id: 4 }
-      ],
-      list2: [
-        { name: "Juan", id: 5 },
-        { name: "Edgard", id: 6 },
-        { name: "Johnson", id: 7 }
-      ]
     };
   },
   methods: {
-    add: function() {
-      this.list.push({ name: "Juan" });
-    },
-    replace: function() {
-      this.list = [{ name: "Edgard" }];
-    },
-    clone: function(el) {
-      return {
-        name: el.name + " cloned"
-      };
-    },
-    log: function(evt) {
-      window.console.log(evt);
-    }
+    
   },
+  mounted(){
+    const { right, display1, left } = this.$refs; 
+    
+    dragula([ 
+      left, right //어디서 어디로 옮기는지 
+    ],{ 
+      revertOnSpill: true //클릭한 요소 컨테이너 밖으로 보내도 순서유지. 
+    } 
+    
+    ).on('drop', el => { 
+      if(right.children.length > 0) { 
+        display1.innerHTML = right.innerHTML 
+        // dummy
+        console.log(el)
+      }else{ 
+        display1.innerHTML = "Display" 
+      } 
+    }) 
+  }
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 body {
   background-image: url('~@/assets/bgs/create_hall.png');
   background-repeat: no-repeat;
@@ -102,4 +79,103 @@ body {
   margin: 0;
   height: 100%;
 }
+
+
+.container {
+  max-width: 960px; margin: 0 auto;
+} 
+
+.left {
+float: left; 
+position: relative; 
+width: 50%; 
+height: 100%; 
+} 
+
+.right { 
+  float: left; 
+  position: relative; 
+  width: 40%; 
+  margin-left: 5%; 
+  height: 100%; 
+} 
+
+#display { 
+  background: #2d2d2d; 
+  border: 10px solid #000000; 
+  border-radius: 5px; 
+  font-size: 2em; 
+  color: white; 
+  height: 100px; 
+  min-width:200px; 
+  text-align: center; 
+  padding: 1em; 
+  display:table-cell; 
+  vertical-align:middle; 
+} 
+
+#drag-elements { 
+  display: block; 
+  background-color: #dfdfdf; 
+  border-radius: 5px; 
+  min-height: 50px; 
+  margin: 0 auto; 
+  padding: 2em; 
+} 
+
+#drag-elements > div {
+  text-align: center; 
+  float: left; 
+  padding: 1em; 
+  margin: 0 1em 1em 0; 
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); 
+  border-radius: 100px; 
+  border: 2px solid #ececec; 
+  background: #F7F7F7; 
+  transition: all .5s ease; 
+} 
+
+#drag-elements > div:active { 
+  -webkit-animation: wiggle 0.3s 0s infinite ease-in; 
+  animation: wiggle 0.3s 0s infinite ease-in; 
+  opacity: .6; 
+  border: 2px solid #000; 
+} 
+
+#drag-elements > div:hover { 
+  border: 2px solid gray; 
+  background-color: #e5e5e5; 
+} 
+
+#drop-target { 
+  border: 2px dashed #D9D9D9; 
+  border-radius: 5px; 
+  min-height: 50px; 
+  margin: 0 auto; 
+  margin-top: 10px; 
+  padding: 2em; 
+  display: block; 
+  text-align: center; 
+} 
+
+#drop-target > div { 
+  text-align: center; 
+  float: left; 
+  padding: 1em; 
+  margin: 0 1em 1em 0; 
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); 
+  border-radius: 100px; 
+  border: 2px solid #ececec; 
+  background: #F7F7F7; 
+  transition: all .5s ease; 
+} 
+
+#drop-target > div:active { 
+  -webkit-animation: wiggle 0.3s 0s infinite ease-in; 
+  animation: wiggle 0.3s 0s infinite ease-in; 
+  opacity: .6; 
+  border: 2px solid #000; 
+}
+
+@-webkit-keyframes wiggle { 0% { -webkit-transform: rotate(0deg); } 25% { -webkit-transform: rotate(2deg); } 75% { -webkit-transform: rotate(-2deg); } 100% { -webkit-transform: rotate(0deg); } } @keyframes wiggle { 0% { transform: rotate(-2deg); } 25% { transform: rotate(2deg); } 75% { transform: rotate(-2deg); } 100% { transform: rotate(0deg); } } .gu-mirror { position: fixed !important; margin: 0 !important; z-index: 9999 !important; padding: 1em; } .gu-hide { display: none !important; } .gu-unselectable { -webkit-user-select: none !important; -moz-user-select: none !important; -ms-user-select: none !important; user-select: none !important; } .gu-transit { opacity: 0.5; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: alpha(opacity=50); } .gu-mirror { opacity: 0.5; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: alpha(opacity=50); }
 </style>
