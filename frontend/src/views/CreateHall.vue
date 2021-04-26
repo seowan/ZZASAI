@@ -4,7 +4,7 @@
     <div class="h3"> 홀 & 게임 세팅 </div>
 
     <!-- OrderBlock -->
-      
+    <TEST />
 
     <!-- HelpIcon -->
     <HelpIcon />
@@ -14,12 +14,14 @@
 </template>
 
 <script>
+import TEST from './test.vue'
 import HelpIcon from '@/components/HelpIcon'
 
 export default {
   name: 'CreateHall',
   components: {
     HelpIcon,
+    TEST
   },
   data() {
     return {
