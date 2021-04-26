@@ -7,6 +7,7 @@ import CardPlay from '../views/room/CardPlay.vue'
 import GamePlay from '../views/room/GamePlay.vue'
 import CharTest from '../views/room/CharTest.vue'
 
+import Test from '../views/Test'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/char-test',
     name: 'CharTest',
     component: CharTest
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
   },
 ]
 
