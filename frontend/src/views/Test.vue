@@ -24,9 +24,9 @@ export default {
     }
   },
   methods: {
-    getToken: function (sessionId) {
-      return this.createSession(sessionId).then(sessionId => this.createToken(sessionId))
-    },
+    // getToken: function (sessionId) {
+    //   return this.createSession(sessionId).then(sessionId => this.createToken(sessionId))
+    // },
     // createToken: function (sessionId) {
 		// 	return new Promise((resolve, reject) => {
 		// 		axios.post(`${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`, {}, {
@@ -54,27 +54,27 @@ export default {
       this.subscribers.push(subscriber)
     })
 
-    this.getToken(this.mySessionId).then(token => {
-      this.session.connect(token, { clientData: this.myUserName })
-        .then(() => {
-          let publisher = this.OV.initPublisher(undefined, {
-            audioSource: undefined,
-            videoSource: undefined,
-            publishAudio: true,
-            publishVideo: true,
-            resolution: '640x480',
-            frameRate: 30,
-            insertMode: 'APPEND',
-            mirror: false
-          })
+    // this.getToken(this.mySessionId).then(token => {
+    //   this.session.connect(token, { clientData: this.myUserName })
+    //     .then(() => {
+    //       let publisher = this.OV.initPublisher(undefined, {
+    //         audioSource: undefined,
+    //         videoSource: undefined,
+    //         publishAudio: true,
+    //         publishVideo: true,
+    //         resolution: '640x480',
+    //         frameRate: 30,
+    //         insertMode: 'APPEND',
+    //         mirror: false
+    //       })
 
-          this.publisher = publisher
-          this.mainStreamManager = this.publisher
+    //       this.publisher = publisher
+    //       this.mainStreamManager = this.publisher
   
-          this.session.publish(this.publisher)
-        })
-        .catch(err => console.log('세션 커넥트 에러', err.code, err.message))
-    })
+    //       this.session.publish(this.publisher)
+    //     })
+    //     .catch(err => console.log('세션 커넥트 에러', err.code, err.message))
+    // })
   }
 }
 </script>
