@@ -27,7 +27,7 @@ export default {
       location.href="create-hall"
     },
     btn_enterroom:function(){
-      location.href=this.teamcode
+      location.href="hall/"+this.teamcode
     }
   },
 }
