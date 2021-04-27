@@ -1,20 +1,22 @@
 <template>
     <div>
-        <p>{{name}} | {{randomstring}} 
+        <p>{{roomCode}} 
         <button type="button" 
-        v-clipboard:copy="randomstring"
+        v-clipboard:copy="roomCode"
         v-clipboard:success="onCopy">코드 복사</button>
         </p>
     </div>
 </template>
 
 <script>
+
+
 export default {
   name: 'RandomRoomCode',
   data(){
       return{
           name: '방 이름',
-          randomstring: '',
+          roomCode: '',
       }
   },
 methods: {
@@ -23,9 +25,9 @@ methods: {
     var stringLength = 8
     for (var i = 0; i < stringLength; i++) {
       var rnum = Math.floor(Math.random() * chars.length)
-      this.randomstring += chars.substring(rnum, rnum + 1)
+      this.roomCode += chars.substring(rnum, rnum + 1)
     }
-    return this.randomstring
+    return this.roomCode
     },
     onCopy() {
       alert('코드 복사를 완료하였습니다. 새 친구에게 코드를 공유해주세요!')
