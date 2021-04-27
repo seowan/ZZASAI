@@ -1,6 +1,15 @@
 <template>
   <div class="navbar">
-    <div id="logo">무슨 서비스</div>
+    <!-- <div id="logo"></div> -->
+    <img id="logo_img" src="@/assets/logo.png" alt="짜사이">
+    <div id="nav">
+      <router-link to="/">메인</router-link> |
+      <router-link to="/create-hall">홀 세팅</router-link> |
+      <router-link to="/hall">홀</router-link> |
+      <router-link to="/card-play">카드 게임</router-link> |
+      <router-link to="/game-play">게임</router-link> |
+      <router-link to="/char-test">MBTI</router-link>
+    </div>
     <div class="row">
       <div class="align-center mt-60">
         <h3 class="point" style="font-size:22px; color:red; display:inline-block;">짜</h3>
@@ -21,5 +30,10 @@ export default {
 <style>
 .row{
   padding-right: 15px;
+}
+
+#logo_img {
+  text-align: left;
+  width: 5%;
 }
 </style>
