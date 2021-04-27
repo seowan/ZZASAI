@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.icebreaking.model.mapper.RoomMapper">
+	<insert id="insertRoominfo" parameterType="RoomDto">
+		insert into room
+		(roomcode,roomadmin,game1,game2,game3) values
+		(#{roomCode},#{roomAdmin},#{Game1},#{Game2},#{Game3})
+	</insert>
+</mapper>
