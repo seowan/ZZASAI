@@ -2,6 +2,7 @@ package com.ssafy.icebreaking.model;
 
 public class RoomDto {
 	private String roomCode;
+	private String roomName;
 	private String roomAdmin;
 	private String Game1;
 	private String Game2;
@@ -13,6 +14,14 @@ public class RoomDto {
 
 	public void setRoomCode(String roomCode) {
 		this.roomCode = roomCode;
+	}
+
+	public String getRoomName() {
+		return roomName;
+	}
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
 	}
 
 	public String getRoomAdmin() {
