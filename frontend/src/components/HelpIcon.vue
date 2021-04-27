@@ -35,13 +35,15 @@ export default {
 
 <style>
 #help-icon {
-  display: flex;
-  left: 0;
-  bottom: 0;
+  /* display: flex; */
+  position: absolute;
+  left: 3%;
+  bottom: 3%;
+  text-align: left;
 }
 #help-icon-btn {
-  width: 3%;
-  height: 3%;
+  width: 10%;
+  height: 10%;
   cursor: pointer;
 }
 

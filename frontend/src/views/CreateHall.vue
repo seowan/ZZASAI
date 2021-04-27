@@ -87,13 +87,14 @@ export default {
     },
     btn_start: function () {
       if (this.list2.length < 1) {
-        alert("순서를 정하세요!")
+        alert("컨텐츠를 정하세요!")
       } else {
-        alert("통과입니다")
+        // alert("통과입니다")
         for (let i = 0; i < this.list2.length; i++) {
           this.$store.commit('CREATE_PROGRAMME', this.list2[i])
         }
-        console.log(this.$store.state.programme)
+        // console.log(this.$store.state.programme)
+        this.$router.push({ name: 'Hall' })
       }
     },
   }
