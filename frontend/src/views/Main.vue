@@ -1,15 +1,13 @@
 <template>
   <!-- 메인 홈 -->
   <div id="main">
-    <div class="mainfont">서비스 이름</div>
+    <div class="mainfont">짜사이</div>
     <div class="mainframe">
-      <input class="maininput" v-model="teamcode" placeholder="팀 코드를 입력하세요">
+      <input class="maininput" v-model="teamcode" placeholder="팀 코드를 입력하세요" v-on:keyup.enter="btn_enterroom">
       <button class = "mainbutton" id="enterroom" v-on:click="btn_enterroom">방 입장하기</button>      
-      <!-- <button class = "mainbutton" id="createroom" v-on:click="btn_createroom">방 만들기</button> -->
     </div>
     <div class="mainbuttons">
       <button class = "mainbutton" id="createroom" v-on:click="btn_createroom">방 만들기</button>
-      <!-- <button class = "mainbutton" id="enterroom" v-on:click="btn_enterroom">방 입장하기</button> -->
     </div>
   </div>
 </template>
@@ -27,7 +25,10 @@ export default {
       location.href="create-hall"
     },
     btn_enterroom:function(){
-      location.href="hall/"+this.teamcode
+      if (this.teamcode!='' && this.teamcode.length>=8) {        
+        location.href="hall/"+this.teamcode
+        this.teamcode=''
+      }
     }
   },
 }
@@ -70,7 +71,6 @@ export default {
 }
 
 #createroom{
-  /* margin-right: 8px; */
   margin-left: 8px;
   padding-right: 20px;
   padding-left: 20px;
