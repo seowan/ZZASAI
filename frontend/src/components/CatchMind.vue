@@ -93,8 +93,8 @@ export default {
       this.beginPath(x, y);
       // console.log("begin path");
     });
-    this.socket.on("stroked path", (x, y) => {
-      this.strokePath(x, y);
+    this.socket.on("stroked path", (x, y, color, size) => {
+      this.strokePath(x, y, color, size);
       // console.log("strokedpath path");
     });
   },
@@ -103,9 +103,20 @@ export default {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
     },
-    strokePath(x, y) {
+    strokePath(x, y, color, size) {
+      var currentColor = this.ctx.strokeStyle; //원래 색 저장
+      var currentSize = this.ctx.lineWidth;
+      if (color != null) {
+        this.ctx.strokeStyle = color;
+      }
+      if (size != null) {
+        this.ctx.lineWidth = size;
+      }
       this.ctx.lineTo(x, y);
       this.ctx.stroke();
+      //원래 색으로 되돌리기
+      this.ctx.strokeStyle = currentColor;
+      this.ctx.lineWidth = currentSize;
     },
     onMouseMove(event) {
       const x = event.offsetX;
@@ -114,8 +125,14 @@ export default {
         this.beginPath(x, y);
         this.socket.emit("begin path", x, y);
       } else {
-        this.strokePath(x, y);
-        this.socket.emit("stroke path", x, y);
+        this.strokePath(x, y, null, null);
+        this.socket.emit(
+          "stroke path",
+          x,
+          y,
+          this.ctx.strokeStyle,
+          this.ctx.lineWidth
+        );
       }
     },
     startPainting() {

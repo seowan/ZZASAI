@@ -32,9 +32,9 @@ io.on("connection", function (socket) {
     // io.emit("move", x, y);
     io.emit("began path", x, y);
   });
-  socket.on("stroke path", function (x, y) {
+  socket.on("stroke path", function (x, y, color, size) {
     // io.emit("paint", x, y);
-    io.emit("stroked path", x, y);
+    io.emit("stroked path", x, y, color, size);
   });
 });
 
