@@ -36,6 +36,9 @@ io.on("connection", function (socket) {
     // io.emit("paint", x, y);
     io.emit("stroked path", x, y, color, size);
   });
+  socket.on("clear all", function () {
+    io.emit("cleared all");
+  });
 });
 
 //4

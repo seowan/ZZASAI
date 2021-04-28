@@ -70,13 +70,13 @@ export default {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
+    // Resize canvas
+    this.canvas.height = this.canvasHeight;
+    this.canvas.width = this.canvasWidth;
     this.ctx.lineWidth = 2.5;
     // fill canvas with white color
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-    // Resize canvas
-    this.canvas.height = this.canvasHeight;
-    this.canvas.width = this.canvasWidth;
 
     // 3) 서버의 변경사항을 수신
     this.socket.on("receive message", (name, text) => {
@@ -88,7 +88,7 @@ export default {
       }
     });
 
-    // 3-1) ctx의 path 관련 사항 수신
+    // 3-1) ctx 관련 정보 수신
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
       // console.log("begin path");
@@ -96,6 +96,9 @@ export default {
     this.socket.on("stroked path", (x, y, color, size) => {
       this.strokePath(x, y, color, size);
       // console.log("strokedpath path");
+    });
+    this.socket.on("cleared all", () => {
+      this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
   },
   methods: {
@@ -148,8 +151,9 @@ export default {
       this.ctx.strokeStyle = color;
     },
     clearAll() {
-      this.ctx.fillStyle = "white";
+      // this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.socket.emit("clear all");
     },
     sendMessage() {
       // 2) 채팅메세지를 서버로 전송
