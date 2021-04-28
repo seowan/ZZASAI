@@ -9,4 +9,5 @@ public interface RoomMapper {
 
 	public void insertRoominfo(RoomDto roomdto);
 
+	public RoomDto returnRoominfo(String roomcode);
 }
