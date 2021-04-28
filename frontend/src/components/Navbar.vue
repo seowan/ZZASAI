@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <!-- <div id="logo"></div> -->
-    <img id="logo_img" src="@/assets/logo.png" alt="짜사이">
+    <img id="logo_img" src="@/assets/logo.png" alt="짜사이" @click="toHome">
     <div id="nav">
       <router-link to="/">메인</router-link> |
       <router-link to="/create-hall">홀 세팅</router-link> |
@@ -24,6 +24,11 @@
 <script>
 export default {
   name: 'Navbar',
+  methods: {
+    toHome: function () {
+      this.$router.push({ name: 'Main' })
+    }
+  },
 }
 </script>
 
@@ -35,5 +40,6 @@ export default {
 #logo_img {
   text-align: left;
   width: 5%;
+  cursor: pointer;
 }
 </style>

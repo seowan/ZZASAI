@@ -6,14 +6,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     programme: [],
-    username:[]
+    username:'',
+    roomname: '',
+    roomcode: '',
   },
   mutations: {
     CREATE_PROGRAMME: function (state, item) {
       state.programme.push(item)
     },
-    INSERT_USERNAME:function (state,name){
-      state.username.push(name)
+    CREATE_USERNAME:function (state, name) {
+      // state.username.push(name)
+      state.username = name
+    },
+    CREATE_ROOMNAME: function (state, name) {
+      state.roomname = name
+    },
+    CREATE_ROOMCODE: function (state, code) {
+      state.roomcode = code
     }
   },
   actions: {
