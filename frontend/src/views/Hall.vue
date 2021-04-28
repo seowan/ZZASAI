@@ -2,8 +2,6 @@
   <!-- 메인 홀 -->
   <div id="hall">
     <div class="py-3 my-5"></div>
-
-    
     <div class="row">
       <div class="col-3"></div>
       <div class="col-2 hall-card">
