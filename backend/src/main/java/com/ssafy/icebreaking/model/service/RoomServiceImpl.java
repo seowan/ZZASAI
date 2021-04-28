@@ -20,4 +20,12 @@ public class RoomServiceImpl implements RoomService {
 
 	}
 
+	@Override
+	public RoomDto returnRoominfo(String roomcode) {
+		RoomDto roomdto = new RoomDto();
+
+		roomdto = sqlSession.getMapper(RoomMapper.class).returnRoominfo(roomcode);
+		return roomdto;
+	}
+
 }

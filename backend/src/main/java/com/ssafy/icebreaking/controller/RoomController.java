@@ -1,9 +1,19 @@
 package com.ssafy.icebreaking.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.icebreaking.model.RoomDto;
@@ -32,5 +42,16 @@ public class RoomController {
 		}
 
 		return result;
+	}
+
+	////////// 방 정보 전달//////////
+	@GetMapping("/info")
+	public RoomDto returnRoominfo(@RequestParam("roomcode") String roomcode, HttpServletRequest request)
+			throws Exception {
+		RoomDto roomdto = new RoomDto();
+
+		roomdto = roomservice.returnRoominfo(roomcode);
+
+		return roomdto;
 	}
 }
