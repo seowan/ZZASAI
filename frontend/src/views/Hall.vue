@@ -52,6 +52,9 @@ export default {
     CodeShareBtn,
     RandomRoomCode,
   },
+  created: function () {
+    // 진행순서 데이터 받아오기
+  }
 }
 </script>
 
