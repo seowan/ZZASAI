@@ -6,13 +6,15 @@ import Hall from '../views/Hall.vue'
 import CardPlay from '../views/room/CardPlay.vue'
 import GamePlay from '../views/room/GamePlay.vue'
 import CharTest from '../views/room/CharTest.vue'
+import HostName from '../views/room_register/HostName.vue'
+import RoomName from '../views/room_register/RoomName.vue'
+import UserName from '../views/room_register/UserName.vue'
 import CharTest2 from '../views/room/CharTest2.vue'
 import CharTest3 from '../views/room/CharTest3.vue'
 import CharTest4 from '../views/room/CharTest4.vue'
 import CharTest5 from '../views/room/CharTest5.vue'
 import CharTest6 from '../views/room/CharTest6.vue'
 import CharTest7 from '../views/room/CharTest7.vue'
-
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,21 @@ const routes = [
     path: '/char-test',
     name: 'CharTest',
     component: CharTest
+  },
+  {
+    path: '/create/name',
+    name: 'HostName',
+    component: HostName
+  },
+  {
+    path: '/create/room',
+    name: 'RoomName',
+    component: RoomName
+  },
+  {
+    path: '/username',
+    name: 'UserName',
+    component: UserName
   },
   {
     path: '/char-test2',
