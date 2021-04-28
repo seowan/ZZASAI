@@ -24,8 +24,7 @@ io.on("connection", function (socket) {
   socket.on("send message", function (name, text) {
     //3-3. chat service
     var msg = name + " : " + text;
-    console.log(msg);
-    io.broadcast.emit("receive message", name, text);
+    io.emit("receive message", name, text);
   });
 
   socket.on("begin path", function (x, y) {

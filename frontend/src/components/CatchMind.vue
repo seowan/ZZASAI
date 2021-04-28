@@ -7,7 +7,7 @@
       @mouseleave="stopPainting"
       id="canvas"
     ></canvas>
-    <div>
+    <div v-if="turnToDraw == true">
       <div
         v-for="color in colors"
         :key="color"
@@ -15,23 +15,27 @@
         :class="color"
         @click="strokeColorHandler(color)"
       ></div>
+      <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
+      <div id="btn clearAll" @click="clearAll">
+        모두 지우기
+      </div>
+      <div
+        v-for="i in 3"
+        :key="i"
+        @click="strokeSizeHandler(i)"
+        style="float:left;"
+      >
+        {{ i }}번째 크기
+      </div>
     </div>
-    <div v-for="i in 3" :key="i" @click="strokeSizeHandler(i)">
-      {{ i }}번째 크기
-    </div>
-    <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
-    <div id="btn clearAll" @click="clearAll">
-      모두 지우기
+    <div v-else>
+      <input type="text" v-model="text" @keyup.enter="sendMessage()" />
     </div>
 
-    <ul>
-      <li v-for="(msg, index) in messages" :key="index">
-        {{ msg.name }}: {{ msg.text }}
-      </li>
-    </ul>
-    <div>
-      <input type="text" @keyup.enter="sendMessage()" v-model="text" />
-    </div>
+    <!-- 채팅 내용 -->
+    <!-- <p v-for="(msg, index) in messages" :key="index">
+      {{ msg.name }}: {{ msg.text }}
+    </p> -->
   </div>
 </template>
 
@@ -56,6 +60,8 @@ export default {
         "blue",
         "darkviolet",
       ],
+
+      turnToDraw: false,
 
       // 1) 서버와 연결
       socket: io("localhost:3000"), //url:port
@@ -91,11 +97,9 @@ export default {
     // 3-1) ctx 관련 정보 수신
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
-      // console.log("begin path");
     });
     this.socket.on("stroked path", (x, y, color, size) => {
       this.strokePath(x, y, color, size);
-      // console.log("strokedpath path");
     });
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -122,6 +126,7 @@ export default {
       this.ctx.lineWidth = currentSize;
     },
     onMouseMove(event) {
+      if (!this.turnToDraw) return;
       const x = event.offsetX;
       const y = event.offsetY;
       if (!this.painting) {
@@ -158,6 +163,7 @@ export default {
     sendMessage() {
       // 2) 채팅메세지를 서버로 전송
       this.socket.emit("send message", this.nickname, this.text);
+      this.text = ""; //채팅 입력칸 초기화
     },
   },
 };
@@ -168,6 +174,7 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  float: left;
 }
 #canvas {
   border: 3px solid black;
