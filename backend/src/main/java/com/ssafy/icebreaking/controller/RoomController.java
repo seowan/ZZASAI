@@ -1,14 +1,9 @@
 package com.ssafy.icebreaking.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.icebreaking.model.RoomDto;
 import com.ssafy.icebreaking.model.service.RoomService;
 
+@CrossOrigin(origins= {"http://zzasai.com"})
 @RestController
 @RequestMapping("/room")
 public class RoomController {
