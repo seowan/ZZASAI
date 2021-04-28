@@ -109,15 +109,15 @@ export default {
         if (this.list2.length > 2) {
           context.game2 = this.list2[2].name
         }
-        axios.post(`${SERVER_URL}/create/`, context)
-          .then( res => {
-            console.log(res)
-            this.$router.push({ name: 'Hall' })
-          })
-          .catch( err => {
-            console.log(err)
-            alert("오류가 발생하였습니다. 다시 시도해주세요.")
-          })
+        // axios.post(`${SERVER_URL}/create/`, context)
+        //   .then( res => {
+        //     console.log(res)
+        //     this.$router.push({ name: 'Hall' })
+        //   })
+        //   .catch( err => {
+        //     console.log(err)
+        //     alert("오류가 발생하였습니다. 다시 시도해주세요.")
+        //   })
         // console.log(this.$store.state.programme)
         
       }
