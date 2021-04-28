@@ -25,7 +25,7 @@
         @click="strokeSizeHandler(i)"
         style="float:left;"
       >
-        {{ i }}번째 크기
+        {{ i }}
       </div>
     </div>
     <div v-else>
