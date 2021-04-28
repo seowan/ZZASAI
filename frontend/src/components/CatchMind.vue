@@ -66,11 +66,14 @@ export default {
     };
   },
   mounted() {
+    //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
     this.ctx.lineWidth = 2.5;
-
+    // fill canvas with white color
+    this.ctx.fillStyle = "white";
+    this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     // Resize canvas
     this.canvas.height = this.canvasHeight;
     this.canvas.width = this.canvasWidth;
@@ -85,18 +88,34 @@ export default {
       }
     });
 
-    console.log(this.socket);
+    // 3-1) ctx의 path 관련 사항 수신
+    this.socket.on("began path", (x, y) => {
+      this.beginPath(x, y);
+      // console.log("begin path");
+    });
+    this.socket.on("stroked path", (x, y) => {
+      this.strokePath(x, y);
+      // console.log("strokedpath path");
+    });
   },
   methods: {
+    beginPath(x, y) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+    },
+    strokePath(x, y) {
+      this.ctx.lineTo(x, y);
+      this.ctx.stroke();
+    },
     onMouseMove(event) {
       const x = event.offsetX;
       const y = event.offsetY;
       if (!this.painting) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
+        this.beginPath(x, y);
+        this.socket.emit("begin path", x, y);
       } else {
-        this.ctx.lineTo(x, y);
-        this.ctx.stroke();
+        this.strokePath(x, y);
+        this.socket.emit("stroke path", x, y);
       }
     },
     startPainting() {
@@ -104,7 +123,6 @@ export default {
     },
     stopPainting() {
       this.painting = false;
-      // this.ctx.beginPath();
     },
     strokeSizeHandler(size) {
       this.ctx.lineWidth = 1.0 + 5 * (size - 1); //1: 1, 2: 6, 3: 11

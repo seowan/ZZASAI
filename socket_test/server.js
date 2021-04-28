@@ -25,7 +25,16 @@ io.on("connection", function (socket) {
     //3-3. chat service
     var msg = name + " : " + text;
     console.log(msg);
-    io.emit("receive message", name, text);
+    io.broadcast.emit("receive message", name, text);
+  });
+
+  socket.on("begin path", function (x, y) {
+    // io.emit("move", x, y);
+    io.emit("began path", x, y);
+  });
+  socket.on("stroke path", function (x, y) {
+    // io.emit("paint", x, y);
+    io.emit("stroked path", x, y);
   });
 });
 
