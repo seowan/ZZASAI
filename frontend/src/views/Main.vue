@@ -50,6 +50,8 @@ export default {
       if (this.teamcode!='' && this.teamcode.length>=8) {        
         location.href="hall/"+this.teamcode
         this.teamcode=''
+        this.$store.commit('INSERT_USERNAME',this.entername)
+        this.entername=''
       }
     },
     handle_toggle : function(){
