@@ -52,6 +52,9 @@ import draggable from "vuedraggable";
 import HelpIcon from '@/components/HelpIcon'
 import RandomRoomCode2 from '@/components/RandomRoomCode2'
 
+import axios from 'axios'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'CreateHall',
   components: {
@@ -82,21 +85,41 @@ export default {
         name: el.name + " cloned"
       };
     },
-    log: function(evt) {
-      window.console.log(evt);
+    log: function() {
+      // window.console.log(evt);
     },
     btn_start: function () {
-      if (this.room_name.length < 1) {
-        alert("방 제목을 입력하세요!")
-      } else if (this.list2.length < 1) {
+      if (this.list2.length < 1) {
         alert("컨텐츠를 정하세요!")
       }else {
-        // alert("통과입니다")
-        for (let i = 0; i < this.list2.length; i++) {
-          this.$store.commit('CREATE_PROGRAMME', this.list2[i])
+        // for (let i = 0; i < this.list2.length; i++) {
+        //   this.$store.commit('CREATE_PROGRAMME', this.list2[i])
+        // }
+        var context = {
+            game1: this.list2[0].name,
+            game2: "",
+            game3: "",
+            roomAdmin: this.$store.state.username,
+            roomCode: this.$store.state.roomcode,
+            roomName: this.$store.state.roomname,
         }
+        if (this.list2.length > 1) {
+          context.game2 = this.list2[1].name
+        }
+        if (this.list2.length > 2) {
+          context.game2 = this.list2[2].name
+        }
+        axios.post(`${SERVER_URL}/create/`, context)
+          .then( res => {
+            console.log(res)
+            this.$router.push({ name: 'Hall' })
+          })
+          .catch( err => {
+            console.log(err)
+            alert("오류가 발생하였습니다. 다시 시도해주세요.")
+          })
         // console.log(this.$store.state.programme)
-        this.$router.push({ name: 'Hall' })
+        
       }
     },
   },

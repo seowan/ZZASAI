@@ -20,7 +20,8 @@ import com.ssafy.icebreaking.model.service.CatchMindService;
 
 //@CrossOrigin(origins= {"http://localhost:3000"})
 //@CrossOrigin(origins= {"http://k4a205.p.ssafy.io"})
-@CrossOrigin(origins= {"http://zzasai.com"})
+//@CrossOrigin(origins= {"http://zzasai.com"})
+@CrossOrigin(origins= {"http://localhost:8080"})
 @RestController
 @RequestMapping("/catchmind")
 public class CatchMindController {
