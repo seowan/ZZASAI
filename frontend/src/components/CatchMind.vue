@@ -30,7 +30,7 @@
       </li>
     </ul>
     <div>
-      <input type="text" @keyup.enter="sendMessage()" v-model="message" />
+      <input type="text" @keyup.enter="sendMessage()" v-model="text" />
     </div>
   </div>
 </template>
@@ -57,11 +57,12 @@ export default {
         "darkviolet",
       ],
 
+      // 1) 서버와 연결
+      socket: io("localhost:3000"), //url:port
+      nickname: "user", //to identify user
       text: "",
       messages: [],
-      nickname: "user",
-      // 1) 서버와 연결
-      socket: io("localhost:3000"),
+      answer: "정답",
     };
   },
   mounted() {
@@ -78,7 +79,13 @@ export default {
     this.socket.on("receive message", (name, text) => {
       var data = { name: name, text: text };
       this.messages = [...this.messages, data];
+      if (text == this.answer) {
+        //채팅이 정답과 일치
+        console.log("correct~!!!!!!");
+      }
     });
+
+    console.log(this.socket);
   },
   methods: {
     onMouseMove(event) {
@@ -111,7 +118,7 @@ export default {
     },
     sendMessage() {
       // 2) 채팅메세지를 서버로 전송
-      this.socket.emit("send message", this.nickname, this.text); //"gyu" 부분만 유저이름으로 바꾸면 됨
+      this.socket.emit("send message", this.nickname, this.text);
     },
   },
 };
