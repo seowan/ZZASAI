@@ -3,34 +3,44 @@
   <div class="create-hall">
     <div class="h3"> 홀 & 게임 세팅 </div>
 
-    <!-- OrderBlock -->
-    <div class="info">
-      <div id="title">PUZZLE</div>
-      <div id="rest">Drag and drop the colored pieces on the puzzle below. (better images are on their way) </div>
-      <div id="rest2">You can put multiple pieces in the same area but you can't interchange them, only the last one you put will be accessible.</div>
-    </div>
 
-    <div id="images">
-      <div id="drag4" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag5" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag6" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag7" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag8" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag9" draggable="true" ondragstart="drag(event)"></div>
-    </div>
+    <!-- <Test /> -->
 
-    <div id="text">
-      <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    </div>
 
+    <!-- Vue.Draggable -->
+    <div class="row">
+      <div class="col-3 offset-3">
+        <h3>Items</h3>
+        <draggable class="list-group" :list="list1" group="people" @change="log">
+          <div
+            class="list-group-item"
+            v-for="(element) in list1"
+            :key="element.name"
+          >
+            {{ element.name }}
+            <!-- {{ element.name }} {{ index }} -->
+          </div>
+        </draggable>
+      </div>
+
+      <div class="col-3">
+        <h3>진행순서</h3>
+        <draggable class="list-group" :list="list2" group="people" @change="log">
+          <div
+            class="list-group-item"
+            v-for="(element) in list2"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
+      </div>
+
+      <!-- <rawDisplayer class="col-3" :value="list1" title="List 1" /> -->
+
+      <!-- <rawDisplayer class="col-3" :value="list2" title="List 2" /> -->
+    </div>
+    <button class="startbutton" id="" v-on:click="btn_start">시작하기</button>
     <!-- HelpIcon -->
     <HelpIcon />
     
@@ -39,32 +49,64 @@
 </template>
 
 <script>
+import draggable from "vuedraggable";
 import HelpIcon from '@/components/HelpIcon'
+
 
 export default {
   name: 'CreateHall',
   components: {
+    draggable,
     HelpIcon,
   },
-  methods: {
-    allowDrop(ev) {
-      ev.preventDefault();
-    },
-
-    drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    },
-
-    drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
-    },
+  data() {
+    return {
+      list1: [
+        { name: "성향검사", id: 1 },
+        { name: "게임", id: 2 },
+        { name: "카드", id: 3 },
+      ],
+      list2: [
+      ]
+    };
   },
+  methods: {
+    add: function() {
+      this.list.push({ name: "Juan" });
+    },
+    replace: function() {
+      this.list = [{ name: "Edgard" }];
+    },
+    clone: function(el) {
+      return {
+        name: el.name + " cloned"
+      };
+    },
+    log: function(evt) {
+      window.console.log(evt);
+    },
+    btn_start: function () {
+      if (this.list2.length < 1) {
+        alert("컨텐츠를 정하세요!")
+      } else {
+        // alert("통과입니다")
+        for (let i = 0; i < this.list2.length; i++) {
+          this.$store.commit('CREATE_PROGRAMME', this.list2[i])
+        }
+        // console.log(this.$store.state.programme)
+        this.$router.push({ name: 'Hall' })
+      }
+    },
+  }
+  
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+html {
+  height: 100%;
+}
+
 body {
   background-image: url('~@/assets/bgs/create_hall.png');
   background-repeat: no-repeat;
@@ -72,7 +114,7 @@ body {
   /* opacity: 0.5; */
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .create-hall {
   margin: 0;
@@ -80,85 +122,39 @@ body {
 }
 
 
-.info {
-  position:relative;
-  font-family:Arial;
-  margin:10px;
-  text-align:center;
-  border-radius:5px;
-  font-size:15px;
-}
-
-#title {
+.startbutton{
+  border: 4px solid white;
+  background-color : rgba(0,0,0,0);
+  padding:5px;
+  padding-left:10px;
+  padding-right:10px;
   font-size:20px;
+  //
+  margin-top: 3%;
 }
 
-#rest2 {
-  font-size:13px;
-}
 
-#text div {
-  position:relative;
-  height: 200px;
-  width: 200px;
-  border: 1px dashed gray;
-  display: inline-block;
-  margin: 0;
+// Vue.Draggable
+.flip-list-move {
+  transition: transform 0.5s;
 }
-
-#text {
-  width:614px;
-  height:614px;
-  background:black;
-  border:5px solid black;
-  margin:auto;
+.no-move {
+  transition: transform 0s;
 }
-
-#images {
-  width: 100%
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
 }
-
-img {
-  height: 200px;
-  width: 200px;
+.list-group {
+  min-height: 20px;
 }
-
-#drag4,
-#drag5,
-#drag6,
-#drag7,
-#drag8,
-#drag9,
-#drag10,
-#drag11,
-#drag12 {
-  height: 200px;
-  width: 200px;
-  
-  display: inline-block;
+.list-group-item {
+  cursor: move;
+  //
+  border : 4px solid pink;
+  background-color: rgba( 255, 255, 255, 0.5 ); // opacity를 쓰면 글자까지 투명해진다!
 }
-
-#drag4 {
-  background: linear-gradient(to bottom right, orange, orange, yellow);
-}
-
-#drag5 {
-  background: linear-gradient(to right, red, orange);
-}
-
-#drag6 {
-  background: linear-gradient(red, orange);
-}
-
-#drag7 {
-  background: linear-gradient(to bottom right, red, red, orange);
-}
-
-#drag8 {
-  background:yellow;
-}
-
-#drag9 {
-  background: linear-gradient(orange, yellow);
+.list-group-item i {
+  cursor: pointer;
 }
 </style>

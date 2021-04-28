@@ -17,8 +17,7 @@
         <p>질문카드: 서로 간의 이야기를 할 수 있습니다.</p>
         <br>
         <h3>[방법]</h3>
-        <p>1. 블록을 이동하여 순서를 설정하세요!</p>
-        <p>2. 설정이 완료되면 방 만들기 버튼을 누르세요!</p>
+        <p>왼쪽의 리스트에서 진행할 순서를 정해서 오른쪽 리스트로 드래그앤드롭하세요!</p>
         <br>
         <h3>[추천코스]</h3>
         <p>추천코스1: 성향 테스트 - 캐치마인드 - 질문카드</p>
@@ -36,13 +35,15 @@ export default {
 
 <style>
 #help-icon {
-  display: flex;
-  left: 0;
-  bottom: 0;
+  /* display: flex; */
+  position: absolute;
+  left: 3%;
+  bottom: 3%;
+  text-align: left;
 }
 #help-icon-btn {
-  width: 3%;
-  height: 3%;
+  width: 10%;
+  height: 10%;
   cursor: pointer;
 }
 
