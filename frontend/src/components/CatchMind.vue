@@ -61,7 +61,7 @@ export default {
         "darkviolet",
       ],
 
-      turnToDraw: false,
+      turnToDraw: true,
 
       // 1) 서버와 연결
       socket: io("localhost:3000"), //url:port
