@@ -1,9 +1,9 @@
 <template>
   <!-- 메인 홀 -->
   <div id="hall">
+    <RandomRoomCode />
+    <CodeShareBtn />
     <div class="py-3 my-5"></div>
-
-    
     <div class="row">
       <div class="col-3"></div>
       <div class="col-2 hall-card">
@@ -38,12 +38,23 @@
       </div>
       <div class="col-3"></div>
     </div>
+    <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2>
   </div>
 </template>
 
 <script>
+import CodeShareBtn from '@/components/CodeShareBtn'
+import RandomRoomCode from '@/components/RandomRoomCode'
+
 export default {
   name: 'Hall',
+  components: {
+    CodeShareBtn,
+    RandomRoomCode,
+  },
+  created: function () {
+    // 진행순서 데이터 받아오기
+  }
 }
 </script>
 

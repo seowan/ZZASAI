@@ -1,7 +1,5 @@
 <template>
-  <!-- 캐치마인드 -->
-  <div id="catch-mind">
-    <h3>캐치마인드</h3>
+  <div>
     <canvas
       @mousedown="startPainting"
       @mouseup="stopPainting"
@@ -9,7 +7,7 @@
       @mouseleave="stopPainting"
       id="canvas"
     ></canvas>
-    <div>
+    <div v-if="turnToDraw == true">
       <div
         v-for="color in colors"
         :key="color"
@@ -17,19 +15,33 @@
         :class="color"
         @click="strokeColorHandler(color)"
       ></div>
+      <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
+      <div id="btn clearAll" @click="clearAll">
+        모두 지우기
+      </div>
+      <div
+        v-for="i in 3"
+        :key="i"
+        @click="strokeSizeHandler(i)"
+        style="float:left;"
+      >
+        {{ i }}
+      </div>
     </div>
-    <div v-for="i in 3" :key="i" @click="strokeSizeHandler(i)">
-      {{ i }}번째 크기
+    <div v-else>
+      <input type="text" v-model="text" @keyup.enter="sendMessage()" />
     </div>
-    <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
-    <div id="btn clearAll" @click="clearAll">
-      모두 지우기
-    </div>
-    <h3>끝</h3>
+
+    <!-- 채팅 내용 -->
+    <!-- <p v-for="(msg, index) in messages" :key="index">
+      {{ msg.name }}: {{ msg.text }}
+    </p> -->
   </div>
 </template>
 
 <script>
+import io from "socket.io-client";
+
 export default {
   name: "CatchMind",
   data() {
@@ -48,28 +60,87 @@ export default {
         "blue",
         "darkviolet",
       ],
+
+      turnToDraw: false,
+
+      // 1) 서버와 연결
+      socket: io("localhost:3000"), //url:port
+      nickname: "user", //to identify user
+      text: "",
+      messages: [],
+      answer: "정답",
     };
   },
   mounted() {
+    //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
-    this.ctx.lineWidth = 2.5;
-
     // Resize canvas
     this.canvas.height = this.canvasHeight;
     this.canvas.width = this.canvasWidth;
+    this.ctx.lineWidth = 2.5;
+    // fill canvas with white color
+    this.ctx.fillStyle = "white";
+    this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // 3) 서버의 변경사항을 수신
+    this.socket.on("receive message", (name, text) => {
+      var data = { name: name, text: text };
+      this.messages = [...this.messages, data];
+      if (text == this.answer) {
+        //채팅이 정답과 일치
+        console.log("correct~!!!!!!");
+      }
+    });
+
+    // 3-1) ctx 관련 정보 수신
+    this.socket.on("began path", (x, y) => {
+      this.beginPath(x, y);
+    });
+    this.socket.on("stroked path", (x, y, color, size) => {
+      this.strokePath(x, y, color, size);
+    });
+    this.socket.on("cleared all", () => {
+      this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    });
   },
   methods: {
+    beginPath(x, y) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+    },
+    strokePath(x, y, color, size) {
+      var currentColor = this.ctx.strokeStyle; //원래 색 저장
+      var currentSize = this.ctx.lineWidth;
+      if (color != null) {
+        this.ctx.strokeStyle = color;
+      }
+      if (size != null) {
+        this.ctx.lineWidth = size;
+      }
+      this.ctx.lineTo(x, y);
+      this.ctx.stroke();
+      //원래 색으로 되돌리기
+      this.ctx.strokeStyle = currentColor;
+      this.ctx.lineWidth = currentSize;
+    },
     onMouseMove(event) {
+      if (!this.turnToDraw) return;
       const x = event.offsetX;
       const y = event.offsetY;
       if (!this.painting) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
+        this.beginPath(x, y);
+        this.socket.emit("begin path", x, y);
       } else {
-        this.ctx.lineTo(x, y);
-        this.ctx.stroke();
+        this.strokePath(x, y, null, null);
+        this.socket.emit(
+          "stroke path",
+          x,
+          y,
+          this.ctx.strokeStyle,
+          this.ctx.lineWidth
+        );
       }
     },
     startPainting() {
@@ -77,7 +148,6 @@ export default {
     },
     stopPainting() {
       this.painting = false;
-      // this.ctx.beginPath();
     },
     strokeSizeHandler(size) {
       this.ctx.lineWidth = 1.0 + 5 * (size - 1); //1: 1, 2: 6, 3: 11
@@ -86,8 +156,14 @@ export default {
       this.ctx.strokeStyle = color;
     },
     clearAll() {
-      this.ctx.fillStyle = "white";
+      // this.ctx.fillStyle = "white";
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+      this.socket.emit("clear all");
+    },
+    sendMessage() {
+      // 2) 채팅메세지를 서버로 전송
+      this.socket.emit("send message", this.nickname, this.text);
+      this.text = ""; //채팅 입력칸 초기화
     },
   },
 };
@@ -98,6 +174,12 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  float: left;
+}
+#canvas {
+  border: 3px solid black;
+  height: 500px;
+  width: 500px;
 }
 .black {
   background-color: black;
@@ -119,10 +201,5 @@ export default {
 }
 .darkviolet {
   background-color: darkviolet;
-}
-#canvas {
-  border: 3px solid black;
-  height: 500px;
-  width: 500px;
 }
 </style>
