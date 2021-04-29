@@ -26,7 +26,8 @@ export default {
   name: 'Navbar',
   methods: {
     toHome: function () {
-      this.$router.push({ name: 'Main' })
+      // this.$router.push({ name: 'Main' })
+      location.href="/"
     }
   },
 }

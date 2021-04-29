@@ -3,7 +3,7 @@
   <div id="main">
     <span class="mainfont" @click="movemain">짜사이</span>
     <div class="mainframe">
-      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="handle_toggle" autofocus>      
+      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" autofocus>      
     </div>
     <div class="mainbuttons">
       <button class = "mainbutton" @click="toHostName">방만들기</button>

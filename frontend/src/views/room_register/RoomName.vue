@@ -3,7 +3,7 @@
     <!-- 이 페이지 불필요한 요소 정리완료 - 이송영 -->
     <span class="title">짜사이</span>
     <div class="frame">
-      <input class="input" v-model="name" placeholder="방 이름을 입력하세요" @keyup.enter="toCreateHall" autofocus>
+      <input class="input" v-model="name" placeholder="방 제목을 입력하세요" @keyup.enter="toCreateHall" autofocus>
     </div>
     <div class="buttons">
       <button class = "button" id="createroom" @click="toCreateHall">확인</button>

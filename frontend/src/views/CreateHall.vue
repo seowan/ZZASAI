@@ -109,16 +109,23 @@ export default {
         if (this.list2.length > 2) {
           context.game2 = this.list2[2].name
         }
-        // axios.post(`${SERVER_URL}/create/`, context)
-        //   .then( res => {
-        //     console.log(res)
-        //     this.$router.push({ name: 'Hall' })
-        //   })
-        //   .catch( err => {
-        //     console.log(err)
-        //     alert("오류가 발생하였습니다. 다시 시도해주세요.")
-        //   })
-        // console.log(this.$store.state.programme)
+        console.log(context)
+        alert('console 창을 확인하세요')
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/room/create/`,
+          data: JSON.stringify(context),
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+          }
+        }).then(res=>{
+            console.log(res);
+            this.$router.push({ name: 'Hall' })
+        }).catch(err=>{
+            console.log(err);
+            alert("오류가 발생하였습니다. 다시 시도해주세요.")
+        })
         
       }
     },
