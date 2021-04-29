@@ -35,6 +35,7 @@ export default {
     return {
       teamNumber: "",
       numberState: null,
+      totalPeople: "",
     };
   },
   mounted() {},
@@ -43,11 +44,27 @@ export default {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
     },
   },
+  computed: {
+    teams: function() {
+      return this.$store.state.teams;
+    },
+  },
   methods: {
     checkFormValidity() {
-      const valid = this.$refs.form.checkValidity();
-      this.numberState = valid;
-      return valid;
+      //   const valid = this.$refs.form.checkValidity();
+      //   this.numberState = valid;
+      if (this.teamNumber >= 1 && this.teamNumber <= 10) {
+        // return valid;
+
+        this.$store.commit("CREATE_TEAMNUMBER", this.teamNumber);
+        for (var i = 1; i <= this.teamNumber; i++) {
+          this.$store.state.teams = i;
+        }
+        console.log("길이: " + this.$store.state.teams.length);
+        this.$router.push({ name: "SelectTeam" });
+      } else {
+        alert("다시 입력하세요");
+      }
     },
     resetModal() {
       this.teamNumber = "";
@@ -68,7 +85,6 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.hide("modal-input-number");
       });
-      this.$router.push({ name: "GamePlay" });
     },
   },
 };

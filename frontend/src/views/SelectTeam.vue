@@ -1,24 +1,14 @@
 <template>
-  <tbody>
-    <tr v-for="(form, index) in graphicState" :key="form.id">
-      <td @click="removeDate(index)"><i class="far fa-trash-alt"></i></td>
-      <td>
-        <input type="radio" v-model="form.show" />
-      </td>
-      <td>
-        <input
-          type="radio"
-          name="grp"
-          :value="form.id"
-          v-model="form.selected"
-          @change="onRadioChange(index)"
-        />
-      </td>
-      <td v-on:click="toggleShape(index)">
-        {{ form.shape }}
-      </td>
-    </tr>
-  </tbody>
+  <div>
+    <ul v-for="(team, index) in $store.state.teams" :key="index">
+      <li>
+        <input type="radio" name="team" /> {{ index + 1 }}팀
+        <b-badge pill variant="warning">
+          {{ team }} / {{ totalPerson }}
+        </b-badge>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -26,12 +16,23 @@ export default {
   name: "SelectTeam",
   components: {},
   data() {
-    return {};
+    return {
+      totalPerson: 30,
+    };
   },
 
   mounted() {},
   methods: {},
+  computed: {
+    teamnumber: function() {
+      return this.$store.state.teams;
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+li {
+  list-style: none;
+}
+</style>
