@@ -1,20 +1,22 @@
 <template>
     <div>
-        <p>{{name}} | {{randomstring}} 
+        <p>{{roomCode}} 
         <button type="button" 
-        v-clipboard:copy="randomstring"
+        v-clipboard:copy="roomCode"
         v-clipboard:success="onCopy">코드 복사</button>
         </p>
     </div>
 </template>
 
 <script>
+
+
 export default {
   name: 'RandomRoomCode',
   data(){
       return{
           name: '방 이름',
-          randomstring: '',
+          roomCode: '',
       }
   },
 methods: {
@@ -23,7 +25,7 @@ methods: {
     var stringLength = 8
     for (var i = 0; i < stringLength; i++) {
       var rnum = Math.floor(Math.random() * chars.length)
-      this.randomstring += chars.substring(rnum, rnum + 1)
+      this.roomCode += chars.substring(rnum, rnum + 1)
     }
     // roomcode 저장하기
     this.$store.commit('CREATE_ROOMCODE', this.randomstring)
