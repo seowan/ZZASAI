@@ -5,7 +5,7 @@
 
 
     <!-- <Test /> -->
-    <RandomRoomCode2 />
+    <RoomCodeCreate />
     <!-- Vue.Draggable -->
     <div class="row">
       <div class="col-3 offset-3">
@@ -50,7 +50,7 @@
 <script>
 import draggable from "vuedraggable";
 import HelpIcon from '@/components/HelpIcon'
-import RandomRoomCode2 from '@/components/RandomRoomCode2'
+import RoomCodeCreate from '@/components/RoomCodeCreate'
 
 import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -60,13 +60,13 @@ export default {
   components: {
     draggable,
     HelpIcon,
-    RandomRoomCode2,
+    RoomCodeCreate,
   },
   data() {
     return {
       list1: [
         { name: "성향검사", id: 1 },
-        { name: "게임", id: 2 },
+        { name: "이어그리기", id: 2 },
         { name: "카드", id: 3 },
       ],
       list2: [
@@ -96,7 +96,7 @@ export default {
         //   this.$store.commit('CREATE_PROGRAMME', this.list2[i])
         // }
         var context = {
-            game1: this.list2[0].name,
+            game1: this.list2[0].id,
             game2: "",
             game3: "",
             roomAdmin: this.$store.state.username,
@@ -104,13 +104,11 @@ export default {
             roomName: this.$store.state.roomname,
         }
         if (this.list2.length > 1) {
-          context.game2 = this.list2[1].name
+          context.game2 = this.list2[1].id
         }
         if (this.list2.length > 2) {
-          context.game2 = this.list2[2].name
+          context.game2 = this.list2[2].id
         }
-        console.log(context)
-        alert('console 창을 확인하세요')
         axios({
           method: 'post',
           url: `${SERVER_URL}/room/create/`,
@@ -121,6 +119,7 @@ export default {
           }
         }).then(res=>{
             console.log(res);
+            alert("방 생성이 완료되었습니다!")
             this.$router.push({ name: 'Hall' })
         }).catch(err=>{
             console.log(err);

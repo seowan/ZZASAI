@@ -1,59 +1,131 @@
 <template>
   <!-- 메인 홀 -->
   <div id="hall">
-    <RandomRoomCode />
-    <CodeShareBtn />
+    <RoomCode :roomcode="roomcode" />
+    <!-- <CodeShareBtn :roomcode="roomcode" /> -->
+    <!-- {{ room_data }} -->
+    <!-- {{ order_mark }} -->
     <div class="py-3 my-5"></div>
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-2 hall-card">
-        <div class="hall-card-inner">
-          <div class="hall-card-front">
-            <img src="@/assets/icons/exam.png" alt="Avatar" style="width:100px;height:100px;">
-          </div>
-          <div class="hall-card-back">
-            <h2 class="hall-card-text">성향테스트</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-2 hall-card">
-        <div class="hall-card-inner">
-          <div class="hall-card-front">
-            <img src="@/assets/icons/pencil.png" alt="Avatar" style="width:100px;height:100px;">
-          </div>
-          <div class="hall-card-back">
-            <h2 class="hall-card-text">캐치마인드</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-2 hall-card">
-        <div class="hall-card-inner">
-          <div class="hall-card-front">
-            <img src="@/assets/icons/card.png" alt="Avatar" style="width:100px; height1300px;">
-          </div>
-          <div class="hall-card-back">
-            <h2 class="hall-card-text">질문카드</h2>
-          </div>
-        </div>
-      </div>
-      <div class="col-3"></div>
+    <!-- 여기에 flip-card 넣기 -->
+    <div v-if="order_mark == '100'" class="row justify-content-center">
+      <Exam />
     </div>
-    <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2>
+    <div v-else-if="order_mark == '120'" class="row justify-content-center">
+      <Exam />
+      <Drawing />
+    </div>
+    <div v-else-if="order_mark == '123'" class="row justify-content-center">
+      <Exam />
+      <Drawing />
+      <Card />
+    </div>
+    <div v-else-if="order_mark == '130'" class="row justify-content-center">
+      <Exam />
+      <Card />
+    </div>
+    <div v-else-if="order_mark == '132'" class="row justify-content-center">
+      <Exam />
+      <Card />
+      <Drawing />
+    </div>
+    <div v-else-if="order_mark == '200'" class="row justify-content-center">
+      <Drawing />
+    </div>
+    <div v-else-if="order_mark == '210'" class="row justify-content-center">
+      <Drawing />
+      <Exam />
+    </div>
+    <div v-else-if="order_mark == '213'" class="row justify-content-center">
+      <Drawing />
+      <Exam />
+      <Card />
+    </div>
+    <div v-else-if="order_mark == '230'" class="row justify-content-center">
+      <Drawing />
+      <Card />
+    </div>
+    <div v-else-if="order_mark == '231'" class="row justify-content-center">
+      <Drawing />
+      <Card />
+      <Exam />
+    </div>
+    <div v-else-if="order_mark == '300'" class="row justify-content-center">
+      <Card />
+    </div>
+    <div v-else-if="order_mark == '310'" class="row justify-content-center">
+      <Card />
+      <Exam />
+    </div>
+    <div v-else-if="order_mark == '312'" class="row justify-content-center">
+      <Card />
+      <Exam />
+      <Drawing />
+    </div>
+    <div v-else-if="order_mark == '320'" class="row justify-content-center">
+      <Card />
+      <Drawing />
+    </div>
+    <div v-else class="row justify-content-center">
+      <Card />
+      <Drawing />
+      <Exam />
+    </div>
+    <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
 
 <script>
-import CodeShareBtn from '@/components/CodeShareBtn'
-import RandomRoomCode from '@/components/RandomRoomCode'
+import Card from '@/components/hall/Card'
+// import CodeShareBtn from '@/components/CodeShareBtn'
+import Drawing from '@/components/hall/Drawing'
+import Exam from '@/components/hall/Exam'
+import RoomCode from '@/components/RoomCode'
+
+import axios from 'axios'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'Hall',
   components: {
-    CodeShareBtn,
-    RandomRoomCode,
+    Card,
+    // CodeShareBtn,
+    Drawing,
+    Exam,
+    RoomCode
   },
-  created: function () {
+  data () {
+    return {
+      order_mark: '',
+      roomcode: this.$store.state.roomcode,
+      room_data: {
+
+      },
+    }
+  },
+  methods: {
+    getRoomData: function () {
+      axios({
+          method: 'get',
+          url: `${SERVER_URL}/room/info/?roomcode=${this.$store.state.roomcode}`,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          }
+        })
+      .then(res=>{
+        console.log(res.data)
+        this.room_data = res.data
+        this.order_mark = String(this.room_data.game1) + String(this.room_data.game2) + String(this.room_data.game3)
+      }).catch(err=>{
+        console.log(err);
+        alert("데이터를 가지고 오지 못했습니다ㅜㅜ")
+      })
+    },
+  },
+  beforeMount: function () {
     // 진행순서 데이터 받아오기
+    this.getRoomData()
+    
+    console.log(this.order_mark)
   }
 }
 </script>
