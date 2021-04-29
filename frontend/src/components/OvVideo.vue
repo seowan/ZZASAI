@@ -9,7 +9,7 @@ export default {
 		streamManager: Object,
 	},
 	mounted () {
-		this.streamManager.addVideoElement(this.$el);
+		this.streamManager.addVideoElement(this.$el)
 	},
-};
+}
 </script>

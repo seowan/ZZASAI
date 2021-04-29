@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import OvVideo from './OvVideo';
+import OvVideo from './OvVideo'
 export default {
 	name: 'UserVideo',
 	components: {
@@ -17,15 +17,15 @@ export default {
 	},
 	computed: {
 		clientData () {
-			const { clientData } = this.getConnectionData();
+			const { clientData } = this.getConnectionData()
 			return clientData;
 		},
 	},
 	methods: {
 		getConnectionData () {
-			const { connection } = this.streamManager.stream;
-			return JSON.parse(connection.data);
+			const { connection } = this.streamManager.stream
+			return JSON.parse(connection.data)
 		},
 	},
-};
+}
 </script>
