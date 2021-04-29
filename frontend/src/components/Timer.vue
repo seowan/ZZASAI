@@ -27,8 +27,11 @@ export default {
       var sound =
         "https://soundbible.com/mp3/School Bell-SoundBible.com-449398625.mp3";
       var audio = new Audio(sound);
-      audio.currentTime = 1;
-      audio.play();
+      let timerId = setTimeout(() => audio.play());
+      setTimeout(() => {
+        clearInterval(timerId);
+        audio.pause();
+      }, 1500);
     },
   },
   created() {

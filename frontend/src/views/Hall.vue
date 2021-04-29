@@ -9,7 +9,11 @@
       <div class="col-2 hall-card">
         <div class="hall-card-inner">
           <div class="hall-card-front">
-            <img src="@/assets/icons/exam.png" alt="Avatar" style="width:100px;height:100px;">
+            <img
+              src="@/assets/icons/exam.png"
+              alt="Avatar"
+              style="width:100px;height:100px;"
+            />
           </div>
           <div class="hall-card-back">
             <h2 class="hall-card-text">성향테스트</h2>
@@ -19,17 +23,29 @@
       <div class="col-2 hall-card">
         <div class="hall-card-inner">
           <div class="hall-card-front">
-            <img src="@/assets/icons/pencil.png" alt="Avatar" style="width:100px;height:100px;">
+            <img
+              src="@/assets/icons/pencil.png"
+              alt="Avatar"
+              style="width:100px;height:100px;"
+            />
           </div>
           <div class="hall-card-back">
             <h2 class="hall-card-text">캐치마인드</h2>
+            <TeamDivideModal
+              v-if="isModalViewed"
+              @close-modal="isModalViewed = false"
+            />
           </div>
         </div>
       </div>
       <div class="col-2 hall-card">
         <div class="hall-card-inner">
           <div class="hall-card-front">
-            <img src="@/assets/icons/card.png" alt="Avatar" style="width:100px; height1300px;">
+            <img
+              src="@/assets/icons/card.png"
+              alt="Avatar"
+              style="width:100px; height1300px;"
+            />
           </div>
           <div class="hall-card-back">
             <h2 class="hall-card-text">질문카드</h2>
@@ -38,32 +54,39 @@
       </div>
       <div class="col-3"></div>
     </div>
-    <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2>
+    <h2 class="pt-5" style="font-family: 'Single Day', cursive;">
+      호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요
+    </h2>
   </div>
 </template>
 
 <script>
-import CodeShareBtn from '@/components/CodeShareBtn'
-import RandomRoomCode from '@/components/RandomRoomCode'
+import CodeShareBtn from "@/components/CodeShareBtn";
+import RandomRoomCode from "@/components/RandomRoomCode";
+import TeamDivideModal from "@/components/TeamDivideModal";
 
 export default {
-  name: 'Hall',
+  name: "Hall",
   components: {
     CodeShareBtn,
     RandomRoomCode,
+    TeamDivideModal,
   },
-  created: function () {
+  data() {
+    return { isModalViewed: true };
+  },
+  created: function() {
     // 진행순서 데이터 받아오기
-  }
-}
+  },
+};
 </script>
 
 <style>
 /* Google Font - Single Day */
-@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 body {
-  background-image: url('~@/assets/bgs/hall.jpg');
+  background-image: url("~@/assets/bgs/hall.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-size: cover;
@@ -84,7 +107,7 @@ body {
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
   border: 4px solid white;
   margin: 0 auto;
@@ -95,7 +118,8 @@ body {
   transform: rotateY(180deg);
 }
 
-.hall-card-front, .hall-card-back {
+.hall-card-front,
+.hall-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -116,13 +140,12 @@ body {
   transform: rotateY(180deg);
 }
 
-
 .hall-card-text {
   color: black;
   margin-top: 0;
   text-align: center;
   text-transform: uppercase;
   /* font-weight: bold; */
-  font-family: 'Single Day', cursive;
+  font-family: "Single Day", cursive;
 }
 </style>

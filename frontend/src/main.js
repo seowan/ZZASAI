@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import App from "./App.vue";
 import store from "./store";
 import router from "./router";
+import VeeValidate from "vee-validate";
 
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
@@ -18,6 +19,8 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 Vue.use(VueClipboard);
+
+Vue.use(VeeValidate);
 
 Vue.config.productionTip = false;
 
