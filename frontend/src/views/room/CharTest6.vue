@@ -1,37 +1,122 @@
 <template>
   <!-- 캐릭터 테스트 -->
   <div id="char-test6">
-    <h1>성격분류가 완료되었습니다.</h1>
-    <div class="py-3 my-1"></div>
-      <div class="row">
-        <div class="col-4 offset-md-2">
-        <img src="~@/assets/mbti/parrot.png" alt="mbti image"/>
-        </div>
-        <div class="col-5">
-        <h2> <br>밝고, 사랑스럽고 장난기 많은 앵무새. </h2>
-        <br>
-        <h2> 듣기만 해도 ESFP 성격이 떠오르지 않는가?<br>
-          무엇이든 빨리배우고 익힌다는 점, <br>
-          어디서든 적응을 잘하고 사교적이라는 점, 
-        </h2>
-        <br>
-        <h2>
-          사람들에게 둘러싸이는 것을 좋아하는 ‘관종’이라는 점에서 
-          이 둘의 공통점을 발견할 수 있다.
-        </h2>
-        <br>
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>
-        </div>
-      </div>
-   
-    <!-- 
-      16가지 경우를 나눠줘야 하기에 각 선택시 변수를 다르게 저장해서 조건문으로 나눠줘야 하기 때문에
-      vuex 공부중입니다. 그리고 컴포넌트 호출 부분도 공부중입니다
-    -->
+    <div v-if="this.$store.state.m == 1 
+    && this.$store.state.b == 1
+    && this.$store.state.t == 1
+    && this.$store.state.i == 1">
+        <Dog/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 1
+    && this.$store.state.t == 1
+    && this.$store.state.i == 2">
+        <Dolphin/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 1
+    && this.$store.state.t == 2
+    && this.$store.state.i == 1">
+        <Cheetah/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 1
+    && this.$store.state.t == 2
+    && this.$store.state.i == 2">
+        <Fox/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 2
+    && this.$store.state.t == 1
+    && this.$store.state.i == 1">
+        <Horse/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 2
+    && this.$store.state.t == 1
+    && this.$store.state.i == 2">
+        <Parrot/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 2
+    && this.$store.state.t == 2
+    && this.$store.state.i == 1">
+        <Wolf/>
+    </div>
+    <div v-else-if="this.$store.state.m == 1
+    && this.$store.state.b == 2
+    && this.$store.state.t == 2
+    && this.$store.state.i == 2">
+        <Hyena/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 1
+    && this.$store.state.t == 1
+    && this.$store.state.i == 1">
+        <Hippocampus/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 1
+    && this.$store.state.t == 1
+    && this.$store.state.i == 2">
+        <Elephant/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 1
+    && this.$store.state.t == 2
+    && this.$store.state.i == 1">
+        <Octopus/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 1
+    && this.$store.state.t == 2
+    && this.$store.state.i == 2">
+        <Lizard/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 2
+    && this.$store.state.t == 1
+    && this.$store.state.i == 1">
+        <Penguin/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 2
+    && this.$store.state.t == 1
+    && this.$store.state.i == 2">
+        <Cat/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 2
+    && this.$store.state.t == 2
+    && this.$store.state.i == 1">
+        <Turtle/>
+    </div>
+    <div v-else-if="this.$store.state.m == 2
+    && this.$store.state.b == 2
+    && this.$store.state.t == 2
+    && this.$store.state.i == 2">
+        <Crow/>
+    </div>
   </div>
 </template>
 
 <script>
+import Cat from '@/components/mbti/Cat.vue'
+import Cheetah from '@/components/mbti/Cheetah.vue'
+import Crow from '@/components/mbti/Crow.vue'
+import Dog from '@/components/mbti/Dog.vue'
+import Dolphin from '@/components/mbti/Dolphin.vue'
+import Elephant from '@/components/mbti/Elephant.vue'
+import Fox from '@/components/mbti/Fox.vue'
+import Hippocampus from '@/components/mbti/Hippocampus.vue'
+import Horse from '@/components/mbti/Horse.vue'
+import Hyena from '@/components/mbti/Hyena.vue'
+import Lizard from '@/components/mbti/Lizard.vue'
+import Octopus from '@/components/mbti/Octopus.vue'
+import Parrot from '@/components/mbti/Parrot.vue'
+import Penguin from '@/components/mbti/Penguin.vue'
+import Turtle from '@/components/mbti/Turtle.vue'
+import Wolf from '@/components/mbti/Wolf.vue'
 
 export default {
   data() {
@@ -43,14 +128,14 @@ export default {
     next() {
       this.$router.push('/char-test7');
     }
+  },
+  components: {
+    Cat, Cheetah, Crow, Dog, Dolphin, Elephant, Fox, Hippocampus, Horse, Hyena, Lizard, Octopus, Parrot, Penguin, Turtle, Wolf
   }
 }
 </script>
 
+
 <style>
-.col-4 img{
-position: absolute; top:0; left: 0;
-width: 70%;
-height: 130%;
-}
+
 </style>

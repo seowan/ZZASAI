@@ -9,6 +9,10 @@ export default new Vuex.Store({
     username:'',
     roomname: '',
     roomcode: '',
+    m: 0,
+    b: 0,
+    t: 0,
+    i: 0,
   },
   mutations: {
     CREATE_PROGRAMME: function (state, item) {
@@ -23,7 +27,31 @@ export default new Vuex.Store({
     },
     CREATE_ROOMCODE: function (state, code) {
       state.roomcode = code
-    }
+    },
+    myes: function(state) {
+      state.m = 1;
+    },
+    mno: function(state) {
+      state.m = 2;
+    },
+    byes: function(state) {
+      state.b = 1;
+    },
+    bno: function(state) {
+      state.b = 2;
+    },
+    tyes: function(state) {
+      state.t = 1;
+    },
+    tno: function(state) {
+      state.t = 2;
+    },
+    iyes: function(state) {
+      state.i = 1;
+    },
+    ino: function(state) {
+      state.i = 2;
+    },
   },
   actions: {
   },

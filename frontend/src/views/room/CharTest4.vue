@@ -7,8 +7,8 @@
     <br><br>
     <h1>가벼운 차사고가 났다 친구에게 카톡을 하는데 어떤 느낌에 가까운가?</h1>
     <br>
-    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="next">나 차 사고 났어 ㅠㅠ( 위로해줘 )</b-button>
-    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="next">나 차 사고 났어ㅋㅋ ( 알아두라고 )</b-button>
+    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="tyes()">나 차 사고 났어 ㅠㅠ( 위로해줘 )</b-button>
+    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="tno()">나 차 사고 났어ㅋㅋ ( 알아두라고 )</b-button>
 
   </div>
   
@@ -25,7 +25,15 @@ export default {
   methods: {
     next() {
       this.$router.push('/char-test5');
-    }
+    },
+    tyes: function () {
+      this.$store.commit('tyes')
+      this.$router.push('/char-test5');
+    },
+    tno: function () {
+      this.$store.commit('tno')
+      this.$router.push('/char-test5');
+    },
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <!-- 캐릭터 테스트 -->
-  <div id="char-test6">
+  <div>
     <h1>성격분류가 완료되었습니다.</h1>
     <div class="py-3 my-1"></div>
       <div class="row">
@@ -9,8 +9,7 @@
         </div>
         <div class="col-5">
         <h2><br>
-        똑똑하고 환경에 적응을 잘하고, 호기심이 많다는 점에서 
-        <br> 도마뱀과 INTP은 공통점이 많다.
+        똑똑하고 환경에 적응을 잘하고, 호기심이 많다는 점에서 도마뱀과 INTP은 공통점이 많다.
         </h2>
         <br>
         <h2> 
@@ -19,8 +18,7 @@
         </h2>
         <br>
         <h2>
-        기발하고 혁신적이며 엉뚱한 아이디어를 많이 내는 
-        <br> INTP와 비교되는 이유도 이 때문이다.
+        기발하고 혁신적이며 엉뚱한 아이디어를 많이 내는 INTP와 비교되는 이유도 이 때문이다.
         </h2>
         <br>
         <button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>
@@ -35,21 +33,21 @@
 <script>
 
 export default {
-  name: 'CharTest6',
   data() {
       return {
-        selected: 'radio1',
-        options: [
-          { text: '그렇다', value: 'radio1' },
-          { text: '아니다', value: 'radio2' },
-        ]
+        
       }
-  }
+  },
+  methods: {
+    next() {
+      this.$router.push('/char-test7');
+    },
+  },
 }
 
 </script>
 
-<style>
+<style scoped>
 .col-4 img{
 position: absolute; top:0; left: 0;
 width: 70%;
