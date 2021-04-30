@@ -11,7 +11,14 @@ export default new Vuex.Store({
     roomname: '',
     roomcode: '',
     teamnumber: "",
-    teams: [],
+    teams: [
+      {
+        text: "",
+        currentpeople: "",
+        teampeople: "",
+        disabled: "",
+      },
+    ],
     m: 0,
     b: 0,
     t: 0,
@@ -34,8 +41,8 @@ export default new Vuex.Store({
     CREATE_TEAMNUMBER: function(state, teamnumber) {
       state.teamnumber = teamnumber;
     },
-    CREATE_TEAMS: function(state, teamnumber) {
-      state.teams.push(teamnumber);
+    CREATE_TEAMS(state, payload) {
+      state.teams.push(payload);
     },
     SET_ADMINFLAG: function(state){
       state.adminflag=1;
