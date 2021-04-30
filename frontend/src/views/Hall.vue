@@ -85,7 +85,7 @@ import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'Hall',
+  name: "Hall",
   components: {
     Card,
     // CodeShareBtn,
@@ -132,10 +132,10 @@ export default {
 
 <style>
 /* Google Font - Single Day */
-@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 body {
-  background-image: url('~@/assets/bgs/hall.jpg');
+  background-image: url("~@/assets/bgs/hall.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-size: cover;
@@ -156,7 +156,7 @@ body {
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
   border: 4px solid white;
   margin: 0 auto;
@@ -167,7 +167,8 @@ body {
   transform: rotateY(180deg);
 }
 
-.hall-card-front, .hall-card-back {
+.hall-card-front,
+.hall-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -188,13 +189,12 @@ body {
   transform: rotateY(180deg);
 }
 
-
 .hall-card-text {
   color: black;
   margin-top: 0;
   text-align: center;
   text-transform: uppercase;
   /* font-weight: bold; */
-  font-family: 'Single Day', cursive;
+  font-family: "Single Day", cursive;
 }
 </style>
