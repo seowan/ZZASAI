@@ -22,6 +22,8 @@ methods: {
       var rnum = Math.floor(Math.random() * chars.length)
       this.randomstring += chars.substring(rnum, rnum + 1)
     }
+    // roomcode 저장하기
+    this.$store.commit('CREATE_ROOMCODE', this.randomstring)
     return this.randomstring
     },
 

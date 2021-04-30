@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.icebreaking.model.RoomDto;
 import com.ssafy.icebreaking.model.service.RoomService;
 
-//@CrossOrigin(origins= {"http://localhost:8080"})
-//@CrossOrigin(origins= {"http://zzasai.com"})
 @CrossOrigin(origins= {"*"})
+// @CrossOrigin(origins= {"http://zzasai.com"})
 @RestController
 @RequestMapping("/room")
 public class RoomController {

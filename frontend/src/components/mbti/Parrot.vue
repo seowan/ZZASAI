@@ -1,6 +1,6 @@
 <template>
   <!-- 캐릭터 테스트 -->
-  <div id="char-test6">
+  <div>
     <h1>성격분류가 완료되었습니다.</h1>
     <div class="py-3 my-1"></div>
       <div class="row">
@@ -10,8 +10,8 @@
         <div class="col-5">
         <h2> <br>밝고, 사랑스럽고 장난기 많은 앵무새. </h2>
         <br>
-        <h2> 듣기만 해도 ESFP 성격이 떠오르지 않는가?<br>
-          무엇이든 빨리배우고 익힌다는 점, <br>
+        <h2> 듣기만 해도 ESFP 성격이 떠오르지 않는가?
+          무엇이든 빨리배우고 익힌다는 점,
           어디서든 적응을 잘하고 사교적이라는 점, 
         </h2>
         <br>
@@ -32,21 +32,21 @@
 <script>
 
 export default {
-  name: 'CharTest6',
   data() {
       return {
-        selected: 'radio1',
-        options: [
-          { text: '그렇다', value: 'radio1' },
-          { text: '아니다', value: 'radio2' },
-        ]
+       
       }
-  }
+  },
+  methods: {
+    next() {
+      this.$router.push('/char-test7');
+    },
+  },
 }
 
 </script>
 
-<style>
+<style scoped>
 .col-4 img{
 position: absolute; top:0; left: 0;
 width: 70%;

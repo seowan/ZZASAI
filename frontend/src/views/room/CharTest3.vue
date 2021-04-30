@@ -7,8 +7,8 @@
     <br><br>
     <h1>데스노트를 보고 '만약 나에게 데스노트가 있다면'을 상상해본적이 있는가?</h1>
     <br>
-    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="next">그렇다</b-button>
-    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="next">아니다</b-button>
+    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="byes()">그렇다</b-button>
+    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="bno()">아니다</b-button>
 
   </div>
   
@@ -25,7 +25,15 @@ export default {
   methods: {
     next() {
       this.$router.push('/char-test4');
-    }
+    },
+    byes: function () {
+      this.$store.commit('byes')
+      this.$router.push('/char-test4');
+    },
+    bno: function () {
+      this.$store.commit('bno')
+      this.$router.push('/char-test4');
+    },
   }
 }
 

@@ -3,12 +3,15 @@
   <div id="main">
     <span class="mainfont" @click="movemain">짜사이</span>
     <div class="mainframe">
-      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="handle_toggle" autofocus>      
+      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" autofocus>      
     </div>
     <div class="mainbuttons">
       <button class = "mainbutton" @click="toHostName">방만들기</button>
-      <button v-if="this.roomcode_input.length >= 8" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
+      <button v-if="roomcode_input" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
     </div>
+    <!-- Docker 실행 명령어 : docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-server-kms:2.17.0 -->
+    <!-- <input type="text" v-model="userName">
+    <router-link :to="{ name: 'Test', params: { userName: userName }}"> 입장하기 </router-link> -->
   </div>
 </template>
 
@@ -25,11 +28,12 @@ export default {
       enter_room : true,
       create_room : true,
       enter_show : false,
+      userName: ''
     }
   },
   computed: {
     roomcode_input: function () {
-      return this.roomcode
+      return this.roomcode.length >= 8
     }
   },
   methods:{

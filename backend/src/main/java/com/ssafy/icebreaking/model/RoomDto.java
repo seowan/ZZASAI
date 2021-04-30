@@ -4,9 +4,9 @@ public class RoomDto {
 	private String roomCode;
 	private String roomName;
 	private String roomAdmin;
-	private String Game1;
-	private String Game2;
-	private String Game3;
+	private int Game1;
+	private int Game2;
+	private int Game3;
 
 	public String getRoomCode() {
 		return roomCode;
@@ -32,27 +32,27 @@ public class RoomDto {
 		this.roomAdmin = roomAdmin;
 	}
 
-	public String getGame1() {
+	public int getGame1() {
 		return Game1;
 	}
 
-	public void setGame1(String game1) {
+	public void setGame1(int game1) {
 		Game1 = game1;
 	}
 
-	public String getGame2() {
+	public int getGame2() {
 		return Game2;
 	}
 
-	public void setGame2(String game2) {
+	public void setGame2(int game2) {
 		Game2 = game2;
 	}
 
-	public String getGame3() {
+	public int getGame3() {
 		return Game3;
 	}
 
-	public void setGame3(String game3) {
+	public void setGame3(int game3) {
 		Game3 = game3;
 	}
 

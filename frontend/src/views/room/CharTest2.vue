@@ -9,13 +9,12 @@
     <h1>1/4</h1>
     <h1>Q. 데이트가 없는 주말에 나는</h1>
     <br>
-    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="next">단톡에 연락해서 친구들과 약속을 잡는다</b-button>
-    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="next">침대랑 하루 종일 물아일체가 된다</b-button>
+    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="myes()">단톡에 연락해서 친구들과 약속을 잡는다</b-button>
+    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="mno()">침대랑 하루 종일 물아일체가 된다</b-button>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
       return {
@@ -25,7 +24,15 @@ export default {
   methods: {
     next() {
       this.$router.push('/char-test3');
-    }
+    },
+    myes: function () {
+      this.$store.commit('myes')
+      this.$router.push('/char-test3');
+    },
+    mno: function () {
+      this.$store.commit('mno')
+      this.$router.push('/char-test3');
+    },
   }
 }
 
