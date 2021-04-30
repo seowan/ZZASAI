@@ -7,7 +7,7 @@
     </div>
     <div class="mainbuttons">
       <button class = "mainbutton" @click="toHostName">방만들기</button>
-      <button v-if="this.roomcode_input.length >= 8" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
+      <button v-if="roomcode_input" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     roomcode_input: function () {
-      return this.roomcode
+      return this.roomcode.length >= 8
     }
   },
   methods:{

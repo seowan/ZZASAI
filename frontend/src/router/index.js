@@ -15,6 +15,7 @@ import CharTest4 from '../views/room/CharTest4.vue'
 import CharTest5 from '../views/room/CharTest5.vue'
 import CharTest6 from '../views/room/CharTest6.vue'
 import CharTest7 from '../views/room/CharTest7.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -93,6 +94,7 @@ const routes = [
     name: 'CharTest7',
     component: CharTest7
   },
+
 ]
  
 const router = new VueRouter({

@@ -1,6 +1,6 @@
 <template>
   <!-- 캐릭터 테스트 -->
-  <div id="char-test6">
+  <div>
     <h1>성격분류가 완료되었습니다.</h1>
     <div class="py-3 my-1"></div>
       <div class="row">
@@ -8,16 +8,16 @@
         <img src="~@/assets/mbti/cheetah.png" alt="mbti image"/>
         </div>
         <div class="col-5">
-        <h2><br>추진력이 뛰어난 ENTJ는 목표가 생기면 시속 112km로 <br> 달려가는 치타와 많이 닮았다.</h2>
+        <h2><br>추진력이 뛰어난 ENTJ는 목표가 생기면 시속 112km로 달려가는 치타와 많이 닮았다.</h2>
         <br>
         <h2> 
-        먹잇감이 눈치채기 전까지 조금씩 다가간 다음에 순간적으로 <br>
+        먹잇감이 눈치채기 전까지 조금씩 다가간 다음에 순간적으로
         달려간다는 부분은 일을 순차적으로 빠르게 처리하는 
-        <br>ENTJ의 업무 성향과 비슷하다.
+        ENTJ의 업무 성향과 비슷하다.
         </h2>
         <br>
         <h2>
-        혼자 사냥을 나가는 치타처럼 ENTJ 역시 <br>
+        혼자 사냥을 나가는 치타처럼 ENTJ 역시
         일을 여럿이 하기 보다 혼자 하는 게 더 편한 개인주의 스타일이다.
         </h2>
         <br>
@@ -33,24 +33,24 @@
 <script>
 
 export default {
-  name: 'CharTest6',
   data() {
       return {
-        selected: 'radio1',
-        options: [
-          { text: '그렇다', value: 'radio1' },
-          { text: '아니다', value: 'radio2' },
-        ]
+        
       }
-  }
+  },
+  methods: {
+    next() {
+      this.$router.push('/char-test7');
+    },
+  },
 }
 
 </script>
 
-<style>
+<style scoped>
 .col-4 img{
 position: absolute; top:0; left: 0;
 width: 70%;
-height: 120%;
+height: 110%;
 }
 </style>
