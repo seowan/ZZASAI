@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="grid-wrapper">
+    <!--1st row-->
+    <div class="rtc" id="left-rtc"></div>
     <canvas
       @mousedown="startPainting"
       @mouseup="stopPainting"
@@ -7,7 +9,10 @@
       @mouseleave="stopPainting"
       id="canvas"
     ></canvas>
-    <div v-if="turnToDraw == true">
+    <div class="rtc" id="right-rtc"></div>
+
+    <!--2nd row-->
+    <div class="game-support" v-if="turnToDraw == true">
       <div
         v-for="color in colors"
         :key="color"
@@ -15,27 +20,34 @@
         :class="color"
         @click="strokeColorHandler(color)"
       ></div>
-      <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
-      <div id="btn clearAll" @click="clearAll">
-        모두 지우기
+      <div class="btn btn-size btn-sm" @click="strokeSizeHandler(1)">
+        ●
+      </div>
+      <div class="btn btn-size" @click="strokeSizeHandler(2)">
+        ●
+      </div>
+      <div class="btn btn-size btn-lg" @click="strokeSizeHandler(3)">
+        ●
       </div>
       <div
-        v-for="i in 3"
-        :key="i"
-        @click="strokeSizeHandler(i)"
-        style="float:left;"
+        class="btn eraser"
+        @click="strokeColorHandler('white')"
+        style="float:right;"
       >
-        {{ i }}
+        지우개
       </div>
-    </div>
-    <div v-else>
-      <input type="text" v-model="text" @keyup.enter="sendMessage()" />
+      <div class="btn clearAll" @click="clearAll" style="float:right;">
+        모두 지우기
+      </div>
     </div>
 
     <!-- 채팅 내용 -->
     <!-- <p v-for="(msg, index) in messages" :key="index">
       {{ msg.name }}: {{ msg.text }}
     </p> -->
+    <div v-if="turnToDraw == false" class="game-support">
+      <input type="text" v-model="text" @keyup.enter="sendMessage()" />
+    </div>
   </div>
 </template>
 
@@ -49,8 +61,8 @@ export default {
       painting: false,
       canvas: null,
       ctx: null,
-      canvasHeight: 500,
-      canvasWidth: 500,
+      canvasHeight: window.innerHeight * 0.5,
+      canvasWidth: window.innerWidth * 0.4,
       colors: [
         "black",
         "red",
@@ -77,6 +89,7 @@ export default {
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
     // Resize canvas
+    console.log(window.innerHeight, window.innerWidth);
     this.canvas.height = this.canvasHeight;
     this.canvas.width = this.canvasWidth;
     this.ctx.lineWidth = 2.5;
@@ -170,16 +183,37 @@ export default {
 </script>
 
 <style>
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  grid-template-areas:
+    "left canvas right"
+    "left temp right";
+}
+.rtc#left-rtc {
+  grid-area: left;
+}
+.rtc#right-rtc {
+  grid-area: right;
+}
+#canvas {
+  grid-area: canvas;
+  border: 3px solid black;
+  height: 100%;
+  width: 100%;
+}
+.game-support {
+  grid-area: temp;
+}
+.btn.btn-size {
+  float: left;
+  background-color: white;
+}
 .colorPicker {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   float: left;
-}
-#canvas {
-  border: 3px solid black;
-  height: 500px;
-  width: 500px;
 }
 .black {
   background-color: black;
