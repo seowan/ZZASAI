@@ -17,6 +17,7 @@ import CharTest6 from '../views/room/CharTest6.vue'
 import CharTest7 from '../views/room/CharTest7.vue'
 import SelectTeam from "../views/SelectTeam.vue";
 import Test from '../views/Test'
+import Loading from '../views/Loading.vue'
 
 Vue.use(VueRouter)
 
@@ -32,7 +33,7 @@ const routes = [
     component: CreateHall,
   },
   {
-    path: "/hall",
+    path: "/hall/:roomcode",
     name: "Hall",
     component: Hall,
   },
@@ -105,6 +106,11 @@ const routes = [
     path: "/select-team",
     name: "SelectTeam",
     component: SelectTeam,
+  },
+  {
+    path:"/loading",
+    name:"Loading",
+    component:Loading,
   },
 ];
 

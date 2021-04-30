@@ -64,7 +64,8 @@ export default {
       turnToDraw: true,
 
       // 1) 서버와 연결
-      socket: io("localhost:3000"), //url:port
+      socket: io("localhost:8081"), //url:port
+      // socket: io("localhost:3000"), //url:port
       nickname: "user", //to identify user
       text: "",
       messages: [],

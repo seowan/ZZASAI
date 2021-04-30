@@ -120,7 +120,7 @@ export default {
         }).then(res=>{
             console.log(res);
             alert("방 생성이 완료되었습니다!")
-            this.$router.push({ name: 'Hall' })
+            this.$router.push({ name: 'Hall', params: { roomcode: this.$store.state.roomcode } })
         }).catch(err=>{
             console.log(err);
             alert("오류가 발생하였습니다. 다시 시도해주세요.")
