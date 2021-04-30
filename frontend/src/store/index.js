@@ -6,11 +6,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     programme: [],
-    username:'',
-    roomname: '',
-    roomcode: '',
+    username: "",
+    roomname: "",
+    roomcode: "",
     teamnumber: "",
-    teams: [],
+    teams: [
+      {
+        text: "",
+        currentpeople: "",
+        teampeople: "",
+        disabled: "",
+      },
+    ],
     m: 0,
     b: 0,
     t: 0,
@@ -33,9 +40,10 @@ export default new Vuex.Store({
     CREATE_TEAMNUMBER: function(state, teamnumber) {
       state.teamnumber = teamnumber;
     },
-    CREATE_TEAMS: function(state, teamnumber) {
-      state.teams.push(teamnumber);
+    CREATE_TEAMS(state, payload) {
+      state.teams.push(payload);
     },
+
     myes: function(state) {
       state.m = 1;
     },

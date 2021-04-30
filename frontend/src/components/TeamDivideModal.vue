@@ -35,18 +35,13 @@ export default {
     return {
       teamNumber: "",
       numberState: null,
-      totalPeople: "",
+      totalPeople: "30",
     };
   },
   mounted() {},
   watch: {
     teamNumber() {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
-    },
-  },
-  computed: {
-    teams: function() {
-      return this.$store.state.teams;
     },
   },
   methods: {
@@ -57,10 +52,31 @@ export default {
         // return valid;
 
         this.$store.commit("CREATE_TEAMNUMBER", this.teamNumber);
-        for (var i = 1; i <= this.teamNumber; i++) {
-          this.$store.state.teams = i;
+
+        var teamPeople = [];
+        var addPeople = this.totalPeople % this.teamNumber;
+        var meanPeople = parseInt(this.totalPeople / this.teamNumber);
+
+        for (var idx = 0; idx < this.teamNumber; idx++) {
+          teamPeople[idx] = meanPeople;
         }
-        console.log("길이: " + this.$store.state.teams.length);
+
+        if (addPeople != 0) {
+          for (var index = 0; index < addPeople; index++) {
+            teamPeople[index] += 1;
+          }
+        }
+
+        for (var i = 0; i < this.teamNumber; i++) {
+          this.$store.commit("CREATE_TEAMS", {
+            text: i + 1 + "팀",
+            currentpeople: 0,
+            teampeople: teamPeople[i],
+            disabled: false,
+          });
+        }
+
+        console.log(this.$store.state.teams);
         this.$router.push({ name: "SelectTeam" });
       } else {
         alert("다시 입력하세요");
