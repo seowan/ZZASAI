@@ -90,7 +90,7 @@ export default {
       canvas: null,
       ctx: null,
       canvasHeight: window.innerHeight * 0.5,
-      canvasWidth: window.innerWidth * 0.4, //width 바꾸면 grid 비율도 같이 바꿔줘야 함
+      canvasWidth: window.innerWidth * 0.4, //width 바꾸면 grid 비율도 같이 바꿔줘야 함. 고정값으로 해야할듯..
       colors: [
         "black",
         "red",
@@ -112,12 +112,13 @@ export default {
     };
   },
   mounted() {
+    window.addEventListener("resize", this.resizeHandler);
+
     //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
     // Resize canvas
-    console.log(window.innerHeight, window.innerWidth);
     this.canvas.height = this.canvasHeight;
     this.canvas.width = this.canvasWidth;
     this.ctx.lineWidth = 2.5;
@@ -147,6 +148,11 @@ export default {
     });
   },
   methods: {
+    resizeHandler() {
+      //resize 될 때마다 size 조정
+      this.canvasWidth = window.innerWidth; //비율에 맞춰서 조정 필요.
+      this.canvasHeight = window.innerHeight;
+    },
     beginPath(x, y) {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);

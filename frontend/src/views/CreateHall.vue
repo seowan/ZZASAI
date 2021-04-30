@@ -56,8 +56,8 @@
 
 <script>
 import draggable from "vuedraggable";
-import HelpIcon from '@/components/HelpIcon'
-import RoomCodeCreate from '@/components/RoomCodeCreate'
+import HelpIcon from "@/components/HelpIcon";
+import RoomCodeCreate from "@/components/RoomCodeCreate";
 
 // import axios from 'axios'
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -102,8 +102,7 @@ export default {
         //   this.$store.commit('CREATE_PROGRAMME', this.list2[i])
         // }
         var context = {
-<<<<<<< HEAD
-          game1: this.list2[0].name,
+          game1: this.list2[0].id,
           game2: "",
           game3: "",
           roomAdmin: this.$store.state.username,
@@ -111,53 +110,29 @@ export default {
           roomName: this.$store.state.roomname,
         };
         if (this.list2.length > 1) {
-          context.game2 = this.list2[1].name;
+          context.game2 = this.list2[1].id;
         }
         if (this.list2.length > 2) {
-          context.game2 = this.list2[2].name;
-        }
-        // axios.post(`${SERVER_URL}/create/`, context)
-        //   .then( res => {
-        //     console.log(res)
-        //     this.$router.push({ name: 'Hall' })
-        //   })
-        //   .catch( err => {
-        //     console.log(err)
-        //     alert("오류가 발생하였습니다. 다시 시도해주세요.")
-        //   })
-        // console.log(this.$store.state.programme)
-=======
-            game1: this.list2[0].id,
-            game2: "",
-            game3: "",
-            roomAdmin: this.$store.state.username,
-            roomCode: this.$store.state.roomcode,
-            roomName: this.$store.state.roomname,
-        }
-        if (this.list2.length > 1) {
-          context.game2 = this.list2[1].id
-        }
-        if (this.list2.length > 2) {
-          context.game2 = this.list2[2].id
+          context.game2 = this.list2[2].id;
         }
         axios({
-          method: 'post',
+          method: "post",
           url: `${SERVER_URL}/room/create/`,
           data: JSON.stringify(context),
           headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
+            "Content-Type": "application/json;charset=UTF-8",
             "Access-Control-Allow-Origin": "*",
-          }
-        }).then(res=>{
-            console.log(res);
-            alert("방 생성이 완료되었습니다!")
-            this.$router.push({ name: 'Hall' })
-        }).catch(err=>{
-            console.log(err);
-            alert("오류가 발생하였습니다. 다시 시도해주세요.")
+          },
         })
-
->>>>>>> 6ca5f6ea0b079a355bd10d30bf42ef144e24b5c5
+          .then((res) => {
+            console.log(res);
+            alert("방 생성이 완료되었습니다!");
+            this.$router.push({ name: "Hall" });
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("오류가 발생하였습니다. 다시 시도해주세요.");
+          });
       }
     },
   },
