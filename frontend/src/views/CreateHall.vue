@@ -1,164 +1,217 @@
 <template>
   <!-- 메인 홀 & 게임 세팅 -->
   <div class="create-hall">
-    <div class="h3"> 홀 & 게임 세팅 </div>
+    <span class="title">짜사이</span>
 
-    <!-- OrderBlock -->
-    <div class="info">
-      <div id="title">PUZZLE</div>
-      <div id="rest">Drag and drop the colored pieces on the puzzle below. (better images are on their way) </div>
-      <div id="rest2">You can put multiple pieces in the same area but you can't interchange them, only the last one you put will be accessible.</div>
+    <!-- <Test /> -->
+    <RoomCodeCreate />
+    <!-- Vue.Draggable -->
+    <div class="row">
+      <div class="col-3 offset-3">
+        <h3>Items</h3>
+        <draggable
+          class="list-group"
+          :list="list1"
+          group="people"
+          @change="log"
+        >
+          <div
+            class="list-group-item"
+            v-for="element in list1"
+            :key="element.name"
+          >
+            {{ element.name }}
+            <!-- {{ element.name }} {{ index }} -->
+          </div>
+        </draggable>
+      </div>
+
+      <div class="col-3">
+        <h3>진행순서</h3>
+        <draggable
+          class="list-group"
+          :list="list2"
+          group="people"
+          @change="log"
+        >
+          <div
+            class="list-group-item"
+            v-for="element in list2"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
+      </div>
+
+      <!-- <rawDisplayer class="col-3" :value="list1" title="List 1" /> -->
+
+      <!-- <rawDisplayer class="col-3" :value="list2" title="List 2" /> -->
     </div>
-
-    <div id="images">
-      <div id="drag4" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag5" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag6" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag7" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag8" draggable="true" ondragstart="drag(event)"></div>
-      <div id="drag9" draggable="true" ondragstart="drag(event)"></div>
-    </div>
-
-    <div id="text">
-      <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div4" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div5" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div6" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div7" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div8" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-      <div id="div9" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-    </div>
-
+    <button class="startbutton" id="" v-on:click="btn_start">시작하기</button>
     <!-- HelpIcon -->
     <HelpIcon />
-    
-
   </div>
 </template>
 
 <script>
-import HelpIcon from '@/components/HelpIcon'
+import draggable from "vuedraggable";
+import HelpIcon from "@/components/HelpIcon";
+import RoomCodeCreate from "@/components/RoomCodeCreate";
+
+// import axios from 'axios'
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'CreateHall',
+  name: "CreateHall",
   components: {
+    draggable,
     HelpIcon,
+    RoomCodeCreate,
+  },
+  data() {
+    return {
+      list1: [
+        { name: "성향검사", id: 1 },
+        { name: "이어그리기", id: 2 },
+        { name: "카드", id: 3 },
+      ],
+      list2: [],
+    };
   },
   methods: {
-    allowDrop(ev) {
-      ev.preventDefault();
+    add: function() {
+      this.list.push({ name: "Juan" });
     },
-
-    drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
+    replace: function() {
+      this.list = [{ name: "Edgard" }];
     },
-
-    drop(ev) {
-      ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
+    clone: function(el) {
+      return {
+        name: el.name + " cloned",
+      };
+    },
+    log: function() {
+      // window.console.log(evt);
+    },
+    btn_start: function() {
+      if (this.list2.length < 1) {
+        alert("컨텐츠를 정하세요!");
+      } else {
+        // for (let i = 0; i < this.list2.length; i++) {
+        //   this.$store.commit('CREATE_PROGRAMME', this.list2[i])
+        // }
+        var context = {
+          game1: this.list2[0].id,
+          game2: "",
+          game3: "",
+          roomAdmin: this.$store.state.username,
+          roomCode: this.$store.state.roomcode,
+          roomName: this.$store.state.roomname,
+        };
+        if (this.list2.length > 1) {
+          context.game2 = this.list2[1].id;
+        }
+        if (this.list2.length > 2) {
+          context.game2 = this.list2[2].id;
+        }
+        axios({
+          method: "post",
+          url: `${SERVER_URL}/room/create/`,
+          data: JSON.stringify(context),
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => {
+            console.log(res);
+            alert("방 생성이 완료되었습니다!")
+            this.$router.push({ name: 'Hall', params: { roomcode: this.$store.state.roomcode } })
+        }).catch(err=>{
+            console.log(err);
+            alert("오류가 발생하였습니다. 다시 시도해주세요.");
+          });
+      }
     },
   },
-}
+};
 </script>
 
-<style>
+<style scoped lang="scss">
+html {
+  height: 100%;
+}
+
 body {
-  background-image: url('~@/assets/bgs/create_hall.png');
+  background-image: url("~@/assets/bgs/create_hall.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* opacity: 0.5; */
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .create-hall {
   margin: 0;
   height: 100%;
 }
 
-
-.info {
-  position:relative;
-  font-family:Arial;
-  margin:10px;
-  text-align:center;
-  border-radius:5px;
-  font-size:15px;
+.title {
+  font-size: 80px;
+  visibility: hidden;
 }
 
-#title {
-  font-size:20px;
+.startbutton {
+  border: 4px solid white;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 20px;
+  //
+  margin-top: 3%;
 }
 
-#rest2 {
-  font-size:13px;
+.room_name_input {
+  border: 3px solid pink;
+  padding: 9px;
+  padding-right: 50px;
+  padding-left: 50px;
+  text-align: center;
+  font-size: 20px;
 }
 
-#text div {
-  position:relative;
-  height: 200px;
-  width: 200px;
-  border: 1px dashed gray;
-  display: inline-block;
-  margin: 0;
+.room_name_input:focus {
+  border: 3px solid blue;
 }
 
-#text {
-  width:614px;
-  height:614px;
-  background:black;
-  border:5px solid black;
-  margin:auto;
+// Vue.Draggable
+.flip-list-move {
+  transition: transform 0.5s;
 }
-
-#images {
-  width: 100%
+.no-move {
+  transition: transform 0s;
 }
-
-img {
-  height: 200px;
-  width: 200px;
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
 }
-
-#drag4,
-#drag5,
-#drag6,
-#drag7,
-#drag8,
-#drag9,
-#drag10,
-#drag11,
-#drag12 {
-  height: 200px;
-  width: 200px;
-  
-  display: inline-block;
+.list-group {
+  min-height: 20px;
 }
-
-#drag4 {
-  background: linear-gradient(to bottom right, orange, orange, yellow);
+.list-group-item {
+  cursor: move;
+  //
+  border: 4px solid pink;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); // opacity를 쓰면 글자까지 투명해진다!
 }
-
-#drag5 {
-  background: linear-gradient(to right, red, orange);
-}
-
-#drag6 {
-  background: linear-gradient(red, orange);
-}
-
-#drag7 {
-  background: linear-gradient(to bottom right, red, red, orange);
-}
-
-#drag8 {
-  background:yellow;
-}
-
-#drag9 {
-  background: linear-gradient(orange, yellow);
+.list-group-item i {
+  cursor: pointer;
 }
 </style>
