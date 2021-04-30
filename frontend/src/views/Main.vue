@@ -9,6 +9,9 @@
       <button class = "mainbutton" @click="toHostName">방만들기</button>
       <button v-if="roomcode_input" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
     </div>
+    <!-- Docker 실행 명령어 : docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-server-kms:2.17.0 -->
+    <!-- <input type="text" v-model="userName">
+    <router-link :to="{ name: 'Test', params: { userName: userName }}"> 입장하기 </router-link> -->
   </div>
 </template>
 
@@ -25,6 +28,7 @@ export default {
       enter_room : true,
       create_room : true,
       enter_show : false,
+      userName: ''
     }
   },
   computed: {
