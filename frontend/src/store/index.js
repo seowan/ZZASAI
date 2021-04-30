@@ -36,9 +36,6 @@ export default new Vuex.Store({
     CREATE_TEAMS: function(state, teamnumber) {
       state.teams.push(teamnumber);
     },
-    CREATE_ROOMCODE: function (state, code) {
-      state.roomcode = code
-    },
     myes: function(state) {
       state.m = 1;
     },
@@ -63,8 +60,6 @@ export default new Vuex.Store({
     ino: function(state) {
       state.i = 2;
     },
-  },
-  actions: {
   },
   actions: {},
   modules: {},

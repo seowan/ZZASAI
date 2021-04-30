@@ -55,6 +55,5 @@ public class RoomDto {
 	public void setGame3(int game3) {
 		Game3 = game3;
 	}
-	
-	
+
 }

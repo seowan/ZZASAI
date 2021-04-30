@@ -114,6 +114,7 @@ export default {
       .then(res=>{
         console.log(res.data)
         this.room_data = res.data
+        console.log(this.room_data)
         this.order_mark = String(this.room_data.game1) + String(this.room_data.game2) + String(this.room_data.game3)
       }).catch(err=>{
         console.log(err);
