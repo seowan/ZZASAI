@@ -25,7 +25,7 @@ export default {
         alert("이름은 2글자 이상이어야 합니다!")
       } else {
         this.$store.commit('CREATE_USERNAME', this.name)
-        this.$router.push({ name: "Hall" })
+        this.$router.push({ name: 'Hall', params: { roomcode: this.$store.state.roomcode } })
       }
     }
   },
