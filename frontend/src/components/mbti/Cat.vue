@@ -24,13 +24,12 @@
           사람들이 하자는 대로 맞춰준다는 점에서 이 둘의 공통점을 찾아볼 수
           있다.
         </h2>
-        <br />
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">
-          Next
-        </button>
+        <br>
+        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>
+        
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>

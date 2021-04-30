@@ -35,7 +35,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .col img{
 position: absolute; top:0; left: 0;
 width: 140%;

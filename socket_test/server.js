@@ -12,19 +12,11 @@ var io = require("socket.io")(http, { cors: { origin: "*" } }); //1. **allow all
 var count = 1;
 io.on("connection", function (socket) {
   //3. interact with clients
-  console.log("user connected: ", socket.id); //3-1. client connected
-  var name = "user" + count++; //3-1. temporal username
-  io.to(socket.id).emit("change name", name); //3-1
+  //3-1. client connected
 
   socket.on("disconnect", function () {
     //3-2. client disconnected
     console.log("user disconnected: ", socket.id);
-  });
-
-  socket.on("send message", function (name, text) {
-    //3-3. chat service
-    var msg = name + " : " + text;
-    io.emit("receive message", name, text);
   });
 
   socket.on("begin path", function (x, y) {

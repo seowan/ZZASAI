@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="grid-wrapper">
+    <!--1st row-->
+    <div class="rtc" id="left-rtc"></div>
     <canvas
       @mousedown="startPainting"
       @mouseup="stopPainting"
@@ -7,35 +9,69 @@
       @mouseleave="stopPainting"
       id="canvas"
     ></canvas>
-    <div v-if="turnToDraw == true">
-      <div
-        v-for="color in colors"
-        :key="color"
-        class="colorPicker"
-        :class="color"
-        @click="strokeColorHandler(color)"
-      ></div>
-      <div class="btn eraser" @click="strokeColorHandler('white')">지우개</div>
-      <div id="btn clearAll" @click="clearAll">
-        모두 지우기
+    <div class="rtc" id="right-rtc"></div>
+
+    <!--2nd row-->
+    <div class="game-support" v-if="turnToDraw == true">
+      <div class="colorPicker">
+        <div
+          v-for="color in colors"
+          :key="color"
+          :class="color"
+          @click="strokeColorHandler(color)"
+        ></div>
       </div>
-      <div
-        v-for="i in 3"
-        :key="i"
-        @click="strokeSizeHandler(i)"
-        style="float:left;"
-      >
-        {{ i }}
+      <div class="sizePicker">
+        <div @click="strokeSizeHandler(1)">
+          <div style="width:3px; height:3px;"></div>
+        </div>
+        <div @click="strokeSizeHandler(8)">
+          <div style="width:9px; height:9px;"></div>
+        </div>
+        <div @click="strokeSizeHandler(15)">
+          <div style="width:15px; height:15px;"></div>
+        </div>
       </div>
-    </div>
-    <div v-else>
-      <input type="text" v-model="text" @keyup.enter="sendMessage()" />
+      <!--모두 지우기-->
+      <div class="eraser">
+        <div class="clearAll" @click="clearAll" style="float:right;">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-clockwise"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+            />
+            <path
+              d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+            />
+          </svg>
+        </div>
+        <!--지우개 버튼-->
+        <div @click="strokeColorHandler('white')" style="float:right;">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-eraser-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"
+            />
+          </svg>
+        </div>
+      </div>
     </div>
 
-    <!-- 채팅 내용 -->
-    <!-- <p v-for="(msg, index) in messages" :key="index">
-      {{ msg.name }}: {{ msg.text }}
-    </p> -->
+    <!--채팅 위치-->
+    <div v-if="turnToDraw == false" class="game-support"></div>
   </div>
 </template>
 
@@ -49,8 +85,8 @@ export default {
       painting: false,
       canvas: null,
       ctx: null,
-      canvasHeight: 500,
-      canvasWidth: 500,
+      canvasHeight: window.innerHeight * 0.5,
+      canvasWidth: window.innerWidth * 0.4, //width 바꾸면 grid 비율도 같이 바꿔줘야 함. 고정값으로 해야할듯..
       colors: [
         "black",
         "red",
@@ -61,11 +97,14 @@ export default {
         "darkviolet",
       ],
 
+      //user, 그림 그리는 순서
       turnToDraw: true,
+      users: [], //all user list
+      nickname: "user", //to identify user
+      currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
       socket: io("localhost:3000"), //url:port
-      nickname: "user", //to identify user
       text: "",
       messages: [],
       answer: "정답",
@@ -77,22 +116,13 @@ export default {
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeStyle = "#2c2c2c";
     // Resize canvas
+    window.addEventListener("resize", this.resizeHandler);
     this.canvas.height = this.canvasHeight;
     this.canvas.width = this.canvasWidth;
     this.ctx.lineWidth = 2.5;
     // fill canvas with white color
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-    // 3) 서버의 변경사항을 수신
-    this.socket.on("receive message", (name, text) => {
-      var data = { name: name, text: text };
-      this.messages = [...this.messages, data];
-      if (text == this.answer) {
-        //채팅이 정답과 일치
-        console.log("correct~!!!!!!");
-      }
-    });
 
     // 3-1) ctx 관련 정보 수신
     this.socket.on("began path", (x, y) => {
@@ -106,6 +136,14 @@ export default {
     });
   },
   methods: {
+    resizeHandler() {
+      //resize 될 때마다 canvas size 조정
+      this.canvasWidth = window.innerWidth * 0.4; //innerWidth, innerHeight 비율에 맞춰서 조정 필요
+      this.canvasHeight = window.innerHeight * 0.5;
+
+      this.canvas.height = this.canvasHeight;
+      this.canvas.width = this.canvasWidth;
+    },
     beginPath(x, y) {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -150,7 +188,7 @@ export default {
       this.painting = false;
     },
     strokeSizeHandler(size) {
-      this.ctx.lineWidth = 1.0 + 5 * (size - 1); //1: 1, 2: 6, 3: 11
+      this.ctx.lineWidth = size;
     },
     strokeColorHandler(color) {
       this.ctx.strokeStyle = color;
@@ -160,26 +198,65 @@ export default {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
       this.socket.emit("clear all");
     },
-    sendMessage() {
-      // 2) 채팅메세지를 서버로 전송
-      this.socket.emit("send message", this.nickname, this.text);
-      this.text = ""; //채팅 입력칸 초기화
-    },
   },
 };
 </script>
 
 <style>
-.colorPicker {
-  width: 50px;
-  height: 50px;
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+  grid-template-areas:
+    "left canvas right"
+    "left temp right";
+}
+.rtc {
+  background-color: lightslategray;
+}
+.rtc#left-rtc {
+  grid-area: left;
+}
+.rtc#right-rtc {
+  grid-area: right;
+}
+#canvas {
+  grid-area: canvas;
+  border: 3px solid black;
+  height: 100%;
+  width: 100%;
+}
+.game-support {
+  grid-area: temp;
+}
+.game-support > div {
+  margin: 1px;
+}
+.size-picker > div {
+  float: left;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 10%;
+  /* 자식 항목들을 정가운데로 정렬하기 위한 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.size-picker > div > div {
+  background: black;
+  border-radius: 50%;
+}
+.colorPicker > div {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   float: left;
 }
-#canvas {
-  border: 3px solid black;
-  height: 500px;
-  width: 500px;
+.eraser > svg {
+  color: white;
+  height: auto;
+  width: 30px;
+  margin-right: 8px;
 }
 .black {
   background-color: black;

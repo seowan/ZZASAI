@@ -44,7 +44,7 @@ export default {
       this.$router.push("/char-test7");
     },
   },
-};
+}
 </script>
 
 <style scoped>

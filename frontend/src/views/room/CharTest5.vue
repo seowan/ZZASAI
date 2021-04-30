@@ -9,7 +9,6 @@
     <br>
     <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="iyes()">여행 일주일 전부터 계획표를 쫘악</b-button>
     <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="ino()">무계획이 계획인거다 일단 가고봐~</b-button>
-
   </div>
 </template>
 
