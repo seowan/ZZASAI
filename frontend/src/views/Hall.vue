@@ -96,7 +96,7 @@ export default {
   data () {
     return {
       order_mark: '',
-      roomcode: this.$store.state.roomcode,
+      roomcode: this.$route.params.roomcode,
       room_data: {
 
       },
@@ -106,7 +106,7 @@ export default {
     getRoomData: function () {
       axios({
           method: 'get',
-          url: `${SERVER_URL}/room/info/?roomcode=${this.$store.state.roomcode}`,
+          url: `${SERVER_URL}/room/info/?roomcode=${this.roomcode}`,
           headers: {
             "Access-Control-Allow-Origin": "*",
           }
@@ -124,9 +124,12 @@ export default {
   },
   beforeMount: function () {
     // 진행순서 데이터 받아오기
-    this.getRoomData()
-    
-    console.log(this.order_mark)
+    this.$store.state.roomcode = this.$route.params.roomcode
+    if (this.$store.state.username == '') {
+      this.$router.push({ name: 'UserName' })
+    } else {
+      this.getRoomData()
+    }
   }
 }
 </script>

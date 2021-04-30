@@ -32,7 +32,7 @@ const routes = [
     component: CreateHall,
   },
   {
-    path: "/hall",
+    path: "/hall/:roomcode",
     name: "Hall",
     component: Hall,
   },
