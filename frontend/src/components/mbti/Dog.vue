@@ -21,8 +21,15 @@
         오지랖 넓게 여기저기 간섭하고 다니는 것 또한 그렇다.
         </h2>
         <br>
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>
+        <b-button v-b-modal.modal-1 type="button" class="btn btn-dark btn-lg" v-on:click="myMethod()">Next</b-button>
+          <b-modal id="modal-1" title="검사 진행중 ">
+            <h4>아직 검사를 진행중인 friend가 있습니다. <br>검사를 모두 마치면 자동으로 페이지가 전환됩니다. 잠시만 기다려주세요.</h4>
+            <div class="text-center">
+              <b-spinner label="Spinning"></b-spinner>
+            </div>
+          </b-modal>
         </div>
+        
       </div>
    
     <!--<button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>-->
@@ -35,14 +42,17 @@
 export default {
   data() {
       return {
-        
+        wait: false
       }
   },
   methods: {
-    next() {
-      this.$router.push('/char-test7');
-    },
+    myMethod() {
+      this.wait = true
+      console.log(this.wait)
+    }
   },
+  components: {
+  }
 }
 
 </script>

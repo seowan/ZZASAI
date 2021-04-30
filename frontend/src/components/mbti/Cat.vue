@@ -22,6 +22,7 @@
         </h2>
         <br>
         <button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>
+        
         </div>
       </div>
    
