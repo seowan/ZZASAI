@@ -20,24 +20,52 @@
         :class="color"
         @click="strokeColorHandler(color)"
       ></div>
-      <div class="btn btn-size btn-sm" @click="strokeSizeHandler(1)">
-        ●
+      <div class="size-picker" @click="strokeSizeHandler(1)">
+        1
       </div>
-      <div class="btn btn-size" @click="strokeSizeHandler(2)">
-        ●
+      <div class="size-picker" @click="strokeSizeHandler(2)">
+        2
       </div>
-      <div class="btn btn-size btn-lg" @click="strokeSizeHandler(3)">
-        ●
+      <div class="size-picker" @click="strokeSizeHandler(3)">
+        3
       </div>
+      <!--모두 지우기-->
+      <div class="eraser clearAll" @click="clearAll" style="float:right;">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-arrow-clockwise"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
+          />
+          <path
+            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"
+          />
+        </svg>
+      </div>
+      <!--지우개 버튼-->
       <div
-        class="btn eraser"
+        class="eraser"
         @click="strokeColorHandler('white')"
         style="float:right;"
       >
-        지우개
-      </div>
-      <div class="btn clearAll" @click="clearAll" style="float:right;">
-        모두 지우기
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-eraser-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"
+          />
+        </svg>
       </div>
     </div>
 
@@ -62,7 +90,7 @@ export default {
       canvas: null,
       ctx: null,
       canvasHeight: window.innerHeight * 0.5,
-      canvasWidth: window.innerWidth * 0.4,
+      canvasWidth: window.innerWidth * 0.4, //width 바꾸면 grid 비율도 같이 바꿔줘야 함
       colors: [
         "black",
         "red",
@@ -190,6 +218,9 @@ export default {
     "left canvas right"
     "left temp right";
 }
+.rtc {
+  background-color: lightslategray;
+}
 .rtc#left-rtc {
   grid-area: left;
 }
@@ -205,15 +236,22 @@ export default {
 .game-support {
   grid-area: temp;
 }
-.btn.btn-size {
+.size-picker {
   float: left;
   background-color: white;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
 }
 .colorPicker {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   float: left;
+}
+.eraser > svg {
+  height: auto;
+  width: 30px;
 }
 .black {
   background-color: black;
