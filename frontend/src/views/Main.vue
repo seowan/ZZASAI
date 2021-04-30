@@ -9,9 +9,6 @@
       <button class = "mainbutton" @click="toHostName">방만들기</button>
       <button v-if="roomcode_input" class = "mainbutton"  v-show="enter_room" @click="toUserName">입장하기</button>      
     </div>
-    <!-- Docker 실행 명령어 : docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-server-kms:2.17.0 -->
-    <!-- <input type="text" v-model="userName">
-    <router-link :to="{ name: 'Test', params: { userName: userName }}"> 입장하기 </router-link> -->
   </div>
 </template>
 
@@ -41,17 +38,6 @@ export default {
       location.href="/"
     },
     toHostName:function(){
-      // if(this.create_show){
-      //   if(this.name!=''){
-      //     location.href="create-hall"
-      //     this.$store.commit('INSERT_USERNAME',this.name)
-      //     this.name=''
-      //   }
-      // }else{
-      //   this.code_show = !this.code_show
-      //   this.create_show = !this.create_show
-      //   this.enter_room = !this.enter_room
-      // }
       this.$router.push({ name: 'HostName' })
     },
     toUserName:function(){
@@ -61,11 +47,6 @@ export default {
       } else {
         alert("정확한 입장코드를 입력해주세요!")
       }
-    },
-    handle_toggle : function(){
-      this.code_show = !this.code_show
-      this.enter_show = !this.enter_show
-      this.create_room = !this.create_room
     },
   },
 }

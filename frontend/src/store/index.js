@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     programme: [],
     username:'',
+    adminflag:0,
     roomname: '',
     roomcode: '',
     teamnumber: "",
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     CREATE_TEAMS: function(state, teamnumber) {
       state.teams.push(teamnumber);
+    },
+    SET_ADMINFLAG: function(state){
+      state.adminflag=1;
     },
     myes: function(state) {
       state.m = 1;
