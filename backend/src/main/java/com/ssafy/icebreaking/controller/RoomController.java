@@ -17,7 +17,7 @@ import com.ssafy.icebreaking.model.service.RoomService;
 @CrossOrigin(origins= {"*"})
 // @CrossOrigin(origins= {"http://zzasai.com"})
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/api/room")
 public class RoomController {
 
 	private static final String SUCCESS = "success";
