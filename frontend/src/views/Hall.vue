@@ -75,14 +75,13 @@
 </template>
 
 <script>
-import Card from '@/components/hall/Card'
+import Card from "@/components/hall/Card";
 // import CodeShareBtn from '@/components/CodeShareBtn'
-import Drawing from '@/components/hall/Drawing'
-import Exam from '@/components/hall/Exam'
-import RoomCode from '@/components/RoomCode'
+import Drawing from "@/components/hall/Drawing";
+import Exam from "@/components/hall/Exam";
+import RoomCode from "@/components/RoomCode";
 
-import axios from 'axios'
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
+import axios from "axios";
 
 export default {
   name: "Hall",
@@ -91,47 +90,49 @@ export default {
     // CodeShareBtn,
     Drawing,
     Exam,
-    RoomCode
+    RoomCode,
   },
-  data () {
+  data() {
     return {
-      order_mark: '',
+      order_mark: "",
       roomcode: this.$route.params.roomcode,
-      room_data: {
-
-      },
-    }
+      room_data: {},
+    };
   },
   methods: {
-    getRoomData: function () {
+    getRoomData: function() {
       axios({
-          method: 'get',
-          url: `${SERVER_URL}/room/info/?roomcode=${this.roomcode}`,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          }
-        })
-      .then(res=>{
-        console.log(res.data)
-        this.room_data = res.data
-        console.log(this.room_data)
-        this.order_mark = String(this.room_data.game1) + String(this.room_data.game2) + String(this.room_data.game3)
-      }).catch(err=>{
-        console.log(err);
-        alert("데이터를 가지고 오지 못했습니다ㅜㅜ")
+        method: "get",
+        url: `/api/room/info/?roomcode=${this.roomcode}`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       })
+        .then((res) => {
+          console.log(res.data);
+          this.room_data = res.data;
+          console.log(this.room_data);
+          this.order_mark =
+            String(this.room_data.game1) +
+            String(this.room_data.game2) +
+            String(this.room_data.game3);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("데이터를 가지고 오지 못했습니다ㅜㅜ");
+        });
     },
   },
-  beforeMount: function () {
+  beforeMount: function() {
     // 진행순서 데이터 받아오기
-    this.$store.state.roomcode = this.$route.params.roomcode
-    if (this.$store.state.username == '') {
-      this.$router.push({ name: 'UserName' })
+    this.$store.state.roomcode = this.$route.params.roomcode;
+    if (this.$store.state.username == "") {
+      this.$router.push({ name: "UserName" });
     } else {
-      this.getRoomData()
+      this.getRoomData();
     }
-  }
-}
+  },
+};
 </script>
 
 <style>
