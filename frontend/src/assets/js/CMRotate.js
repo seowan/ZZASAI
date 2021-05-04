@@ -1,11 +1,3 @@
-/**
- * @project-site    http://blog.cmiscm.com/?p=3303
- * @repository		https://github.com/cmiscm/cm-rotate.js
- * @author		    Jongmin Kim - cmiscm.com
- * @version 	    1.0
- * @license		    MIT License
- */
-
 var CMRotate = CMRotate || ( function () {
 
     var _public = {}, $contaier,
@@ -15,7 +7,7 @@ var CMRotate = CMRotate || ( function () {
         _posArr = [], _itemArr = [], _bgArr, _bgTotal,
         _centerX, _centerY, _isDispose = false, _fn,
         _isDrag = false, _oldMouseX , _offsetX, _moveX = 0;
-
+    
     console.log(_offsetX)
     /**
      * init
@@ -282,7 +274,10 @@ var CMRotate = CMRotate || ( function () {
         div.style.width = _itemW + 'px';
         div.style.height = _itemH + 'px';
         div.style.position = 'absolute';
-        div.style.background = 'url(' + _bgArr[id] + ')';
+        // div.style.background = 'url(' + _bgArr[id] + ')';
+        div.style.background = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-7HmblkOtWKVqNHvcKRxY9QQZ8qQB8u7D9w&usqp=CAU")'
+        // div.style.backgroundImage = 'url("../cards/card_front/black1.png")'
+        div.style.background = "url('../cards/card_front/black1.png')"; 
         movePlane(div, -5000, -5000, 0);
         $contaier.appendChild(div);
         plane = {plane:div, use:1, no:no, id:id};
@@ -305,7 +300,7 @@ var CMRotate = CMRotate || ( function () {
             'OTransform'
         ];
         var p;
-        while (p == properties.shift()) {
+        while ((p = properties.shift())) {
             if (typeof $contaier.style[p] != 'undefined') {
                 return p;
             }
@@ -365,3 +360,4 @@ if(!window.requestAnimationFrame){
     })();
 }
 
+export default CMRotate
