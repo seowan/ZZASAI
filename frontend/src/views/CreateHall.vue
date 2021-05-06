@@ -120,8 +120,7 @@ export default {
         alert("하이")
         axios({
           method: "post",
-          url: `${SERVER_URL}/room/create/`,
-          // url: `/api/room/create/`,
+          url: `http://localhost:8080/api/room/create/`,
           data: JSON.stringify(context),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -130,9 +129,13 @@ export default {
         })
           .then((res) => {
             console.log(res);
-            alert("방 생성이 완료되었습니다!")
-            this.$router.push({ name: 'Hall', params: { roomcode: this.$store.state.roomcode } })
-        }).catch(err=>{
+            alert("방 생성이 완료되었습니다!");
+            this.$router.push({
+              name: "Hall",
+              params: { roomcode: this.$store.state.roomcode },
+            });
+          })
+          .catch((err) => {
             console.log(err);
             alert("오류가 발생하였습니다. 다시 시도해주세요.");
           });
