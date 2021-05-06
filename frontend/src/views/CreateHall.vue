@@ -113,7 +113,7 @@ export default {
           context.game2 = this.list2[1].id;
         }
         if (this.list2.length > 2) {
-          context.game2 = this.list2[2].id;
+          context.game3 = this.list2[2].id;
         }
         axios({
           method: "post",
@@ -127,9 +127,13 @@ export default {
         })
           .then((res) => {
             console.log(res);
-            alert("방 생성이 완료되었습니다!")
-            this.$router.push({ name: 'Hall', params: { roomcode: this.$store.state.roomcode } })
-        }).catch(err=>{
+            alert("방 생성이 완료되었습니다!");
+            this.$router.push({
+              name: "Hall",
+              params: { roomcode: this.$store.state.roomcode },
+            });
+          })
+          .catch((err) => {
             console.log(err);
             alert("오류가 발생하였습니다. 다시 시도해주세요.");
           });
