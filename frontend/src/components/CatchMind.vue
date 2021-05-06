@@ -127,6 +127,7 @@ export default {
     // 3-1) ctx 관련 정보 수신
     this.socket.on("connected", () => {
       console.log("connected: socket server");
+      this.socket.emit("info", "gyu", "1234", false);
     });
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
