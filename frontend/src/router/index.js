@@ -98,9 +98,10 @@ const routes = [
     component: CharTest7,
   },
   {
-    path: '/test',
+    path: '/hall/:roomcode/test',
     name: 'Test',
-    component: Test
+    component: Test,
+    props: true
   },
   {
     path: "/select-team",
