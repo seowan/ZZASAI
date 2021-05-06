@@ -113,8 +113,11 @@ export default {
           context.game2 = this.list2[1].id;
         }
         if (this.list2.length > 2) {
-          context.game2 = this.list2[2].id;
+          context.game3 = this.list2[2].id;
         }
+        console.log(this.list2)
+        console.log(context)
+        alert("하이")
         axios({
           method: "post",
           url: `${SERVER_URL}/room/create/`,

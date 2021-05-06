@@ -277,7 +277,7 @@ var CMRotate = CMRotate || ( function () {
         // div.style.background = 'url(' + _bgArr[id] + ')';
         div.style.background = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-7HmblkOtWKVqNHvcKRxY9QQZ8qQB8u7D9w&usqp=CAU")'
         // div.style.backgroundImage = 'url("../cards/card_front/black1.png")'
-        div.style.background = "url('../cards/card_front/black1.png')"; 
+        // div.style.background = "url('../cards/card_front/black1.png')"; 
         movePlane(div, -5000, -5000, 0);
         $contaier.appendChild(div);
         plane = {plane:div, use:1, no:no, id:id};

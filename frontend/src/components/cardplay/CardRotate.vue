@@ -16,9 +16,10 @@ export default {
     var backgroundImages = ["@/assets/cards/card_front/img1.jpg", "@/assets/cards/card_front/img2.jpg", "@/assets/cards/card_front/img3.jpg", "@/assets/cards/card_front/img4.jpg", "@/assets/cards/card_front/img5.jpg",
                             "@/assets/cards/card_front/img6.jpg", "@/assets/cards/card_front/img7.jpg", "@/assets/cards/card_front/img8.jpg", "@/assets/cards/card_front/img9.jpg", "@/assets/cards/card_front/img10.jpg",
                             "@/assets/cards/card_front/img11.jpg", "@/assets/cards/card_front/img12.jpg", "@/assets/cards/card_front/img13.jpg", "@/assets/cards/card_front/img14.jpg", "@/assets/cards/card_front/img15.jpg",
-                            "@/assets/cards/card_front/img16.jpg", "@/assets/cards/card_front/img17.jpg", "@/assets/cards/card_front/img18.jpg"];
+                            "@/assets/cards/card_front/img16.jpg", "@/assets/cards/card_front/img17.jpg", "@/assets/cards/card_front/img18.jpg", "@/assets/cards/card_front/img2.jpg", "@/assets/cards/card_front/img2.jpg"];
 
-    CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
+    CMRotate.init('rotate-div', 200, 300, 100, 12, 200, backgroundImages, clickFn);
+    // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
 
     function clickFn(no) {
         alert('click no - ' + (no + 1));
