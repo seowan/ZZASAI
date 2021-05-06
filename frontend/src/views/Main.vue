@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .mainfont{
   font-size: 80px;
   cursor: pointer;

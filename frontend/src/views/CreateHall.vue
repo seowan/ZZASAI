@@ -60,7 +60,7 @@ import HelpIcon from "@/components/HelpIcon";
 import RoomCodeCreate from "@/components/RoomCodeCreate";
 
 import axios from 'axios'
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CreateHall",

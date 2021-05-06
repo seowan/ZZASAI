@@ -202,7 +202,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .grid-wrapper {
   display: grid;
   grid-template-columns: 30% 40% 30%;

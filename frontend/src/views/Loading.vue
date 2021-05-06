@@ -28,7 +28,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 div p{
     background-color: white;
     opacity: 0.5;

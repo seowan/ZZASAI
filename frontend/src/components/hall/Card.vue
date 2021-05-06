@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 img {
   src: "@/assets/icons/card.png"
 }
