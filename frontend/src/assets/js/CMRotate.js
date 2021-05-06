@@ -6,7 +6,7 @@
  * @license		    MIT License
  */
 
-var CMRotate = CMRotate || ( function () {
+ var CMRotate = CMRotate || ( function () {
 
     var _public = {}, $contaier,
         _isTouch = 'ontouchstart' in window, _isTrans3D, _cssTransform,
@@ -282,11 +282,15 @@ var CMRotate = CMRotate || ( function () {
         div.style.width = _itemW + 'px';
         div.style.height = _itemH + 'px';
         div.style.position = 'absolute';
-        // div.style.background = 'url(' + _bgArr[id] + ')';
+        div.style.background = 'url(' + _bgArr[id] + ')';
+        div.style.backgroundSize = '100% 100%';
+        div.style.backgroundRepeat = 'no-repeat';
         div.style.border = '1px solid red';
+        console.log(_bgArr[id]);
+        // div.style.background = 'url(_bgArr[id])';
         // div.style.background = 'pink';
-        div.style.background = 'url(~@/assets/cards/sample/img1.jpg)';
-        // div.style.backgroundImage = 'url(/img/Andys-Room.62734ee9.jpg)';
+        // div.style.background = 'url(C:/ssafy/last_temp/frontend/src/assets/cards/sample/img1.jpg)';
+        // div.style.backgroundImage = 'url(/img/img1.b5ed8c85.jpg)';
         movePlane(div, -5000, -5000, 0);
         $contaier.appendChild(div);
         plane = {plane:div, use:1, no:no, id:id};
