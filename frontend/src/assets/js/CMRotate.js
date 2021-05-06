@@ -15,7 +15,7 @@
         _posArr = [], _itemArr = [], _bgArr, _bgTotal,
         _centerX, _centerY, _isDispose = false, _fn,
         _isDrag = false, _oldMouseX , _offsetX, _moveX = 0;
-
+    
     console.log(_offsetX)
     /**
      * init
