@@ -125,6 +125,9 @@ export default {
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     // 3-1) ctx 관련 정보 수신
+    this.socket.on("connected", () => {
+      console.log("connected: socket server");
+    });
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
     });
