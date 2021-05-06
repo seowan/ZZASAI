@@ -1,4 +1,12 @@
-var CMRotate = CMRotate || ( function () {
+/**
+ * @project-site    http://blog.cmiscm.com/?p=3303
+ * @repository		https://github.com/cmiscm/cm-rotate.js
+ * @author		    Jongmin Kim - cmiscm.com
+ * @version 	    1.0
+ * @license		    MIT License
+ */
+
+ var CMRotate = CMRotate || ( function () {
 
     var _public = {}, $contaier,
         _isTouch = 'ontouchstart' in window, _isTrans3D, _cssTransform,
@@ -274,10 +282,15 @@ var CMRotate = CMRotate || ( function () {
         div.style.width = _itemW + 'px';
         div.style.height = _itemH + 'px';
         div.style.position = 'absolute';
-        // div.style.background = 'url(' + _bgArr[id] + ')';
-        div.style.background = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-7HmblkOtWKVqNHvcKRxY9QQZ8qQB8u7D9w&usqp=CAU")'
-        // div.style.backgroundImage = 'url("../cards/card_front/black1.png")'
-        // div.style.background = "url('../cards/card_front/black1.png')"; 
+        div.style.background = 'url(' + _bgArr[id] + ')';
+        div.style.backgroundSize = '100% 100%';
+        div.style.backgroundRepeat = 'no-repeat';
+        div.style.border = '1px solid red';
+        console.log(_bgArr[id]);
+        // div.style.background = 'url(_bgArr[id])';
+        // div.style.background = 'pink';
+        // div.style.background = 'url(C:/ssafy/last_temp/frontend/src/assets/cards/sample/img1.jpg)';
+        // div.style.backgroundImage = 'url(/img/img1.b5ed8c85.jpg)';
         movePlane(div, -5000, -5000, 0);
         $contaier.appendChild(div);
         plane = {plane:div, use:1, no:no, id:id};
@@ -360,4 +373,4 @@ if(!window.requestAnimationFrame){
     })();
 }
 
-export default CMRotate
+export default CMRotate;
