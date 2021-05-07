@@ -1,15 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     programme: [],
-    username:'',
-    adminflag:0,
-    roomname: '',
-    roomcode: '',
+    username: "",
+    adminflag: 0,
+    roomname: "",
+    roomcode: "",
     teamnumber: "",
     teams: [
       {
@@ -44,8 +45,11 @@ export default new Vuex.Store({
     CREATE_TEAMS(state, payload) {
       state.teams.push(payload);
     },
-    SET_ADMINFLAG: function(state){
-      state.adminflag=1;
+    BTN_STATUS_BLOCK(state, index, value) {
+      state.teams[index].disabled = value;
+    },
+    SET_ADMINFLAG: function(state) {
+      state.adminflag = 1;
     },
     myes: function(state) {
       state.m = 1;
@@ -74,4 +78,5 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {},
+  plugins: [createPersistedState()],
 });

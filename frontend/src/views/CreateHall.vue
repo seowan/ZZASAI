@@ -111,12 +111,12 @@ export default {
         if (this.list2.length > 1) {
           context.game2 = this.list2[1].id;
         }
-        if (this.list.length > 2) {
+        if (this.list2.length > 2) {
           context.game3 = this.list2[2].id;
         }
         axios({
           method: "post",
-          url: `http://localhost:8080/api/room/create/`,
+          url: `http://localhost:8080/api/room/create`,
           data: JSON.stringify(context),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",

@@ -11,7 +11,7 @@ export default {
   name: "Timer",
   data() {
     return {
-      countDown: 3 * teams.teampeople,
+      countDown: "",
     };
   },
   computed: {
@@ -40,6 +40,9 @@ export default {
     },
   },
   created() {
+    // 팀 인원 받아오는 부분 수정 필요
+    this.countDown = this.$store.teams[1].teampeople;
+    console.log(this.countDown);
     this.countDownTimer();
   },
 };
