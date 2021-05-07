@@ -67,6 +67,9 @@ export default {
           }
         }
 
+        // 빈 배열(index 0) 삭제
+        this.$store.state.teams.splice(0);
+
         for (var i = 0; i < this.teamNumber; i++) {
           this.$store.commit("CREATE_TEAMS", {
             text: i + 1 + "팀",
@@ -76,6 +79,7 @@ export default {
           });
         }
 
+        console.log(this.$store.state.teams);
         console.log(this.$store.state.teams);
         this.$router.push({ name: "SelectTeam" });
       } else {

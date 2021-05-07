@@ -103,7 +103,7 @@ export default {
     getRoomData: function() {
       axios({
         method: "get",
-        url: `/api/room/info/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },

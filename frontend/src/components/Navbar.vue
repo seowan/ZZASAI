@@ -9,7 +9,9 @@
       <router-link to="/card-play">카드 게임</router-link> |
       <router-link to="/game-play">게임</router-link> |
       <router-link to="/char-test">MBTI</router-link> |
-      <router-link to="/select-team">팀 선택</router-link>
+      <router-link to="/select-team">팀 선택</router-link> |
+      <router-link to="/pugtest">pug테스트</router-link> |
+      <router-link to="/swipetest">swipte테스트</router-link>
     </div>
     <div class="row">
       <div class="align-center mt-60">
@@ -46,7 +48,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .row {
   padding-right: 15px;
 }

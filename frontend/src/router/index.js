@@ -18,6 +18,8 @@ import CharTest7 from '../views/room/CharTest7.vue'
 import SelectTeam from "../views/SelectTeam.vue";
 import Test from '../views/Test'
 import Loading from '../views/Loading.vue'
+import PugTest from '../views/PugTest.vue'
+import SwipeTest from '../views/SwipeTest.vue'
 
 Vue.use(VueRouter)
 
@@ -111,7 +113,17 @@ const routes = [
   {
     path:"/loading",
     name:"Loading",
-    component:Loading,
+    component: Loading,
+  },
+  {
+    path:"/pugtest",
+    name:"PugTest",
+    component: PugTest,
+  },
+  {
+    path:"/swipetest",
+    name:"SwipeTest",
+    component: SwipeTest,
   },
 ];
 

@@ -98,13 +98,16 @@ export default {
       ],
 
       //user, 그림 그리는 순서
+      nickname: this.$store.state.username, //to identify user
+      roomCode: this.$store.state.roomcode,
+      roomName: this.$store.state.roomname,
       turnToDraw: true,
       users: [], //all user list
-      nickname: "user", //to identify user
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
       socket: io("localhost:3000"), //url:port
+
       text: "",
       messages: [],
       answer: "정답",
@@ -125,6 +128,21 @@ export default {
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     // 3-1) ctx 관련 정보 수신
+    this.socket.on("connect", () => {
+      console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
+      this.socket.emit("info", "gyu", "123ABC", true);
+    });
+
+    this.socket.on("duplicated code", () => {
+      console.log("duplicated code");
+    });
+
+    this.socket.on("disconnected", (user) => {
+      //방을 떠난 유저가 있을 때
+      console.log("disconnected: ", user);
+    });
+
+    /* painting */
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
     });
@@ -202,7 +220,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .grid-wrapper {
   display: grid;
   grid-template-columns: 30% 40% 30%;
