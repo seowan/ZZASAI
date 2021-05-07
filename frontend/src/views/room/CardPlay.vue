@@ -10,48 +10,58 @@
 
 <script>
 import CMRotate from '@/assets/js/CMRotate.js'
+import axios from 'axios'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+var backgroundImages = []
 
 export default {
   name: 'CardPlay',
+  data: function () {
+    return {
+      cards: {},
+    }
+  },
   methods: {
     clickCard (no) {
       // 매개인자 no를 넘겨받으면 해당 이미지로 변환
         alert('click no -' + (no +1));
         var selectedCard = document.getElementById("selected_card")
+        console.log(this.cards[no]["cardurl_front"])
 
+        // selectedCard.style.backgroundImages = 'url("https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png")'
         selectedCard.style.backgroundImages = 'url("https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png")'
-        console.log(selectedCard)
+        // console.log(selectedCard)
+    },
+    getData () {
+      axios({
+          method: "get",
+          url: `${SERVER_URL}/api/card/list/`,
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => {
+            
+            var i;
+            for (i = 0; i < res.data.length; i++) {
+              backgroundImages.push(res.data[i]["cardurl_front"])
+            }
+
+            this.cards = res.data
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("오류가 발생했습니다. 다시 시도하세요");
+          });
     },
   },
-  mounted () {
-    window.onload = function () {
+  async mounted () {
+    await this.getData()
 
-            var backgroundImages = [
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/blue12.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/green1.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/mint10.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/red2.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/white12.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/yellow12.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black13.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/blue8.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/green5.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/mint3.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/red6.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/white5.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/yellow5.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black11.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/blue2.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/green3.png",
-                "https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/mint2.png"
-            ];
-             CMRotate.init('rotate-div', 200, 300, 100, 20, 200, backgroundImages, this.clickCard);
-    // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
-    }
-    
-   
-
+      CMRotate.init('rotate-div', 200, 300, 100, 20, 200, backgroundImages, this.clickCard);
+      // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
     
   },
 }

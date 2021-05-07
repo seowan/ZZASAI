@@ -285,8 +285,8 @@
         div.style.background = 'url(' + _bgArr[id] + ')';
         div.style.backgroundSize = '100% 100%';
         div.style.backgroundRepeat = 'no-repeat';
-        div.style.border = '1px solid red';
-        console.log(_bgArr[id]);
+        // div.style.border = '1px solid red';
+        // console.log(_bgArr[id]);
         // div.style.background = 'url(_bgArr[id])';
         // div.style.background = 'pink';
         // div.style.background = 'url(C:/ssafy/last_temp/frontend/src/assets/cards/sample/img1.jpg)';
