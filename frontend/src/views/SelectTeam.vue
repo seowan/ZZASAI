@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Timer />
     <!-- <ul v-for="(team, index) in teams" :key="index"> -->
 
     <!-- <div v-if="index >= 1"> -->
@@ -18,7 +19,9 @@
 
     <b-badge pill variant="warning"> 2 / {{ teams.teampeople }} </b-badge>
     <!-- </div> -->
-
+    <button @click="selectTeam">
+      팀 선택 완료
+    </button>
     <!-- </ul> -->
   </div>
 </template>
@@ -26,17 +29,31 @@
 <script>
 import { mapState } from "vuex";
 
+import Timer from "@/components/Timer";
+
 export default {
   name: "SelectTeam",
-  components: {},
+  components: { Timer },
   data() {
     return {
       totalPerson: 30,
+      btnStatus: "",
     };
   },
 
   mounted() {},
-  methods: {},
+  methods: {
+    selectTeam() {
+      this.btnStatus = true;
+      for (var i = 0; i < this.$store.state.teamNumber; i++) {
+        console.log(i);
+        console.log(this.btnStatus);
+        this.$store.commit("BTN_STATUS_BLOCK", i, this.btnStatus);
+      }
+
+      console.log(this.$store.state.teams);
+    },
+  },
   computed: {
     ...mapState(["teams"]),
   },
