@@ -282,7 +282,11 @@ var CMRotate = CMRotate || ( function () {
         div.style.width = _itemW + 'px';
         div.style.height = _itemH + 'px';
         div.style.position = 'absolute';
-        div.style.background = 'url(' + _bgArr[id] + ')';
+        // div.style.background = 'url(' + _bgArr[id] + ')';
+        div.style.border = '1px solid red';
+        // div.style.background = 'pink';
+        div.style.background = 'url(~@/assets/cards/sample/img1.jpg)';
+        // div.style.backgroundImage = 'url(/img/Andys-Room.62734ee9.jpg)';
         movePlane(div, -5000, -5000, 0);
         $contaier.appendChild(div);
         plane = {plane:div, use:1, no:no, id:id};
@@ -305,7 +309,7 @@ var CMRotate = CMRotate || ( function () {
             'OTransform'
         ];
         var p;
-        while (p == properties.shift()) {
+        while ((p = properties.shift())) {
             if (typeof $contaier.style[p] != 'undefined') {
                 return p;
             }
@@ -365,3 +369,4 @@ if(!window.requestAnimationFrame){
     })();
 }
 
+export default CMRotate;

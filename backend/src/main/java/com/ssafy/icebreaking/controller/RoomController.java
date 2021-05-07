@@ -19,7 +19,6 @@ import com.ssafy.icebreaking.model.service.RoomService;
 @RestController
 @RequestMapping("/api/room")
 public class RoomController {
-
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
@@ -30,7 +29,7 @@ public class RoomController {
 	@PostMapping("/create")
 	public String createRoom(@RequestBody RoomDto roomdto) throws Exception {
 		String result = "";
-
+		System.out.println(roomdto.getGame1());
 		try {
 			roomservice.insertRoominfo(roomdto);
 			result = SUCCESS;
