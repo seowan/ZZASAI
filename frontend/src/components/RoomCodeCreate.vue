@@ -1,9 +1,6 @@
 <template>
     <div>
-        <p>{{name}} | {{randomstring}} 
-        <button type="button" 
-        v-clipboard:copy="randomstring"
-        v-clipboard:success="onCopy">코드 복사</button>
+        <p>방 코드 {{randomstring}} 
         </p>
     </div>
 </template>
@@ -25,11 +22,11 @@ methods: {
       var rnum = Math.floor(Math.random() * chars.length)
       this.randomstring += chars.substring(rnum, rnum + 1)
     }
+    // roomcode 저장하기
+    this.$store.commit('CREATE_ROOMCODE', this.randomstring)
     return this.randomstring
     },
-    onCopy() {
-      alert('코드 복사를 완료하였습니다. 새 친구에게 코드를 공유해주세요!')
-    },
+
 },
 beforeMount(){
     this.getRoomInfo()

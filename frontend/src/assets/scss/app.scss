@@ -1,5 +1,7 @@
 /* Google Font - Nanum Brush Script */
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap');
+/* Google Font - Jua */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 html {
   height: 100%;
@@ -7,7 +9,8 @@ html {
 
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
-  font-family: 'Nanum Brush Script', cursive;
+  // font-family: 'Nanum Brush Script', cursive;
+  font-family: 'Jua', sans-serif;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
