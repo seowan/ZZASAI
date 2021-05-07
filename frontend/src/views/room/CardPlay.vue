@@ -1,8 +1,9 @@
 <template>
   <!-- 질문 카드 게임 -->
   <div id="card-play">
-    <h3> 질문 카드 게임 </h3>
-    <img id="selected_card" src="@/assets/cards/card_front/black1.png" alt="asdasd">
+    <!-- <h3> 질문 카드 게임 </h3> -->
+    
+    <img id="selected_card" :src="cardImage" alt="카드를 선택하세요!" @click="flipCard">
     <div id="rotate-div" class="chand"></div>
     <!-- <img src="@/assets/cards/card_front/black1.png" alt=""> -->
   </div>
@@ -20,21 +21,30 @@ export default {
   data: function () {
     return {
       cards: {},
+      selected_card_no: '',
+      selected_card_url: '',
+    }
+  },
+  computed: {
+    cardImage () {
+      return this.selected_card_url
     }
   },
   methods: {
     clickCard (no) {
-      // 매개인자 no를 넘겨받으면 해당 이미지로 변환
-        alert('click no -' + (no +1));
-        var selectedCard = document.getElementById("selected_card")
-        console.log(this.cards[no]["cardurl_front"])
-
+        // alert('click no -' + (no +1));
+        // var selectedCard = document.getElementById("selected_card")
         // selectedCard.style.backgroundImages = 'url("https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png")'
-        selectedCard.style.backgroundImages = 'url("https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png")'
-        // console.log(selectedCard)
+        
+        this.selected_card_no = no
+        this.selected_card_url = this.cards[no]["cardurl_front"]
     },
-    getData () {
-      axios({
+    flipCard () {
+      console.log('flip')
+      this.selected_card_url = this.cards[this.selected_card_no]["cardurl_back"]
+    },
+    async getData () {
+      await axios({
           method: "get",
           url: `${SERVER_URL}/api/card/list/`,
           headers: {
@@ -60,7 +70,7 @@ export default {
   async mounted () {
     await this.getData()
 
-      CMRotate.init('rotate-div', 200, 300, 100, 20, 200, backgroundImages, this.clickCard);
+      CMRotate.init('rotate-div', 200, 300, 100, 30, 200, backgroundImages, this.clickCard);
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
     
   },
@@ -69,13 +79,10 @@ export default {
 
 <style type="text/css" scoped>
 #selected_card {
-    /* background-image: url("../../assets/cards/card_front/img1.jpg"); */
-    /* background-color: red; */
     height: 50%;
     width: 20%;
     position: absolute;
     left: 40%;
-    /* display: none; */
 }
 
 html, body {
@@ -83,6 +90,7 @@ html, body {
     height:100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 * {
@@ -95,8 +103,8 @@ html, body {
 }
 
 #rotate-div {
-    overflow: hidden;
-    /* position: relative; */
+    /* overflow: hidden; */
+    /* position: absolute; */
     width:100%;
     height:100%;
 }
