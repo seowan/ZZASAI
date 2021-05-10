@@ -59,8 +59,8 @@ import draggable from "vuedraggable";
 import HelpIcon from "@/components/HelpIcon";
 import RoomCodeCreate from "@/components/RoomCodeCreate";
 
-import axios from 'axios'
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+import axios from "axios";
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CreateHall",
@@ -115,12 +115,12 @@ export default {
         if (this.list2.length > 2) {
           context.game3 = this.list2[2].id;
         }
-        console.log(this.list2)
-        console.log(context)
-        alert("하이")
+        console.log(this.list2);
+        console.log(context);
+        alert("하이");
         axios({
           method: "post",
-          url: `${SERVER_URL}/api/room/create/`,
+          url: `api/room/create/`,
           // url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
           data: JSON.stringify(context),
