@@ -76,7 +76,7 @@ io.on("connection", function (socket) {
     if (user == null) return;
 
     for (var i in rooms) {
-      if (room.code == user.code) {
+      if (rooms[i].code == user.code) {
         console.log("room found");
 
         if (user.isAdmin) {
@@ -89,9 +89,9 @@ io.on("connection", function (socket) {
         } else {
           //방장이 아닐 경우
           for (var j in rooms[i].userlist) {
-            if (room.userlist[j].id == socket.id) {
+            if (rooms[i].userlist[j].id == socket.id) {
               console.log("user found", rooms[i].userlist[j]);
-              rooms[i].userlist.splice(i, 1); //삭제
+              rooms[i].userlist.splice(j, 1); //삭제
               break;
             } //유저 찾음
           }
