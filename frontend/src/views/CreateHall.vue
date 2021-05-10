@@ -60,7 +60,7 @@ import HelpIcon from "@/components/HelpIcon";
 import RoomCodeCreate from "@/components/RoomCodeCreate";
 
 import axios from "axios";
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CreateHall",
@@ -120,9 +120,9 @@ export default {
         alert("하이");
         axios({
           method: "post",
-          url: `api/room/create/`,
+          // url: `api/room/create/`,
           // url: `http://localhost:8080/api/room/create/`,
-          // url: `${SERVER_URL}/room/create/`,
+          url: `${SERVER_URL}/api/room/create/`,
           data: JSON.stringify(context),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
