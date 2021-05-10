@@ -1,11 +1,15 @@
 <template>
   <!-- 질문 카드 게임 -->
-  <div id="card-play">
+  <div id="card-play" class="my-0 py-0">
     <!-- <h3> 질문 카드 게임 </h3> -->
-    
-    <img id="selected_card" :src="cardImage" alt="카드를 선택하세요!" @click="flipCard">
-    <div id="rotate-div" class="chand"></div>
-    <!-- <img src="@/assets/cards/card_front/black1.png" alt=""> -->
+    <div v-if="selected_card_front" class="scene scene--card my-0 py-0">
+      <div class="card" @click="flipCard">
+        <img class="card__face card__face--front" :src="cardImageFront">
+        <img class="card__face card__face--back" :src="cardImageBack">
+      </div>
+    </div>
+     <!-- class="chand" -->
+    <div id="rotate-div"></div>
   </div>
 </template>
 
@@ -15,6 +19,7 @@ import axios from 'axios'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = []
+// var target = document.getElementById("rotate-div")
 
 export default {
   name: 'CardPlay',
@@ -22,26 +27,41 @@ export default {
     return {
       cards: {},
       selected_card_no: '',
-      selected_card_url: '',
+      selected_card_front: '',
+      selected_card_back: '',
     }
   },
   computed: {
-    cardImage () {
-      return this.selected_card_url
-    }
+    cardImageFront () {
+      return this.selected_card_front
+    },
+    cardImageBack () {
+      return this.selected_card_back
+    },
   },
   methods: {
     clickCard (no) {
-        // alert('click no -' + (no +1));
-        // var selectedCard = document.getElementById("selected_card")
-        // selectedCard.style.backgroundImages = 'url("https://icebreaking205.s3.ap-northeast-2.amazonaws.com/front/black1.png")'
-        
-        this.selected_card_no = no
-        this.selected_card_url = this.cards[no]["cardurl_front"]
+      // 선택하면 기존 카드는 background 리스트에서 삭제하기!
+      if (this.selected_card_no) {
+        var item_id = 'cm-rotate-' + this.selected_card_no
+        var item = document.getElementById(item_id)
+        // console.log('target: ' + target)
+        // console.log(item)
+        // target.removeChild(item)
+        item.parentNode.removeChild(item);
+      } 
+     
+
+      this.selected_card_no = no
+      this.selected_card_front = this.cards[no]["cardurl_front"]
+      this.selected_card_back = this.cards[no]["cardurl_back"]
+
+      var card = document.querySelector('.card');
+      card.classList.toggle('is-flipped');
     },
-    flipCard () {
-      console.log('flip')
-      this.selected_card_url = this.cards[this.selected_card_no]["cardurl_back"]
+    flipCard() {
+      var card = document.querySelector('.card');
+      card.classList.toggle('is-flipped');
     },
     async getData () {
       await axios({
@@ -70,7 +90,7 @@ export default {
   async mounted () {
     await this.getData()
 
-      CMRotate.init('rotate-div', 200, 300, 100, 30, 200, backgroundImages, this.clickCard);
+      CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
     
   },
@@ -78,12 +98,6 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-#selected_card {
-    height: 50%;
-    width: 20%;
-    position: absolute;
-    left: 40%;
-}
 
 html, body {
     width:100%;
@@ -93,14 +107,14 @@ html, body {
     overflow: hidden;
 }
 
-* {
+/* * {
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
-}
+} */
 
 #rotate-div {
     /* overflow: hidden; */
@@ -123,4 +137,54 @@ a:hover {
 .chand:active {
     /* cursor: url(images/hand-h.cur), move; */
 }
+
+
+/* card flip */
+.scene {
+  position: absolute;
+  left: 40%;
+  /* 200px 260px */
+  width: 20%;
+  height: 55%;
+  /* border: 1px solid #CCC; */
+  margin: 40px 0;
+  perspective: 600px;
+}
+
+.card {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+.card.is-flipped {
+  transform: rotateY(-180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 260px;
+  /* color: white; */
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  /* background: red; */
+}
+
+.card__face--back {
+  /* background: blue; */
+  transform: rotateY(180deg);
+}
+
 </style>
