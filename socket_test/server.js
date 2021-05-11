@@ -97,7 +97,7 @@ io.on("connection", function (socket) {
           }
         }
         io.to(user.code).emit("disconnected", user); //모두에게 알려주기
-        io.to(user.code).emit("room", room); //변화된 방 정보 모두에게 알리기
+        io.to(user.code).emit("room", rooms[i]); //변화된 방 정보 모두에게 알리기
         break;
       }
     }
