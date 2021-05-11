@@ -99,9 +99,11 @@
      * click event on each Plane
      */
     function onClick(event) {
+        // cm-rotate-{id} 를 찾기 위해 추가
+        var target_id = event.target.id
         var no = Number((event.currentTarget.id).substr(10, 3)),
             id = _itemArr[no].id;
-        _fn(id);
+        _fn(id, target_id);
     }
 
 

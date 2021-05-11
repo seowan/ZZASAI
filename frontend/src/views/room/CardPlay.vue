@@ -2,7 +2,7 @@
   <!-- 질문 카드 게임 -->
   <div id="card-play" class="my-0 py-0">
     <!-- <h3> 질문 카드 게임 </h3> -->
-    <div v-if="selected_card_front" class="scene scene--card my-0 py-0">
+    <div v-if="cardImageFront" class="scene scene--card my-0 py-0">
       <div class="card" @click="flipCard">
         <img class="card__face card__face--front" :src="cardImageFront">
         <img class="card__face card__face--back" :src="cardImageBack">
@@ -26,9 +26,10 @@ export default {
   data: function () {
     return {
       cards: {},
-      selected_card_no: '',
-      selected_card_front: '',
-      selected_card_back: '',
+      selected_card_no: null,
+      selected_card_front: null,
+      selected_card_back: null,
+      selected_card_id: null,
     }
   },
   computed: {
@@ -40,24 +41,24 @@ export default {
     },
   },
   methods: {
-    clickCard (no) {
+    clickCard (no, target_id) {
       // 선택하면 기존 카드는 background 리스트에서 삭제하기!
-      if (this.selected_card_no) {
-        var item_id = 'cm-rotate-' + this.selected_card_no
-        var item = document.getElementById(item_id)
-        // console.log('target: ' + target)
-        // console.log(item)
-        // target.removeChild(item)
-        item.parentNode.removeChild(item);
+      if (this.selected_card_no != null && this.selected_card_no != no) {
+        // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
+        var item = document.getElementById(this.selected_card_id)
+        item.remove()
       } 
      
 
       this.selected_card_no = no
       this.selected_card_front = this.cards[no]["cardurl_front"]
       this.selected_card_back = this.cards[no]["cardurl_back"]
+      this.selected_card_id = target_id
 
-      var card = document.querySelector('.card');
-      card.classList.toggle('is-flipped');
+      var card = document.querySelector('card');
+      if (card) {
+        card.classList.toggle('is-flipped');
+      }
     },
     flipCard() {
       var card = document.querySelector('.card');
