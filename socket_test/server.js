@@ -120,11 +120,11 @@ io.on("connection", function (socket) {
   });
 
   /*card function*/
-  socket.on("cardselect",function(cardno,target_id){
+  socket.on("cardselect",function(cardno,target_id, cardlist, backgroundlist){
     console.log("cardselected!!!");
-    console.log(cardno);
-    console.log(target_id);
-    io.emit("cardselected",cardno,target_id);
+    // console.log(cardlist);
+    console.log(backgroundlist);
+    io.emit("cardselected",cardno,target_id, cardlist, backgroundlist);
   })
 });
 
