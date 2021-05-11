@@ -16,6 +16,7 @@
 <script>
 import CMRotate from '@/assets/js/CMRotate.js'
 import axios from 'axios'
+import io from "socket.io-client";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = []
@@ -30,6 +31,7 @@ export default {
       selected_card_front: null,
       selected_card_back: null,
       selected_card_id: null,
+      socket: io("localhost:3000"),//url:port
     }
   },
   computed: {
@@ -42,6 +44,9 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
+      this.socket.emit("cardselect",no,target_id);
+    },
+    afterClickCard(no, target_id){
       // 선택하면 기존 카드는 background 리스트에서 삭제하기!
       if (this.selected_card_no != null && this.selected_card_no != no) {
         // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
@@ -93,7 +98,10 @@ export default {
 
       CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
-    
+      this.socket.on("cardselected",(no,target_id)=>{
+        console.log("card : "+no);
+        this.afterClickCard(no,target_id);
+      })
   },
 }
 </script>
