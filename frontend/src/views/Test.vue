@@ -33,7 +33,8 @@ import UserVideo from "@/components/UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://k4a205.p.ssafy.io";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 export default {
@@ -146,7 +147,8 @@ export default {
         .catch((err) => console.error(err));
     },
   },
-  mounted() {
+  created() {
+    console.log("페이지이동");
     // openvidu 객체 생성
     this.OV = new OpenVidu();
 
