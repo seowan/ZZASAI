@@ -82,6 +82,7 @@ import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
 
 import axios from "axios";
+import io from "socket.io-client";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -96,10 +97,14 @@ export default {
   },
   data() {
     return {
+      socket: io("localhost:3000"),
       order_mark: "",
       roomcode: this.$route.params.roomcode,
       room_data: {},
     };
+  },
+  mounted() {
+    this.$store.state.socket = this.socket;
   },
   methods: {
     getRoomData: function() {
