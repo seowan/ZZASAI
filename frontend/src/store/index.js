@@ -24,6 +24,7 @@ export default new Vuex.Store({
     b: 0,
     t: 0,
     i: 0,
+    socket: null,
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {

@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-
 export default {
   name: "CatchMind",
   data() {
@@ -119,7 +117,8 @@ export default {
       isAdmin: false,
 
       // 1) 서버와 연결
-      socket: io("localhost:3000"), //url:port
+      // socket: io("localhost:3000"), //url:port
+      socket: this.$store.state.socket,
 
       text: "",
       messages: [],
@@ -139,6 +138,10 @@ export default {
     // fill canvas with white color
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+    // this.$store.state.socket = this.socket;
+    console.log(this.socket);
+    // console.log(this.$store.state.socket);
 
     // 3-1) ctx 관련 정보 수신
     this.socket.on("connect", () => {
