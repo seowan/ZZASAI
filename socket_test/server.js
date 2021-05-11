@@ -40,6 +40,7 @@ io.on("connection", function (socket) {
   console.log("user connected: ", socket.id);
 
   var user = null;
+  user = new User(socket.id,"aaa","aaawww12","false");
   socket.on("info", function (name, code, isAdmin) {
     user = new User(socket.id, name, code, isAdmin); //유저 정보 저장
     if (isAdmin) {
@@ -117,6 +118,14 @@ io.on("connection", function (socket) {
     if (user == null) return;
     io.to(user.code).emit("cleared all");
   });
+
+  /*card function*/
+  socket.on("cardselect",function(cardno,target_id){
+    console.log("cardselected!!!");
+    console.log(cardno);
+    console.log(target_id);
+    io.emit("cardselected",cardno,target_id);
+  })
 });
 
 //4
