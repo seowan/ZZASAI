@@ -1,11 +1,5 @@
 <template>
   <div class="grid-wrapper">
-    <div>
-      <input type="text" v-model="name" />
-      <input type="text" v-model="team" />
-      <button @click="beAdmin">방장</button>
-      <button @click="sendInfo">완료!</button>
-    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <canvas
@@ -114,11 +108,6 @@ export default {
       turnToDraw: true,
       currentTurn: 0, //team number of current turn
 
-      //test용 데이터
-      name: "",
-      team: "",
-      isAdmin: false,
-
       // 1) 서버와 연결
       // socket: io("localhost:3000"), //url:port
       socket: this.$store.state.socket,
@@ -155,10 +144,6 @@ export default {
         this.roomCode,
         this.adminFlag != 0 ? true : false
       );
-    });
-
-    this.socket.on("duplicated code", () => {
-      console.log("duplicated code");
     });
 
     this.socket.on("disconnected", (user) => {
@@ -202,13 +187,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    },
-    /* for test */
-    beAdmin() {
-      this.isAdmin = true;
-    },
-    sendInfo() {
-      this.socket.emit("info", this.name, this.team, this.isAdmin);
     },
     /* for painting */
     resizeHandler() {
