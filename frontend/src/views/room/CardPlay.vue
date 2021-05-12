@@ -8,8 +8,7 @@
         <img class="card__face card__face--back" :src="cardImageBack">
       </div>
     </div>
-     <!-- class="chand" -->
-    <div id="rotate-div"></div>
+    <div id="rotate-div" class="chand"></div>
   </div>
 </template>
 
@@ -49,16 +48,17 @@ export default {
         item.remove()
       } 
      
+      var card = document.querySelector('.card');
+      if (card) {
+        card.classList.remove('is-flipped')
+      }
 
       this.selected_card_no = no
       this.selected_card_front = this.cards[no]["cardurl_front"]
-      this.selected_card_back = this.cards[no]["cardurl_back"]
       this.selected_card_id = target_id
+      this.selected_card_back = this.cards[no]["cardurl_back"]
 
-      var card = document.querySelector('card');
-      if (card) {
-        card.classList.toggle('is-flipped');
-      }
+
     },
     flipCard() {
       var card = document.querySelector('.card');
@@ -99,13 +99,13 @@ export default {
 </script>
 
 <style type="text/css" scoped>
-
 html, body {
     width:100%;
     height:100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    /* position: relative; */
 }
 
 /* * {
@@ -118,8 +118,7 @@ html, body {
 } */
 
 #rotate-div {
-    /* overflow: hidden; */
-    /* position: absolute; */
+    overflow: hidden;
     width:100%;
     height:100%;
 }
@@ -133,10 +132,10 @@ a:hover {
 }
 
 .chand {
-    /* cursor: url(images/hand.cur), move; */
+    /* cursor: url(../../assets/cards/sample/hand.cur), move; */
 }
 .chand:active {
-    /* cursor: url(images/hand-h.cur), move; */
+    /* cursor: url(../../assets/cards/sample/hand-h.cur), move; */
 }
 
 
