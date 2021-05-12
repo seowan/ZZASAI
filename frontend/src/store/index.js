@@ -54,6 +54,9 @@ export default new Vuex.Store({
     SET_ADMINFLAG: function(state) {
       state.adminflag = 1;
     },
+    RESTORE_ADMINFLAG:function(state){
+      state.adminflag = 0;
+    },
     myes: function(state) {
       state.m = 1;
     },
