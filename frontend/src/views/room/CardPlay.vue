@@ -65,6 +65,7 @@ export default {
 
 
     },
+    //기존의 카드 리스트 삭제
     flipCard() {
       var card = document.querySelector('.card');
       card.classList.toggle('is-flipped');
