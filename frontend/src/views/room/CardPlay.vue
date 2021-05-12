@@ -8,15 +8,13 @@
         <img class="card__face card__face--back" :src="cardImageBack">
       </div>
     </div>
-     <!-- class="chand" -->
-    <div id="rotate-div"></div>
+    <div id="rotate-div" class="chand"></div>
   </div>
 </template>
 
 <script>
 import CMRotate from '@/assets/js/CMRotate.js'
 import axios from 'axios'
-import io from "socket.io-client";
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = []
@@ -31,7 +29,7 @@ export default {
       selected_card_front: null,
       selected_card_back: null,
       selected_card_id: null,
-      socket: io("localhost:3000"),//url:port
+      socket: this.$store.state.socket,
     }
   },
   computed: {
@@ -44,9 +42,10 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
-      this.socket.emit("cardselect",no,target_id);
+      this.socket.emit("cardselect",no,target_id,this.cards, backgroundImages);
+      this.afterClickCard(no,target_id,this.cards,this.backgroundImages);
     },
-    afterClickCard(no, target_id){
+    afterClickCard(no, target_id, cards){
       // 선택하면 기존 카드는 background 리스트에서 삭제하기!
       if (this.selected_card_no != null && this.selected_card_no != no) {
         // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
@@ -54,17 +53,19 @@ export default {
         item.remove()
       } 
      
+      var card = document.querySelector('.card');
+      if (card) {
+        card.classList.remove('is-flipped')
+      }
 
       this.selected_card_no = no
-      this.selected_card_front = this.cards[no]["cardurl_front"]
-      this.selected_card_back = this.cards[no]["cardurl_back"]
+      this.selected_card_front = cards[no]["cardurl_front"]
       this.selected_card_id = target_id
+      this.selected_card_back = cards[no]["cardurl_back"]
 
-      var card = document.querySelector('card');
-      if (card) {
-        card.classList.toggle('is-flipped');
-      }
+
     },
+    //기존의 카드 리스트 삭제
     flipCard() {
       var card = document.querySelector('.card');
       card.classList.toggle('is-flipped');
@@ -84,7 +85,6 @@ export default {
             for (i = 0; i < res.data.length; i++) {
               backgroundImages.push(res.data[i]["cardurl_front"])
             }
-
             this.cards = res.data
           })
           .catch((err) => {
@@ -98,22 +98,25 @@ export default {
 
       CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
-      this.socket.on("cardselected",(no,target_id)=>{
+      this.socket.on("cardselected",(no,target_id, cards, backgroundImages)=>{
         console.log("card : "+no);
-        this.afterClickCard(no,target_id);
+        console.log("cards : "+ cards);
+        console.log("background : "+ backgroundImages);
+        CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
+        this.afterClickCard(no,target_id,cards);
       })
   },
 }
 </script>
 
 <style type="text/css" scoped>
-
 html, body {
     width:100%;
     height:100%;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    /* position: relative; */
 }
 
 /* * {
@@ -126,8 +129,7 @@ html, body {
 } */
 
 #rotate-div {
-    /* overflow: hidden; */
-    /* position: absolute; */
+    overflow: hidden;
     width:100%;
     height:100%;
 }
@@ -141,10 +143,10 @@ a:hover {
 }
 
 .chand {
-    /* cursor: url(images/hand.cur), move; */
+    /* cursor: url(../../assets/cards/sample/hand.cur), move; */
 }
 .chand:active {
-    /* cursor: url(images/hand-h.cur), move; */
+    /* cursor: url(../../assets/cards/sample/hand-h.cur), move; */
 }
 
 
