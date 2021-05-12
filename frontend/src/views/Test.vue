@@ -3,7 +3,7 @@
     <b-row>
       <b-col>
         <div class="leave-btn" @click="leaveSession">나가기</div>
-        <h5>{{this.$store.state.username}}</h5>
+        <h5>{{ this.$store.state.username }}</h5>
         <!-- 내 비디오 -->
         <!-- <user-video class="my-video" :stream-manager="publisher" /> -->
         <!-- 전체 비디오 -->
@@ -57,8 +57,8 @@ export default {
     };
   },
   methods: {
-    push_userlist: function(name){
-      this.$store.commit('PUSH_USERLIST', name)
+    push_userlist: function(name) {
+      this.$store.commit("PUSH_USERLIST", name);
     },
     // openvidu 서버 토큰 받기
     getToken: function(sessionId) {
@@ -71,7 +71,7 @@ export default {
       console.log("세션 생성");
       return new Promise((resolve, reject) => {
         axios
-          .post(
+          .get(
             `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
             JSON.stringify({
               customSessionId: sessionId,
@@ -153,15 +153,15 @@ export default {
     this.$store.state.userlist.push(this.$store.state.username);
     // openvidu 객체 생성
     this.OV = new OpenVidu();
-    
+
     // 세션 초기화
     this.session = this.OV.initSession();
 
     this.session.on("streamCreated", ({ stream }) => {
       let subscriber = this.session.subscribe(stream);
       this.subscribers.push(subscriber);
-      var temp = []
-      var bootemp = []
+      var temp = [];
+      var bootemp = [];
       for (var sub of this.subscribers) {
         var data = JSON.parse(sub.stream.connection.data);
         temp.push(data.clientData);
@@ -170,8 +170,8 @@ export default {
       }
       this.$store.state.userlist = temp;
       this.$store.state.userlist_boolean = bootemp;
-      console.log(this.$store.state.userlist)
-      console.log(this.$store.state.userlist_boolean)
+      console.log(this.$store.state.userlist);
+      console.log(this.$store.state.userlist_boolean);
     });
 
     this.session.on("streamDestroyed", ({ stream }) => {
@@ -212,11 +212,11 @@ export default {
           this.mainStreamManager = publisher;
           // 유저 subscriber에 나도 추가
           this.subscribers.push(publisher);
-          this.session.publish(this.publisher); 
+          this.session.publish(this.publisher);
           this.PUSH_USERLIST(this.$store.state.username);
           this.PUSH_USERLIST_BOOLEAN(false);
           console.log("끝");
-          })
+        })
         .catch((err) => console.log("세션 커넥트 에러", err.code, err.message));
     });
   },
