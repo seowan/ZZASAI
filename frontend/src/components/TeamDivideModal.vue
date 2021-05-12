@@ -80,7 +80,6 @@ export default {
         }
 
         console.log(this.$store.state.teams);
-        console.log(this.$store.state.teams);
         this.$router.push({ name: "SelectTeam" });
       } else {
         alert("다시 입력하세요");

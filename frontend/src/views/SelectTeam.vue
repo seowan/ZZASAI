@@ -36,12 +36,14 @@ export default {
   components: { Timer },
   data() {
     return {
-      totalPerson: 30,
+      totalPerson: this.$store.userlist.length,
       btnStatus: "",
     };
   },
 
-  mounted() {},
+  mounted() {
+    console.log("총 인원 수 :" + this.totalPerson);
+  },
   methods: {
     selectTeam() {
       this.btnStatus = true;
@@ -51,11 +53,13 @@ export default {
         this.$store.commit("BTN_STATUS_BLOCK", i, this.btnStatus);
       }
 
+      // 유저 팀 정보 넣는 코드
+      this.$store.commit("CREATE_USERTEAM", "1");
       console.log(this.$store.state.teams);
     },
   },
   computed: {
-    ...mapState(["teams"]),
+    ...mapState(["teams", "userlist"]),
   },
 };
 </script>

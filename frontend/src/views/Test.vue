@@ -71,7 +71,7 @@ export default {
       console.log("세션 생성");
       return new Promise((resolve, reject) => {
         axios
-          .post(
+          .get(
             `${OPENVIDU_SERVER_URL}/openvidu/api/sessions`,
             JSON.stringify({
               customSessionId: sessionId,
