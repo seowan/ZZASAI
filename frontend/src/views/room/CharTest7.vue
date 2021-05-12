@@ -17,8 +17,6 @@
          </div>
         </div>
         
-
-        
         <div v-if="showHasan" class="col-3" v-on:click="myMethod()">
           <img class="cover" src="~@/assets/mbti2/cat.png" alt="mbti image"/>
         </div>

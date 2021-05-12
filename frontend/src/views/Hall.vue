@@ -84,7 +84,7 @@ import RoomCode from "@/components/RoomCode";
 import axios from "axios";
 import io from "socket.io-client";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -112,7 +112,9 @@ export default {
         method: "get",
         // url: `api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
+        //url: `api/room/info/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
