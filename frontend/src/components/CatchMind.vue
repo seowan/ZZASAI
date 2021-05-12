@@ -83,6 +83,9 @@
 </template>
 
 <script>
+import axios from "axios";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
 export default {
   name: "CatchMind",
   data() {
@@ -178,8 +181,28 @@ export default {
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
+
+    this.getWord();
   },
   methods: {
+    /* to get word */
+    getWord() {
+      axios({
+        method: "get",
+        // url: `api/room/info/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/api/catchmind/answer`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          this.answer = res.data.answer;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     /* for test */
     beAdmin() {
       this.isAdmin = true;
