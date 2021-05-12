@@ -40,10 +40,20 @@ io.on("connection", function (socket) {
   console.log("user connected: ", socket.id);
 
   var user = null;
-  user = new User(socket.id, "aaa", "aaawww12", "false");
+  user = new User(socket.id,"aaa","aaawww12","false");
   socket.on("info", function (name, code, isAdmin) {
     user = new User(socket.id, name, code, isAdmin); //유저 정보 저장
     if (isAdmin) {
+      //방장이라면, 방 코드 유일값인지 확인
+      for (var room of rooms) {
+        if (room.code == code) {
+          console.log("duplicated code!!!");
+          io.to(socket.id).emit("duplicated code");
+          user = null;
+          return;
+        }
+      }
+      //유일값일 경우 새 방 생성
       rooms.push(new Room(code, [user]));
     } else {
       for (var room of rooms) {
@@ -95,14 +105,6 @@ io.on("connection", function (socket) {
     // console.log(rooms);
   });
 
-  /* to play game */
-  socket.on("answer", (answer) => {
-    io.to(user.code).emit("answer", answer);
-  });
-  socket.on("right answer", (answer, username) => {
-    io.to(user.code).emit("right answer", answer, username);
-  });
-
   /* painting function */
   socket.on("begin path", function (x, y) {
     if (user == null) return;
@@ -120,9 +122,12 @@ io.on("connection", function (socket) {
   /*card function*/
   socket.on("cardselect",function(cardno,target_id, cardlist, backgroundlist){
     console.log("cardselected!!!");
-    // console.log(cardlist);
-    console.log(backgroundlist);
     io.emit("cardselected",cardno,target_id, cardlist, backgroundlist);
+  }),
+
+  socket.on("firstinit",function(backgroundlist){
+    console.log("신호 오나봅시당");
+    io.emit("setinit",backgroundlist);
   })
 });
 
