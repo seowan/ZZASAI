@@ -1,11 +1,5 @@
 <template>
   <div class="grid-wrapper">
-    <div>
-      <input type="text" v-model="name" />
-      <input type="text" v-model="team" />
-      <button @click="beAdmin">방장</button>
-      <button @click="sendInfo">완료!</button>
-    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <canvas
@@ -83,6 +77,9 @@
 </template>
 
 <script>
+import axios from "axios";
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
 export default {
   name: "CatchMind",
   data() {
@@ -111,11 +108,6 @@ export default {
       turnToDraw: true,
       currentTurn: 0, //team number of current turn
 
-      //test용 데이터
-      name: "",
-      team: "",
-      isAdmin: false,
-
       // 1) 서버와 연결
       // socket: io("localhost:3000"), //url:port
       socket: this.$store.state.socket,
@@ -143,7 +135,8 @@ export default {
     console.log(this.socket);
     // console.log(this.$store.state.socket);
 
-    // 3-1) ctx 관련 정보 수신
+    // 3-1) on 함수들
+    /* room and user */
     this.socket.on("connect", () => {
       console.log(this.socket.id);
       this.socket.emit(
@@ -152,10 +145,6 @@ export default {
         this.roomCode,
         this.adminFlag != 0 ? true : false
       );
-    });
-
-    this.socket.on("duplicated code", () => {
-      console.log("duplicated code");
     });
 
     this.socket.on("disconnected", (user) => {
@@ -168,6 +157,11 @@ export default {
       console.log("changed user list: ", this.users);
     });
 
+    /* answer checking */
+    this.socket.on("answer", (answer) => {
+      this.answer = answer;
+    });
+
     /* painting */
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
@@ -178,14 +172,33 @@ export default {
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
+
+    this.getWord();
   },
   methods: {
-    /* for test */
-    beAdmin() {
-      this.isAdmin = true;
+    /* to game play */
+    getAnswer() {
+      axios({
+        method: "get",
+        // url: `api/room/info/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/api/catchmind/answer`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          this.answer = res.data.answer;
+          this.socket.emit("answer", this.answer);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    sendInfo() {
-      this.socket.emit("info", this.name, this.team, this.isAdmin);
+    isAnswer(word) {
+      if (this.answer == word) {
+        this.socket.emit("right answer", this.answer, this.nickname);
+      }
     },
     /* for painting */
     resizeHandler() {
