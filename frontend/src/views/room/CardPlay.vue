@@ -48,7 +48,6 @@ export default {
             for (i = 0; i < res.data.length; i++) {
               backgroundImages.push(res.data[i]["cardurl_front"])
             }
-
             this.cards = res.data
           })
           .catch((err) => {

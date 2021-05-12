@@ -19,12 +19,14 @@
         </h2>
         <br>
         <b-button v-b-modal.modal-1 type="button" class="btn btn-dark btn-lg" v-on:click="myMethod()">Next</b-button>
+        <!--
           <b-modal id="modal-1" title="검사 진행중 ">
             <h4>아직 검사를 진행중인 friend가 있습니다. <br>검사를 모두 마치면 자동으로 페이지가 전환됩니다. 잠시만 기다려주세요.</h4>
             <div class="text-center">
               <b-spinner label="Spinning"></b-spinner>
             </div>
           </b-modal>
+          -->
         </div>
         
       </div>
@@ -41,10 +43,17 @@ export default {
       }
   },
   methods: {
-    myMethod() {
-      this.wait = true
-      console.log(this.wait)
-    }
+    next() {
+      this.updateArray(this.$store.state.userlist, this.$store.state.username)
+      console.log(this.$store.state.userlist_boolean);
+      this.$router.push("/loading");
+    },
+    updateArray(myArray, oldValue){
+        const index = myArray.indexOf(oldValue);
+        if (index !== -1) {
+         this.$store.state.userlist_boolean[index] = this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i;
+        }
+    },
   },
   components: {
   }
