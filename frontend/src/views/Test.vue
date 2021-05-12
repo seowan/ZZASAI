@@ -182,7 +182,7 @@ export default {
     this.getToken(this.mySessionId).then((token) => {
       // 내이름을 params로 전달
       this.session
-        .connect(token, { clientData: this.$route.params.userName })
+        .connect(token, { clientData: this.$store.state.username })
         .then(() => {
           let publisher = this.OV.initPublisher(undefined, {
             audioSource: undefined,
