@@ -135,7 +135,8 @@ export default {
     console.log(this.socket);
     // console.log(this.$store.state.socket);
 
-    // 3-1) ctx 관련 정보 수신
+    // 3-1) on 함수들
+    /* room and user */
     this.socket.on("connect", () => {
       console.log(this.socket.id);
       this.socket.emit(
@@ -156,6 +157,11 @@ export default {
       console.log("changed user list: ", this.users);
     });
 
+    /* answer checking */
+    this.socket.on("answer", (answer) => {
+      this.answer = answer;
+    });
+
     /* painting */
     this.socket.on("began path", (x, y) => {
       this.beginPath(x, y);
@@ -170,8 +176,8 @@ export default {
     this.getWord();
   },
   methods: {
-    /* to get word */
-    getWord() {
+    /* to game play */
+    getAnswer() {
       axios({
         method: "get",
         // url: `api/room/info/?roomcode=${this.roomcode}`,
@@ -183,10 +189,16 @@ export default {
       })
         .then((res) => {
           this.answer = res.data.answer;
+          this.socket.emit("answer", this.answer);
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    isAnswer(word) {
+      if (this.answer == word) {
+        this.socket.emit("right answer", this.answer, this.nickname);
+      }
     },
     /* for painting */
     resizeHandler() {

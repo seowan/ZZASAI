@@ -95,6 +95,14 @@ io.on("connection", function (socket) {
     // console.log(rooms);
   });
 
+  /* to play game */
+  socket.on("answer", (answer) => {
+    io.to(user.code).emit("answer", answer);
+  });
+  socket.on("right answer", (answer, username) => {
+    io.to(user.code).emit("right answer", answer, username);
+  });
+
   /* painting function */
   socket.on("begin path", function (x, y) {
     if (user == null) return;
