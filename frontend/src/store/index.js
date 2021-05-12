@@ -8,6 +8,8 @@ export default new Vuex.Store({
   state: {
     programme: [],
     username: "",
+    userlist: [],
+    userlist_boolean: [],
     adminflag: 0,
     roomname: "",
     roomcode: "",
@@ -75,6 +77,12 @@ export default new Vuex.Store({
     },
     ino: function(state) {
       state.i = 2;
+    },
+    PUSH_USERLIST: function(state, name){
+      state.userlist.push(name);
+    },
+    PUSH_USERLIST_BOOLEAN: function(state, bool){
+      state.userlist_boolean.push(bool);
     },
   },
   actions: {},
