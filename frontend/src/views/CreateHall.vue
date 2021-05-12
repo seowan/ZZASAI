@@ -120,8 +120,8 @@ export default {
         alert("하이");
         axios({
           method: "post",
-          url: `api/room/create/`,
-          // url: `http://localhost:8080/api/room/create/`,
+          //url: `api/room/create/`,
+          url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
           data: JSON.stringify(context),
           headers: {
