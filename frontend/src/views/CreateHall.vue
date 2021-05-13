@@ -146,7 +146,8 @@ export default {
   },
   created () {
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://i.pinimg.com/originals/a7/4a/a4/a74aa4316568e3e2bdc07ec80d144dd6.jpg' + ')';
+    body.style.backgroundImage = 'url(' + 'http://i.imgur.com/n0WLCWr.png' + ')';
+    // body.style.opacity = 0.5;
   },
 };
 </script>
@@ -165,6 +166,7 @@ body {
   height: 100%;
   /* overflow: hidden; */
 }
+
 .create-hall {
   margin: 0;
   height: 100%;

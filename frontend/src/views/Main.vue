@@ -1,7 +1,21 @@
 <template>
   <!-- 메인 홈 -->
   <div id="main">
-    <span class="mainfont" @click="movemain">짜사이</span>
+    <span class="mainfont" @click="movemain">
+        <div class="align-center mt-60">
+          <div class="mainfontA">
+            짜
+          </div>
+          <div class="mainfontB" style="">
+            식, 이제 우리 친구
+          </div>
+          <div
+            class="mainfontA">
+            사이
+          </div>
+          <div class="mainfontB" style="">다</div>
+        </div>
+    </span>
     <div class="mainframe">
       <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" autofocus>      
     </div>
@@ -51,19 +65,30 @@ export default {
     },
   },
   created () {
-    
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTdfMTI1/MDAxNTg0MzczNzk2MTQ0._vIJo7E7YznPdR-vuJaAW5mi1kbK6YT390HW_ZHDRhkg.67Akq565cnkh4StUIJ9IHtkAzMXbbowefhXYiq0d67Ug.JPEG.se___ovo/%EB%85%B8%ED%8A%B8%EB%B6%81%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B402.jpg?type=w800' + ')';
+    body.style.backgroundImage = 'url(' + 'https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg' + ')';
   },
 }
 </script>
 
 <style scoped>
-.mainfont{
-  font-size: 80px;
+.mainfont {
+  
   cursor: pointer;
+  color: white;
+}
+
+.mainfontA {
+  display: inline-block;
+  color: black;
+  font-size: 65px;
+}
+
+.mainfontB {
+  display: inline-block;
   font-family: 'Nanum Brush Script', cursive;
-  /* color: red; */
+  font-size: 35px;
+
 }
 
 .mainframe {

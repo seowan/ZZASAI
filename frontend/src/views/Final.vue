@@ -5,9 +5,9 @@
     <div id="final_content">
       <h3>
         순위 발표 <br>
-        <div>1등 {{ result_show[0].team }} : {{ result_show[0].score }}</div>
-        <div>2등 {{ result_show[1].team }} : {{ result_show[1].score }}</div>
-        <div>3등 {{ result_show[2].team }} : {{ result_show[2].score }}</div>
+        <!-- <div>1등 {{ result_show[0].team }} : {{ result_show[0].score }}</div> -->
+        <!-- <div>2등 {{ result_show[1].team }} : {{ result_show[1].score }}</div> -->
+        <!-- <div>3등 {{ result_show[2].team }} : {{ result_show[2].score }}</div> -->
       </h3>
       <h2>
         긴 모험 끝 여러분은 보물을 찾았습니다.
