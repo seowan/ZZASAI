@@ -113,14 +113,6 @@ export default {
       users: [], //all user list
       teamnumber: this.$store.state.teamnumber,
       teams: this.$store.state.teams,
-      // teams: [
-      //   {
-      //     text: "",  //n팀
-      //     currentpeople: "",  //현재 해당 팀 선택한 사람
-      //     teampeople: 0,  //해당 팀에 분배된 사람 수
-      //     disabled: "",  //버튼 비활성화
-      //   },
-      // ],
       // turnToDraw: this.userinfo.team == this.teams[0].text,
       turnToDraw: false, //user의 team 정하는 코드 완성되면 윗줄 코드로 바꾸기
       currentTurn: 0, //team number of current turn
@@ -226,10 +218,18 @@ export default {
       this.text = "";
     },
     answerMessage(user) {
+      //get user's team number
+      var i = 0;
+      for (var team of this.teams) {
+        if (team.text == this.user.team) break;
+        i++;
+      }
+
       //1.정답 애니메이션
       console.log(user);
-
       //2.점수 추가
+      this.userinfo.score += 1;
+      this.teams[i] += 1;
 
       //3.다음 턴으로 넘기기
       this.currentTurn++;
@@ -238,6 +238,13 @@ export default {
       this.turnToDraw =
         this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
       //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
+      if (i == -1) {
+        //조건 변경 필요
+        this.$store.state.userinfo = this.userinfo;
+        this.$store.state.teams = this.teams;
+
+        //페이지 이동
+      }
 
       //4.새 문제 받아오기
       if (this.isAdmin) {

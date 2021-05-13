@@ -26,9 +26,11 @@ export default new Vuex.Store({
     teams: [
       {
         text: "",
-        currentpeople: "",
-        teampeople: 0,
-        disabled: "",
+        currentpeople: 0,
+        totalpeople: 0,
+        joinlist: {},
+        disabled: Boolean,
+        score: 0,
       },
     ],
     m: 0,
