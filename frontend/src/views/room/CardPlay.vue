@@ -30,6 +30,7 @@ export default {
       selected_card_back: null,
       selected_card_id: null,
       socket: this.$store.state.socket,
+      checkflag : 0,
     }
   },
   computed: {
@@ -42,8 +43,8 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
-      this.socket.emit("cardselect",no,target_id,this.cards, backgroundImages);
-      this.afterClickCard(no,target_id,this.cards,this.backgroundImages);
+      // this.socket.emit("cardselect",no,target_id,this.cards, backgroundImages);
+      this.afterClickCard(no,target_id,this.cards);
     },
     afterClickCard(no, target_id, cards){
       // 선택하면 기존 카드는 background 리스트에서 삭제하기!
@@ -94,16 +95,29 @@ export default {
   },
   async mounted () {
     await this.getData()
-
+    if (this.$store.state.adminflag==1 && this.checkflag==0) {      
       CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
-      // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
-      this.socket.on("cardselected",(no,target_id, cards, backgroundImages)=>{
+      console.log(this.checkflag);
+      this.checkflag=1;
+      console.log(this.checkflag);
+      this.socket.emit("firstinit",backgroundImages);
+    }
+
+    this.socket.on("setinit",(backgroundImages)=>{
+      console.log("신호 받아지나 테스트");
+      if (this.$store.state.adminflag==0) {
+        CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
+      }
+    })
+
+        this.socket.on("cardselected",(no,target_id, cards, backgroundImages)=>{
         console.log("card : "+no);
         console.log("cards : "+ cards);
         console.log("background : "+ backgroundImages);
-        CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
         this.afterClickCard(no,target_id,cards);
       })
+      // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
+
   },
 }
 </script>

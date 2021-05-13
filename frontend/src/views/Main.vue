@@ -43,6 +43,7 @@ export default {
     toUserName:function(){
       if (this.roomcode!='' && this.roomcode.length>=8) {        
         this.$store.commit('CREATE_ROOMCODE', this.roomcode)
+        this.$store.commit('RESTORE_ADMINFLAG')
         this.$router.push({ name: 'UserName' })
       } else {
         alert("정확한 입장코드를 입력해주세요!")

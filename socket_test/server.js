@@ -122,9 +122,12 @@ io.on("connection", function (socket) {
   /*card function*/
   socket.on("cardselect",function(cardno,target_id, cardlist, backgroundlist){
     console.log("cardselected!!!");
-    // console.log(cardlist);
-    console.log(backgroundlist);
     io.emit("cardselected",cardno,target_id, cardlist, backgroundlist);
+  }),
+
+  socket.on("firstinit",function(backgroundlist){
+    console.log("신호 오나봅시당");
+    io.emit("setinit",backgroundlist);
   })
 });
 
