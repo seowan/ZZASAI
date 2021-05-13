@@ -2,17 +2,23 @@
   <div class="grid-wrapper">
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
-    <canvas
-      @mousedown="startPainting"
-      @mouseup="stopPainting"
-      @mousemove="onMouseMove"
-      @mouseleave="stopPainting"
-      id="canvas"
-    ></canvas>
+    <div class="canvas-wrapper">
+      <div class="answer" v-if="turnToDraw">{{ answer }}</div>
+      <div class="answer" v-else>
+        <span v-for="i in answer.length" :key="i">_</span>
+      </div>
+      <canvas
+        @mousedown="startPainting"
+        @mouseup="stopPainting"
+        @mousemove="onMouseMove"
+        @mouseleave="stopPainting"
+        id="canvas"
+      ></canvas>
+    </div>
     <div class="rtc" id="right-rtc"></div>
 
     <!--2nd row-->
-    <div class="game-support" v-if="turnToDraw == true">
+    <div class="game-support" v-if="turnToDraw">
       <div class="colorPicker">
         <div
           v-for="color in colors"
@@ -71,7 +77,7 @@
       </div>
     </div>
 
-    <!--채팅 위치-->
+    <!--채팅 위치 -> 메인 페이지로 빼는게 나을 듯 -->
     <div v-if="turnToDraw == false" class="game-support">
       <input type="text" v-model="text" @keyup.enter="typeMessage" />
     </div>
@@ -103,11 +109,9 @@ export default {
 
       //user, 그림 그리는 순서
       username: this.$store.state.username, //to identify user
-      roomCode: this.$store.state.roomcode,
-      roomName: this.$store.state.roomname,
       isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
-      turnToDraw: false,
+      turnToDraw: true,
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
@@ -151,7 +155,10 @@ export default {
 
     /* chatting */
     this.socket.on("chat", (name, msg) => {
-      console.log(name, ": ", msg);
+      if (msg == this.answer) {
+        //정답이면
+        console.log(name, ": ", msg);
+      }
     });
 
     /* answer checking */
@@ -287,8 +294,15 @@ export default {
 .rtc#right-rtc {
   grid-area: right;
 }
-#canvas {
+.canvas-wrapper {
   grid-area: canvas;
+}
+.answer {
+  position: absolute;
+  z-index: 1;
+  padding: 0.5em;
+}
+#canvas {
   border: 3px solid black;
   height: 100%;
   width: 100%;
