@@ -121,7 +121,8 @@ export default {
       //     disabled: "",  //버튼 비활성화
       //   },
       // ],
-      turnToDraw: this.userinfo.team == this.teams[0].text,
+      // turnToDraw: this.userinfo.team == this.teams[0].text,
+      turnToDraw: false, //user의 team 정하는 코드 완성되면 윗줄 코드로 바꾸기
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
@@ -236,6 +237,7 @@ export default {
       //3-1.user의 순서면 그림 그리기 허용
       this.turnToDraw =
         this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
+      //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
 
       //4.새 문제 받아오기
       if (this.isAdmin) {
