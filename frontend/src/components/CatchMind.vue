@@ -27,7 +27,7 @@
           @click="strokeColorHandler(color)"
         ></div>
       </div>
-      <div class="sizePicker">
+      <div class="size-picker">
         <!--size handler 3type-->
         <div @click="strokeSizeHandler(1)">
           <div style="width:3px; height:3px;"></div>
@@ -334,7 +334,7 @@ export default {
   border-radius: 50%;
   float: left;
 }
-.eraser > svg {
+.eraser > div > svg {
   color: white;
   height: auto;
   width: 30px;
