@@ -108,10 +108,20 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      username: this.$store.state.username, //to identify user
+      userinfo: this.$store.state.userinfo, //to identify user
       isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
-      turnToDraw: true,
+      teamnumber: this.$store.state.teamnumber,
+      teams: this.$store.state.teams,
+      // teams: [
+      //   {
+      //     text: "",  //n팀
+      //     currentpeople: "",  //현재 해당 팀 선택한 사람
+      //     teampeople: 0,  //해당 팀에 분배된 사람 수
+      //     disabled: "",  //버튼 비활성화
+      //   },
+      // ],
+      turnToDraw: this.userinfo.team == this.teams[0].text,
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
@@ -141,6 +151,12 @@ export default {
     console.log(this.socket);
     // console.log(this.$store.state.socket);
 
+    //문제 받아오기
+    if (this.isAdmin) {
+      this.getAnswer();
+    }
+    //타이머 시작
+
     // 3-1) on 함수들
     /* room and user */
     this.socket.on("disconnected", (user) => {
@@ -155,15 +171,15 @@ export default {
 
     /* chatting */
     this.socket.on("chat", (name, msg) => {
-      if (msg == this.answer) {
-        //정답이면
-        console.log(name, ": ", msg);
-      }
+      console.log(name, msg);
     });
 
-    /* answer checking */
+    /* answer setting */
     this.socket.on("answer", (answer) => {
       this.answer = answer; //answer 받아오기
+    });
+    this.socket.on("correct answer", (user) => {
+      this.answerMessage(user);
     });
 
     /* painting */
@@ -176,9 +192,6 @@ export default {
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
-    if (this.isAdmin) {
-      this.getAnswer();
-    }
   },
   methods: {
     /* to game play */
@@ -200,15 +213,36 @@ export default {
           console.log(err);
         });
     },
-    isAnswer(word) {
-      if (this.answer == word) {
-        this.socket.emit("right answer", this.username, this.answer);
-      }
-    },
+
     /* to game play - chatting */
     typeMessage() {
-      this.socket.emit("chat", this.username, this.text);
+      //text input for chatting - on keyup callback func
+      this.socket.emit("chat", this.userinfo.username, this.text);
+      if (this.text == this.answer) {
+        //정답이면
+        this.socket.emit("correct answer", this.userinfo);
+      }
       this.text = "";
+    },
+    answerMessage(user) {
+      //1.정답 애니메이션
+      console.log(user);
+
+      //2.점수 추가
+
+      //3.다음 턴으로 넘기기
+      this.currentTurn++;
+      if (this.currentTurn == this.teamnumber) this.currentTurn = 0;
+      //3-1.user의 순서면 그림 그리기 허용
+      this.turnToDraw =
+        this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
+
+      //4.새 문제 받아오기
+      if (this.isAdmin) {
+        this.getAnswer();
+      }
+
+      //5.새 타이머 시작
     },
     /* for painting */
     resizeHandler() {
@@ -318,7 +352,7 @@ export default {
   background-color: white;
   width: 30px;
   height: 30px;
-  border-radius: 10%;
+  border-radius: 50%;
   /* 자식 항목들을 정가운데로 정렬하기 위한 설정 */
   display: flex;
   justify-content: center;

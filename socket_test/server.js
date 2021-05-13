@@ -1,6 +1,7 @@
 // server.js
 
 var express = require("express");
+const { emit } = require("process");
 var app = express();
 var http = require("http").Server(app); //1
 var io = require("socket.io")(http, { cors: { origin: "*" } }); //1. **allow all cors**
@@ -117,6 +118,9 @@ io.on("connection", function (socket) {
     if (user == null) return;
     //back에서 받아온 정답을 모두에게 알림
     io.to(user.code).emit("answer", answer);
+  });
+  socket.on("correct answer", function (userinfo) {
+    io.to(user.code).emit("correct answer", userinfo);
   });
 
   /* painting function */

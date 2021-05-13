@@ -7,6 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     programme: [],
+    //현재 진행중인 컨텐츠. programme[]를 가리키는 인덱스
+    pidx: 0,
     userlist: [],
     userinfo: {
       username: "",
@@ -64,7 +66,7 @@ export default new Vuex.Store({
     SET_ADMINFLAG: function(state) {
       state.adminflag = 1;
     },
-    RESTORE_ADMINFLAG:function(state){
+    RESTORE_ADMINFLAG: function(state) {
       state.adminflag = 0;
     },
     myes: function(state) {
