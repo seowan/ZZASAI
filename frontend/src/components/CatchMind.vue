@@ -137,16 +137,6 @@ export default {
 
     // 3-1) on 함수들
     /* room and user */
-    this.socket.on("connect", () => {
-      console.log(this.socket.id);
-      this.socket.emit(
-        "info",
-        this.nickname,
-        this.roomCode,
-        this.adminFlag != 0 ? true : false
-      );
-    });
-
     this.socket.on("disconnected", (user) => {
       //방을 떠난 유저가 있을 때
       console.log("disconnected: ", user);
