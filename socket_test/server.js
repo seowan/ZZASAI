@@ -40,7 +40,7 @@ io.on("connection", function (socket) {
   console.log("user connected: ", socket.id);
 
   var user = null;
-  user = new User(socket.id,"aaa","aaawww12","false");
+  user = new User(socket.id, "aaa", "aaawww12", "false");
   socket.on("info", function (name, code, isAdmin) {
     user = new User(socket.id, name, code, isAdmin); //유저 정보 저장
     if (isAdmin) {
@@ -59,7 +59,7 @@ io.on("connection", function (socket) {
       for (var room of rooms) {
         if (room.code == code) {
           room.userlist.push(user);
-          io.to(user.code).emit("room", room); //변화된 방 정보 모두에게 알리기
+          io.to(user.code).emit("room", room.userlist); //변화된 방 정보 모두에게 알리기
           break;
         }
       }
@@ -105,6 +105,20 @@ io.on("connection", function (socket) {
     // console.log(rooms);
   });
 
+  /* chatting */
+  socket.on("chat", function (name, msg) {
+    if (user == null) return;
+    io.to(user.code).emit("chat", name, msg);
+  });
+
+  /* checking answer */
+  socket.on("answer", function (answer) {
+    //방장이 정답을 back에서 받아와서 서버에 알림
+    if (user == null) return;
+    //back에서 받아온 정답을 모두에게 알림
+    io.to(user.code).emit("answer", answer);
+  });
+
   /* painting function */
   socket.on("begin path", function (x, y) {
     if (user == null) return;
@@ -120,15 +134,17 @@ io.on("connection", function (socket) {
   });
 
   /*card function*/
-  socket.on("cardselect",function(cardno,target_id, cardlist, backgroundlist){
-    console.log("cardselected!!!");
-    io.emit("cardselected",cardno,target_id, cardlist, backgroundlist);
-  }),
-
-  socket.on("firstinit",function(backgroundlist){
-    console.log("신호 오나봅시당");
-    io.emit("setinit",backgroundlist);
-  })
+  socket.on(
+    "cardselect",
+    function (cardno, target_id, cardlist, backgroundlist) {
+      console.log("cardselected!!!");
+      io.emit("cardselected", cardno, target_id, cardlist, backgroundlist);
+    }
+  ),
+    socket.on("firstinit", function (backgroundlist) {
+      console.log("신호 오나봅시당");
+      io.emit("setinit", backgroundlist);
+    });
 });
 
 //4

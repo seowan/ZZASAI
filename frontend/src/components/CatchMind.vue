@@ -72,7 +72,9 @@
     </div>
 
     <!--채팅 위치-->
-    <div v-if="turnToDraw == false" class="game-support"></div>
+    <div v-if="turnToDraw == false" class="game-support">
+      <input type="text" v-model="text" @keyup.enter="typeMessage" />
+    </div>
   </div>
 </template>
 
@@ -100,12 +102,12 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      nickname: this.$store.state.username, //to identify user
+      username: this.$store.state.username, //to identify user
       roomCode: this.$store.state.roomcode,
       roomName: this.$store.state.roomname,
-      adminFlag: this.$store.state.adminflag,
+      isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
-      turnToDraw: true,
+      turnToDraw: false,
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
@@ -141,15 +143,20 @@ export default {
       //방을 떠난 유저가 있을 때
       console.log("disconnected: ", user);
     });
-    this.socket.on("room", (room) => {
+    this.socket.on("room", (users) => {
       //유저 정보 변화가 있을 때
-      this.users = room;
+      this.users = users;
       console.log("changed user list: ", this.users);
+    });
+
+    /* chatting */
+    this.socket.on("chat", (name, msg) => {
+      console.log(name, ": ", msg);
     });
 
     /* answer checking */
     this.socket.on("answer", (answer) => {
-      this.answer = answer;
+      this.answer = answer; //answer 받아오기
     });
 
     /* painting */
@@ -162,8 +169,9 @@ export default {
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
-
-    this.getWord();
+    if (this.isAdmin) {
+      this.getAnswer();
+    }
   },
   methods: {
     /* to game play */
@@ -178,8 +186,8 @@ export default {
         },
       })
         .then((res) => {
-          this.answer = res.data.answer;
-          this.socket.emit("answer", this.answer);
+          // this.answer = res.data.answer;  //서버에서 emit해서 받을 거라 굳이 필요 없음
+          this.socket.emit("answer", res.data.answer);
         })
         .catch((err) => {
           console.log(err);
@@ -187,8 +195,13 @@ export default {
     },
     isAnswer(word) {
       if (this.answer == word) {
-        this.socket.emit("right answer", this.answer, this.nickname);
+        this.socket.emit("right answer", this.username, this.answer);
       }
+    },
+    /* to game play - chatting */
+    typeMessage() {
+      this.socket.emit("chat", this.username, this.text);
+      this.text = "";
     },
     /* for painting */
     resizeHandler() {
