@@ -1,6 +1,9 @@
 <template>
   <!-- 질문 카드 게임 -->
   <div id="card-play" class="my-0 py-0">
+    <div style="background-image: ">
+      
+    </div>
     <!-- <h3> 질문 카드 게임 </h3> -->
     <div v-if="cardImageFront" class="scene scene--card my-0 py-0">
       <div class="card" @click="flipCard">
@@ -92,6 +95,10 @@ export default {
             alert("오류가 발생했습니다. 다시 시도하세요");
           });
     },
+  },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp5642739.jpg' + ')'
   },
   async mounted () {
     await this.getData()

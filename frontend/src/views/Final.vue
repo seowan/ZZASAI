@@ -65,11 +65,12 @@ export default {
       window.location = "http://localhost:8081";
     },
   },
-  async created () {
-    await this.calScores()
-
+  created () {
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTdfMTI1/MDAxNTg0MzczNzk2MTQ0._vIJo7E7YznPdR-vuJaAW5mi1kbK6YT390HW_ZHDRhkg.67Akq565cnkh4StUIJ9IHtkAzMXbbowefhXYiq0d67Ug.JPEG.se___ovo/%EB%85%B8%ED%8A%B8%EB%B6%81%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B402.jpg?type=w800' + ')';
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365447.png' + ')';
+  },
+  async mounted () {
+    await this.calScores()
   },
 }
 </script>

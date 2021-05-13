@@ -146,8 +146,7 @@ export default {
   },
   created () {
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'http://i.imgur.com/n0WLCWr.png' + ')';
-    // body.style.opacity = 0.5;
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp4718598.jpg' + ')';
   },
 };
 </script>

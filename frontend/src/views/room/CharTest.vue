@@ -33,7 +33,7 @@ export default {
   },
   created () {
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://mblogthumb-phinf.pstatic.net/MjAxNzA3MjNfNDUg/MDAxNTAwNzk1Mjg5NjYz.luYmZsoLIRRHss1nHemnIc0l3ZqbJlUkA7rUyVh77uwg.I5GQet-u8sWnztF65KyNqB-xrALeAujtPtgFnzfGkAsg.PNG.badpark/1920x1080-004.png?type=w800' + ')';
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365737.jpg' + ')';
   },
 }
 

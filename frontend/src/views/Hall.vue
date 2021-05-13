@@ -105,7 +105,7 @@ export default {
   },
   created () {
     var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://i.pinimg.com/originals/d9/64/c3/d964c3a16e40d392500e03bde203ae58.jpg' + ')';
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365486.png' + ')';
   },
   mounted() {
     this.$store.state.socket = this.socket;
