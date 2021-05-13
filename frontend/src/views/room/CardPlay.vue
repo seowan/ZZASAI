@@ -43,33 +43,31 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
-      console.log(no);
-      console.log(this.cards[no].cardname); //yellow6등...카드 이름
-      this.socket.emit("cardselect",no,target_id,this.cards,this.cards[no].cardname);
-      // this.afterClickCard(no,target_id,this.cards,this.cards[no].cardname);
-    },
-    afterClickCard(no, target_id, cards,targetname){
-      console.log(no);
-      console.log(targetname);
-      // 선택하면 기존 카드는 background 리스트에서 삭제하기!
-      if (this.selected_card_no != null && this.selected_card_no != no) {
-        // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
-        var item = document.getElementById(this.selected_card_id)
-        item.remove()
-      } 
-     
-      var card = document.querySelector('.card');
-      if (card) {
-        card.classList.remove('is-flipped')
-      }
-
-      this.selected_card_no = no
-      this.selected_card_front = cards[no]["cardurl_front"]
-      this.selected_card_id = target_id
-      this.selected_card_back = cards[no]["cardurl_back"]
-
+      this.socket.emit("cardselect",no,target_id,this.cards[no].cardname);
 
     },
+    // afterClickCard(no, target_id){
+    //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
+
+    //   if (this.selected_card_no != null && this.selected_card_no != no) {
+    //     // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
+    //     var item = document.getElementById(this.selected_card_id)
+    //     console.log("delete");
+    //     item.remove()
+    //   } 
+
+    //   var card = document.querySelector('.card');
+    //   if (card) {
+    //     card.classList.remove('is-flipped')
+    //   }
+
+    //   this.selected_card_no = no
+    //   this.selected_card_front = this.cards[no]["cardurl_front"]
+    //   this.selected_card_id = target_id
+    //   this.selected_card_back = this.cards[no]["cardurl_back"]
+
+
+    // },
     flipCard() {
       var card = document.querySelector('.card');
       card.classList.toggle('is-flipped');
@@ -102,25 +100,39 @@ export default {
     //방장일경우 처음 한번만 카드 리스트 넘겨줌
     if (this.$store.state.adminflag==1 && this.checkflag==0) {      
       CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
-      console.log(this.checkflag);
       this.checkflag=1;
-      console.log(this.checkflag);
       //소켓
       this.socket.emit("firstinit",this.cards,backgroundImages);
     }
 
     //처음 한번만 다른 사람들이 카드 리스트를 받는다
     this.socket.on("setinit",(cards,backgroundImages)=>{
-      console.log("신호 받아지나 테스트");
       if (this.$store.state.adminflag==0) {
         this.cards = cards;
-        CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
+        this.backgroundImages = backgroundImages;
+        CMRotate.init('rotate-div', 200, 300, 50, 30, 200, this.backgroundImages, this.clickCard);
       }
     })
-
+    
     //카드 선택 시 소켓통신
-    this.socket.on("cardselected",(no,target_id, cards,targetname)=>{
-    this.afterClickCard(no,target_id,cards,targetname);
+    this.socket.on("cardselected",(no,target_id)=>{
+      // this.afterClickCard(no,target_id);
+      //이렇게짜면 보이지않는 카드는 삭제가 안됨!!
+      //보이지 않더라도 카드는 삭제되야함!!!!!!흠....
+      console.log(target_id);
+      console.log(no);
+      if (no != null && target_id != no) {
+        var item = document.getElementById(target_id)
+        item.remove()
+      } 
+
+      var card = document.querySelector('.card');
+      if (card) {
+        card.classList.remove('is-flipped')
+      }
+
+      this.selected_card_front = this.cards[no]["cardurl_front"]
+      this.selected_card_back = this.cards[no]["cardurl_back"]
     })
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
 

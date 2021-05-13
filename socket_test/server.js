@@ -120,13 +120,11 @@ io.on("connection", function (socket) {
   });
 
   /*card function*/
-  socket.on("cardselect",function(cardno,target_id, cardlist,targetname){
-    console.log("cardselected!!!");
-    io.emit("cardselected",cardno,target_id, cardlist,targetname);
+  socket.on("cardselect",function(cardno,target_id, targetname){
+    io.emit("cardselected",cardno,target_id, targetname);
   }),
 
   socket.on("firstinit",function(cardlist,backgroundlist){
-    console.log("신호 오나봅시당");
     io.emit("setinit",cardlist,backgroundlist);
   })
 });
