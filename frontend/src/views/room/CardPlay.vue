@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
-      // this.socket.emit("cardselect",no,target_id,this.cards, backgroundImages);
+      this.socket.emit("cardselect",no,target_id,this.cards);
       this.afterClickCard(no,target_id,this.cards);
     },
     afterClickCard(no, target_id, cards){
@@ -95,27 +95,29 @@ export default {
   },
   async mounted () {
     await this.getData()
+    //방장일경우 처음 한번만 카드 리스트 넘겨줌
     if (this.$store.state.adminflag==1 && this.checkflag==0) {      
       CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
       console.log(this.checkflag);
       this.checkflag=1;
       console.log(this.checkflag);
-      this.socket.emit("firstinit",backgroundImages);
+      //소켓
+      this.socket.emit("firstinit",this.cards,backgroundImages);
     }
 
-    this.socket.on("setinit",(backgroundImages)=>{
+    //처음 한번만 다른 사람들이 카드 리스트를 받는다
+    this.socket.on("setinit",(cards,backgroundImages)=>{
       console.log("신호 받아지나 테스트");
       if (this.$store.state.adminflag==0) {
+        this.cards = cards;
         CMRotate.init('rotate-div', 200, 300, 50, 30, 200, backgroundImages, this.clickCard);
       }
     })
 
-        this.socket.on("cardselected",(no,target_id, cards, backgroundImages)=>{
-        console.log("card : "+no);
-        console.log("cards : "+ cards);
-        console.log("background : "+ backgroundImages);
-        this.afterClickCard(no,target_id,cards);
-      })
+    //카드 선택 시 소켓통신
+    this.socket.on("cardselected",(no,target_id, cards)=>{
+    this.afterClickCard(no,target_id,cards);
+    })
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
 
   },
