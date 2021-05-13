@@ -103,6 +103,10 @@ export default {
       room_data: {},
     };
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://i.pinimg.com/originals/d9/64/c3/d964c3a16e40d392500e03bde203ae58.jpg' + ')';
+  },
   mounted() {
     this.$store.state.socket = this.socket;
   },
@@ -151,7 +155,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 body {
-  background-image: url("~@/assets/bgs/hall.jpg");
+  /* background-image: url("~@/assets/bgs/hall.jpg"); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-size: cover;

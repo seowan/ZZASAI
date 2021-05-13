@@ -144,6 +144,10 @@ export default {
       }
     },
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://i.pinimg.com/originals/a7/4a/a4/a74aa4316568e3e2bdc07ec80d144dd6.jpg' + ')';
+  },
 };
 </script>
 
@@ -153,7 +157,7 @@ html {
 }
 
 body {
-  background-image: url("~@/assets/bgs/create_hall.png");
+  // background-image: url("~@/assets/bgs/create_hall.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* opacity: 0.5; */
