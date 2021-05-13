@@ -43,10 +43,14 @@ export default {
   },
   methods: {
     clickCard (no, target_id) {
-      this.socket.emit("cardselect",no,target_id,this.cards);
-      this.afterClickCard(no,target_id,this.cards);
+      console.log(no);
+      console.log(this.cards[no].cardname); //yellow6등...카드 이름
+      this.socket.emit("cardselect",no,target_id,this.cards,this.cards[no].cardname);
+      // this.afterClickCard(no,target_id,this.cards,this.cards[no].cardname);
     },
-    afterClickCard(no, target_id, cards){
+    afterClickCard(no, target_id, cards,targetname){
+      console.log(no);
+      console.log(targetname);
       // 선택하면 기존 카드는 background 리스트에서 삭제하기!
       if (this.selected_card_no != null && this.selected_card_no != no) {
         // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
@@ -115,8 +119,8 @@ export default {
     })
 
     //카드 선택 시 소켓통신
-    this.socket.on("cardselected",(no,target_id, cards)=>{
-    this.afterClickCard(no,target_id,cards);
+    this.socket.on("cardselected",(no,target_id, cards,targetname)=>{
+    this.afterClickCard(no,target_id,cards,targetname);
     })
       // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
 
