@@ -17,6 +17,18 @@ const User = class {
   }
 };
 
+const Userlist_boolean = class {
+  constructor(roomcode, username, userlist, userlist_boolean) {
+    this.roomcode = roomcode;
+    this.username = username;
+    this.userlist = userlist;
+    this.userlist_boolean = userlist_boolean;
+  }
+  str() {
+    console.log(this.roomcode, this.username, this.userlist, this.userlist_boolean);
+  }
+};
+
 const Room = class {
   constructor(code, userlist) {
     this.code = code;
@@ -116,6 +128,43 @@ io.on("connection", function (socket) {
   socket.on("clear all", function () {
     if (user == null) return;
     io.to(user.code).emit("cleared all");
+  });
+
+  userlist_boolean = new Array();
+
+  socket.on("mbti", function (roomcode, username, userlist, mbtivalue) {
+    const index = userlist.indexOf(username);
+        if (index !== -1) {
+          console.log(userlist);
+          console.log(username);
+          console.log(mbtivalue);
+          if(userlist_boolean.length < userlist.length){
+            for(var i=0; i<userlist.length; i++) {
+              userlist_boolean.push(false);
+            }
+          }
+          userlist_boolean[index] = mbtivalue;
+          console.log(userlist_boolean);
+        }
+    userboolean = new Userlist_boolean(roomcode, username, userlist, userlist_boolean);
+    io.emit("userboolean", userboolean);
+  });
+  socket.on("mbti2", function (roomcode, username, userlist, mbtivalue) {
+    const index = userlist.indexOf(username);
+        if (index !== -1) {
+          console.log(roomcode);
+          console.log(userlist);
+          console.log(username);
+          console.log(mbtivalue);
+          userboolean.userlist_boolean[index] = mbtivalue;
+          console.log(userlist_boolean);
+        }
+    io.emit("userboolean", userboolean);
+    if(!userboolean.userlist_boolean.includes(false))
+    {
+      console.log("false없음 !! 모두 mbti 완료 !");
+      io.emit("mbtifinish", userboolean);
+    }
   });
 });
 
