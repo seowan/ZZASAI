@@ -70,6 +70,7 @@
       <Drawing />
       <Exam />
     </div>
+    <Test />
     <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
@@ -80,8 +81,9 @@ import Card from "@/components/hall/Card";
 import Drawing from "@/components/hall/Drawing";
 import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
-
+import Test from "@/views/Test";
 import axios from "axios";
+import io from "socket.io-client";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -93,20 +95,42 @@ export default {
     Drawing,
     Exam,
     RoomCode,
+    Test,
   },
   data() {
     return {
+      socket: io("localhost:3000"),
       order_mark: "",
       roomcode: this.$route.params.roomcode,
       room_data: {},
     };
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365486.png' + ')';
+  },
+  mounted() {
+    this.$store.state.socket = this.socket;
+
+    this.socket.on("connect", () => {
+      console.log(this.socket.id);
+      this.socket.emit(
+        "info",
+        this.$store.state.userinfo.username,
+        this.roomcode,
+        this.adminFlag != 0 ? true : false
+      );
+    });
+    
+  },
   methods: {
     getRoomData: function() {
       axios({
         method: "get",
-        url: `api/room/info/?roomcode=${this.roomcode}`,
+        // url: `api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        //url: `api/room/info/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -144,7 +168,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 body {
-  background-image: url("~@/assets/bgs/hall.jpg");
+  /* background-image: url("~@/assets/bgs/hall.jpg"); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-size: cover;

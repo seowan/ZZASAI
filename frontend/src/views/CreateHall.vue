@@ -120,9 +120,12 @@ export default {
         alert("하이");
         axios({
           method: "post",
-          url: `api/room/create/`,
-          // url: `http://localhost:8080/api/room/create/`,
+          //url: `api/room/create/`,
+          url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
+          //url: `http://localhost:8080/api/room/create/`,
+          // url: `${SERVER_URL}/api/room/create/`,
+          
           data: JSON.stringify(context),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -144,6 +147,10 @@ export default {
       }
     },
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp4718598.jpg' + ')';
+  },
 };
 </script>
 
@@ -153,7 +160,7 @@ html {
 }
 
 body {
-  background-image: url("~@/assets/bgs/create_hall.png");
+  // background-image: url("~@/assets/bgs/create_hall.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* opacity: 0.5; */
@@ -161,6 +168,7 @@ body {
   height: 100%;
   /* overflow: hidden; */
 }
+
 .create-hall {
   margin: 0;
   height: 100%;
