@@ -105,9 +105,10 @@ export default {
       room_data: {},
     };
   },
-  created () {
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365486.png' + ')';
+  created() {
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
     this.$store.state.socket = this.socket;
@@ -121,7 +122,6 @@ export default {
         this.adminFlag != 0 ? true : false
       );
     });
-    
   },
   methods: {
     getRoomData: function() {

@@ -10,7 +10,7 @@
       @ok="handleOk"
       ok-only
     >
-      <form ref="form" @submit.stop.prevent="submitTeamNumber">
+      <form ref="form" @submit.stop.prevent="submitTeamSetting">
         <b-form-group
           label="나누려는 팀 수를 입력해주세요"
           invalid-feedback="팀 수를 입력해주세요"
@@ -19,22 +19,51 @@
           <b-form-input
             v-model="teamNumber"
             :state="numberState"
+            placeholder="ex) 4"
             required
           ></b-form-input>
         </b-form-group>
+        <div>
+          <b-form-group
+            label="한 사람에게 주어지는 시간을 선택하세요"
+            v-slot="{ ariaDescribedby }"
+          >
+            <b-form-radio
+              v-model="timer"
+              :aria-describedby="ariaDescribedby"
+              name="some-radios"
+              value="2"
+              >2초</b-form-radio
+            >
+            <b-form-radio
+              v-model="timer"
+              :aria-describedby="ariaDescribedby"
+              name="some-radios"
+              value="3"
+              >3초</b-form-radio
+            >
+            <b-form-radio
+              v-model="timer"
+              :aria-describedby="ariaDescribedby"
+              name="some-radios"
+              value="5"
+              >5초</b-form-radio
+            >
+          </b-form-group>
+        </div>
       </form>
     </b-modal>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "Teamdividemodal",
   components: {},
   data() {
     return {
       teamNumber: "",
+      timer: 3,
       numberState: null,
       totalPeople: "30",
     };
@@ -45,10 +74,6 @@ export default {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
     },
   },
-
-  computed: {
-    ...mapState(["teams", "userlist"]),
-  },
   methods: {
     checkFormValidity() {
       //   const valid = this.$refs.form.checkValidity();
@@ -58,6 +83,9 @@ export default {
 
         // 방장이 선택한 팀 개수 저장
         this.$store.state.teamnumber = this.teamNumber;
+
+        // 방장이 선택한 1인당 시간 저장
+        this.$store.state.timer = this.timer;
 
         var teamPeople = [];
         var addPeople = this.totalPeople % this.teamNumber;
@@ -81,12 +109,14 @@ export default {
             text: i + 1 + "팀",
             currentpeople: 0,
             totalpeople: teamPeople[i],
+            joinlist: {},
             disabled: false,
             score: 0,
           });
         }
 
-        console.log(this.$store.state.teams);
+        // console.log(this.$store.state.teams);
+        // console.log(this.$store.state.timer);
         this.$router.push({ name: "SelectTeam" });
       } else {
         alert("다시 입력하세요");
@@ -100,9 +130,9 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.submitTeamNumber();
+      this.submitTeamSetting();
     },
-    submitTeamNumber() {
+    submitTeamSetting() {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
