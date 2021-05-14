@@ -1,13 +1,12 @@
 <template>
-
   <div class="grid-wrapper">
     <!-- <timer></timer> -->
     <user-video
-          class="user-videos"
-          v-for="sub in subscribers"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-        />
+      class="user-videos"
+      v-for="sub in subscribers"
+      :key="sub.stream.connection.connectionId"
+      :stream-manager="sub"
+    />
     <div>
       <input type="text" v-model="name" />
       <input type="text" v-model="team" />
@@ -170,7 +169,7 @@ export default {
       this.getAnswer();
     }
     //타이머 시작
-    
+
     // 3-1) ctx 관련 정보 수신
     this.socket.on("connect", () => {
       console.log(this.socket.id);
@@ -365,7 +364,6 @@ export default {
     "left temp right";
 }
 .rtc {
-
 }
 .rtc#left-rtc {
   grid-area: left;
