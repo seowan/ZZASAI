@@ -111,7 +111,7 @@ export default {
     createToken: function(sessionId) {
       return new Promise((resolve, reject) => {
         axios
-          .post(
+          .get(
             `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${sessionId}/connection`,
             {},
             {
