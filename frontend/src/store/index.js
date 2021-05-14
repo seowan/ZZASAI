@@ -26,6 +26,7 @@ export default new Vuex.Store({
     b: 0,
     t: 0,
     i: 0,
+    socket: null,
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {
@@ -52,36 +53,6 @@ export default new Vuex.Store({
     },
     SET_ADMINFLAG: function(state) {
       state.adminflag = 1;
-    },
-    myes: function(state) {
-      state.m = 1;
-    },
-    mno: function(state) {
-      state.m = 2;
-    },
-    byes: function(state) {
-      state.b = 1;
-    },
-    bno: function(state) {
-      state.b = 2;
-    },
-    tyes: function(state) {
-      state.t = 1;
-    },
-    tno: function(state) {
-      state.t = 2;
-    },
-    iyes: function(state) {
-      state.i = 1;
-    },
-    ino: function(state) {
-      state.i = 2;
-    },
-    PUSH_USERLIST: function(state, name){
-      state.userlist.push(name);
-    },
-    PUSH_USERLIST_BOOLEAN: function(state, bool){
-      state.userlist_boolean.push(bool);
     },
   },
   actions: {},

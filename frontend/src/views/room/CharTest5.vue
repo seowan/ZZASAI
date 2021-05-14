@@ -24,11 +24,11 @@ export default {
       this.$router.push('/char-test6');
     },
     iyes: function () {
-      this.$store.commit('iyes')
+      this.$store.state.i = 1;
       this.$router.push('/char-test6');
     },
     ino: function () {
-      this.$store.commit('ino')
+      this.$store.state.i = 2;
       this.$router.push('/char-test6');
     },
   }

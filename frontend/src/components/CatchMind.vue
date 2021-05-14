@@ -1,5 +1,18 @@
 <template>
+
   <div class="grid-wrapper">
+    <user-video
+          class="user-videos"
+          v-for="sub in subscribers"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+        />
+    <div>
+      <input type="text" v-model="name" />
+      <input type="text" v-model="team" />
+      <button @click="beAdmin">방장</button>
+      <button @click="sendInfo">완료!</button>
+    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <canvas
@@ -22,6 +35,7 @@
         ></div>
       </div>
       <div class="sizePicker">
+        <!--size handler 3type-->
         <div @click="strokeSizeHandler(1)">
           <div style="width:3px; height:3px;"></div>
         </div>
@@ -76,10 +90,13 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+import UserVideo from "@/components/UserVideo";
 
 export default {
   name: "CatchMind",
+  components: {
+    UserVideo,
+  },
   data() {
     return {
       painting: false,
@@ -101,12 +118,19 @@ export default {
       nickname: this.$store.state.username, //to identify user
       roomCode: this.$store.state.roomcode,
       roomName: this.$store.state.roomname,
-      turnToDraw: true,
+      adminFlag: this.$store.state.adminflag,
       users: [], //all user list
+      turnToDraw: true,
       currentTurn: 0, //team number of current turn
 
+      //test용 데이터
+      name: "",
+      team: "",
+      isAdmin: false,
+
       // 1) 서버와 연결
-      socket: io("localhost:3000"), //url:port
+      // socket: io("localhost:3000"), //url:port
+      socket: this.$store.state.socket,
 
       text: "",
       messages: [],
@@ -127,10 +151,19 @@ export default {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
+    // this.$store.state.socket = this.socket;
+    console.log(this.socket);
+    // console.log(this.$store.state.socket);
+    
     // 3-1) ctx 관련 정보 수신
     this.socket.on("connect", () => {
-      console.log(this.socket.id); // x8WIv7-mJelg7on_ALbx
-      this.socket.emit("info", "gyu", "123ABC", true);
+      console.log(this.socket.id);
+      this.socket.emit(
+        "info",
+        this.nickname,
+        this.roomCode,
+        this.adminFlag != 0 ? true : false
+      );
     });
 
     this.socket.on("duplicated code", () => {
@@ -140,6 +173,11 @@ export default {
     this.socket.on("disconnected", (user) => {
       //방을 떠난 유저가 있을 때
       console.log("disconnected: ", user);
+    });
+    this.socket.on("room", (room) => {
+      //유저 정보 변화가 있을 때
+      this.users = room;
+      console.log("changed user list: ", this.users);
     });
 
     /* painting */
@@ -154,6 +192,14 @@ export default {
     });
   },
   methods: {
+    /* for test */
+    beAdmin() {
+      this.isAdmin = true;
+    },
+    sendInfo() {
+      this.socket.emit("info", this.name, this.team, this.isAdmin);
+    },
+    /* for painting */
     resizeHandler() {
       //resize 될 때마다 canvas size 조정
       this.canvasWidth = window.innerWidth * 0.4; //innerWidth, innerHeight 비율에 맞춰서 조정 필요
@@ -229,7 +275,7 @@ export default {
     "left temp right";
 }
 .rtc {
-  background-color: lightslategray;
+
 }
 .rtc#left-rtc {
   grid-area: left;

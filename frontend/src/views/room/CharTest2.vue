@@ -17,20 +17,26 @@
 <script>
 export default {
   data() {
-      return {
-        
+      return {  
+        socket: this.$store.state.socket,
       }
+  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
   },
   methods: {
     next() {
       this.$router.push('/char-test3');
     },
     myes: function () {
-      this.$store.commit('myes')
+      this.$store.state.m = 1;
       this.$router.push('/char-test3');
     },
     mno: function () {
-      this.$store.commit('mno')
+      this.$store.state.m = 2;
       this.$router.push('/char-test3');
     },
   }

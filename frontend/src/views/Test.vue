@@ -7,6 +7,7 @@
         <!-- 내 비디오 -->
         <!-- <user-video class="my-video" :stream-manager="publisher" /> -->
         <!-- 전체 비디오 -->
+        
         <user-video
           class="user-videos"
           v-for="sub in subscribers"
@@ -33,8 +34,8 @@ import UserVideo from "@/components/UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-const OPENVIDU_SERVER_URL = "https://k4a205.p.ssafy.io";
+const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+//const OPENVIDU_SERVER_URL = "https://k4a205.p.ssafy.io";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 export default {
@@ -212,9 +213,9 @@ export default {
           this.mainStreamManager = publisher;
           // 유저 subscriber에 나도 추가
           this.subscribers.push(publisher);
-          this.session.publish(this.publisher); 
-          this.PUSH_USERLIST(this.$store.state.username);
-          this.PUSH_USERLIST_BOOLEAN(false);
+          this.session.publish(this.publisher);
+          this.$store.state.userlist.push(this.$store.state.username);
+          this.$store.state.userlist_boolean.push(false);
           console.log("끝");
           })
         .catch((err) => console.log("세션 커넥트 에러", err.code, err.message));

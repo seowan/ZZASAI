@@ -70,6 +70,7 @@
       <Drawing />
       <Exam />
     </div>
+    <Test />
     <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
@@ -80,10 +81,11 @@ import Card from "@/components/hall/Card";
 import Drawing from "@/components/hall/Drawing";
 import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
-
+import Test from "@/views/Test";
 import axios from "axios";
+import io from "socket.io-client";
 
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -93,21 +95,30 @@ export default {
     Drawing,
     Exam,
     RoomCode,
+    Test,
   },
   data() {
     return {
+      socket: io("localhost:3000"),
       order_mark: "",
       roomcode: this.$route.params.roomcode,
       room_data: {},
     };
+  },
+  mounted() {
+    this.$store.state.socket = this.socket;
+    console.log(this.$store.state.socket);
+    console.log("소켓끝");
+    console.log(this.$store.state.roomcode);
+    
   },
   methods: {
     getRoomData: function() {
       axios({
         method: "get",
         //url: `api/room/info/?roomcode=${this.roomcode}`,
-        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
+        //url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },

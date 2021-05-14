@@ -41,9 +41,7 @@ io.on("connection", function (socket) {
 
   var user = null;
   socket.on("info", function (name, code, isAdmin) {
-    socket.join(code);
     user = new User(socket.id, name, code, isAdmin); //유저 정보 저장
-    // console.log(user, "hey");
     if (isAdmin) {
       //방장이라면, 방 코드 유일값인지 확인
       for (var room of rooms) {
@@ -60,10 +58,12 @@ io.on("connection", function (socket) {
       for (var room of rooms) {
         if (room.code == code) {
           room.userlist.push(user);
+          io.to(user.code).emit("room", room); //변화된 방 정보 모두에게 알리기
           break;
         }
       }
     }
+    socket.join(code);
     console.log(socket.rooms);
     // if (rooms != null) {
     //   console.log(rooms[0].userlist);
@@ -73,50 +73,48 @@ io.on("connection", function (socket) {
   socket.on("disconnect", function () {
     //3-2. client disconnected
     console.log("user disconnected: ", socket.id);
-    if (user != null) {
-      if (user.isAdmin) {
-        //방장일 경우
-        for (var i in rooms) {
-          if (rooms[i].userlist[0] == user) {
-            console.log("admin is leaving");
-            io.to(user.code).emit("disconnected", rooms[i].userlist[0]); //모두에게 알려주기
-            if (!rooms[i].nextAdmin()) {
-              //방장바꾸기 시도
-              console.log("empty room. erase it");
-              rooms.splice(i, 1); //실패하면, 마지막 사람므로 방 삭제
-            }
-            break;
+    if (user == null) return;
+
+    for (var i in rooms) {
+      if (rooms[i].code == user.code) {
+        console.log("room found");
+
+        if (user.isAdmin) {
+          console.log("admin is leaving");
+          //방장바꾸기 시도. if문 하나로 합쳐도 됨
+          if (!rooms[i].nextAdmin()) {
+            console.log("empty room. erase it");
+            rooms.splice(i, 1); //실패하면, 마지막 사람므로 방 삭제
+          }
+        } else {
+          //방장이 아닐 경우
+          for (var j in rooms[i].userlist) {
+            if (rooms[i].userlist[j].id == socket.id) {
+              console.log("user found", rooms[i].userlist[j]);
+              rooms[i].userlist.splice(j, 1); //삭제
+              break;
+            } //유저 찾음
           }
         }
-      } else {
-        console.log("member is leaving");
-        for (var room of rooms) {
-          if (room.code == user.code) {
-            console.log("room found");
-            for (var i in room.userlist) {
-              if (room.userlist[i].id == socket.id) {
-                console.log("user found", room.userlist[i]);
-                io.to(user.code).emit("disconnected", room.userlist[i]); //모두에게 알려주기
-                room.userlist.splice(i, 1); //삭제
-                break;
-              } //유저 찾음
-            }
-            break;
-          } //속한 방 찾음
-        } //for loop
-      } //방장 아닐 경우
+        io.to(user.code).emit("disconnected", user); //모두에게 알려주기
+        io.to(user.code).emit("room", rooms[i]); //변화된 방 정보 모두에게 알리기
+        break;
+      }
     }
     // console.log(rooms);
   });
 
   /* painting function */
   socket.on("begin path", function (x, y) {
+    if (user == null) return;
     io.to(user.code).emit("began path", x, y);
   });
   socket.on("stroke path", function (x, y, color, size) {
+    if (user == null) return;
     io.to(user.code).emit("stroked path", x, y, color, size);
   });
   socket.on("clear all", function () {
+    if (user == null) return;
     io.to(user.code).emit("cleared all");
   });
 });
