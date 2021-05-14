@@ -45,7 +45,7 @@ export default {
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365737.jpg' + ')';
 
-    this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
+    this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
     this.$store.state.userlist, false);
     this.$router.push('/char-test2');
 

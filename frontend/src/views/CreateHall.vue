@@ -105,7 +105,7 @@ export default {
           game1: this.list2[0].id,
           game2: "",
           game3: "",
-          roomAdmin: this.$store.state.username,
+          roomAdmin: this.$store.state.userinfo.username,
           roomCode: this.$store.state.roomcode,
           roomName: this.$store.state.roomname,
         };

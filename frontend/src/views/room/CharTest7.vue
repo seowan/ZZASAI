@@ -1,148 +1,144 @@
 <template>
 <div>
     <h1>모든 유저의 성격분류가 완료되었습니다.</h1>
-    <h2>여기를 어떻게 해야 이쁠지 고민중..</h2>
     <div class="py-3 my-1"></div>
       <div class="row">
        <div v-for="(userlist_boolean,index) in this.$store.state.userlist_boolean" :key="userlist_boolean" class="col-3">
           <div class="scene scene--card">
-            <div class="card" @click="flipCard" v-if="userlist_boolean==2121">
+            <div id="octopus" class="card" @click="flipCard('octopus')" v-if="userlist_boolean==2121">
               <img class="cover" src="~@/assets/mbti2/octopus.png" />
               <div class="card__face card__face--back">
-                <h2>INTJ 문어 {{$store.state.userlist[index]}}</h2>
-                <h3>#합리적 #독립성 #합리적 #독립성</h3>
+                <h2><br>INTJ 문어 {{$store.state.userlist[index]}}</h2>
+                <h3>#합리적 #독립성<br>#합리적 #독립성<br><br>환상의짝꿍<br>#돌고래 #여우</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2122">
+            <div id="Lizard" class="card" @click="flipCard('Lizard')" v-else-if="userlist_boolean==2122">
               <img class="cover" src="~@/assets/mbti2/Lizard.png" />
               <div class="card__face card__face--back">
-                <h2>INTP 도마뱀 {{$store.state.userlist[index]}}</h2>
-                <h3>#분석적 #독창적 #개방적 #호기심</h3>
+                <h2><br>INTP 도마뱀 {{$store.state.userlist[index]}}</h2>
+                <h3>#분석적 #독창적<br>#개방적 #호기심<br><br>환상의짝꿍<br>#치타</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1121">
+            <div id="cheetah" class="card" @click="flipCard('cheetah')" v-else-if="userlist_boolean==1121">
               <img class="cover" src="~@/assets/mbti2/cheetah.png" />
               <div class="card__face card__face--back">
-                <h2>ENTJ 치타 {{$store.state.userlist[index]}}</h2>
-                <h3>#자신감 #카리스마 #자신감 #카리스마</h3>
+                <h2><br>ENTJ 치타 {{$store.state.userlist[index]}}</h2>
+                <h3>#자신감 #카리스마<br>#자신감 #카리스마<br><br>환상의짝꿍<br>#코끼리 #도마뱀</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1122">
+            <div id="fox" class="card" @click="flipCard('fox')" v-else-if="userlist_boolean==1122">
               <img class="cover" src="~@/assets/mbti2/fox.png" />
               <div class="card__face card__face--back">
-                <h2>ENTP 여우 {{$store.state.userlist[index]}}</h2>
-                <h3>#지적 #독창적 #카리스마 #열정적</h3>
+                <h2><br>ENTP 여우 {{$store.state.userlist[index]}}</h2>
+                <h3>#지적 #독창적<br>#카리스마 #열정적<br><br>환상의짝꿍<br>#해마 #코끼리</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2111">
+            <div id="hippocampus" class="card" @click="flipCard('hippocampus')" v-else-if="userlist_boolean==2111">
               <img class="cover" src="~@/assets/mbti2/hippocampus.png" />
               <div class="card__face card__face--back">
-                <h2>INFJ 해마 {{$store.state.userlist[index]}}</h2>
-                <h3>#창의적 #통찰력 #열정적 #이타적</h3>
+                <h2><br>INFJ 해마 {{$store.state.userlist[index]}}</h2>
+                <h3>#창의적 #통찰력<br>#열정적 #이타적<br><br>환상의짝꿍<br>#돌고래 #여우</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2112">
+            <div id="elephant" class="card" @click="flipCard('elephant')" v-else-if="userlist_boolean==2112">
               <img class="cover" src="~@/assets/mbti2/elephant.png" />
               <div class="card__face card__face--back">
-                <h2>INFP 코끼리 {{$store.state.userlist[index]}}</h2>
-                <h3>#공감력 #관대함 #개방적 #낭만적</h3>
+                <h2><br>INFP 코끼리 {{$store.state.userlist[index]}}</h2>
+                <h3>#공감력 #관대함<br>#개방적 #낭만적<br><br>환상의짝꿍<br>#문어 #치타</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1111">
+            <div id="dog" class="card" @click="flipCard('dog')" v-else-if="userlist_boolean==1111">
               <img class="cover" src="~@/assets/mbti2/dog.png" />
               <div class="card__face card__face--back">
-                <h2>ENFJ 강아지 {{$store.state.userlist[index]}}</h2>
-                <h3>#관용성 #신뢰성 #이타적 #리더십</h3>
+                <h2><br>ENFJ 강아지 {{$store.state.userlist[index]}}</h2>
+                <h3>#관용성 #신뢰성<br>#이타적 #리더십<br><br>환상의짝꿍<br>#코끼리</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1112">
+            <div id="dolphin" class="card" @click="flipCard('dolphin')" v-else-if="userlist_boolean==1112">
               <img class="cover" src="~@/assets/mbti2/dolphin.png" />
               <div class="card__face card__face--back">
-                <h2>ENFP 돌고래 {{$store.state.userlist[index]}}</h2>
-                <h3>#인기쟁이 #친근함 #사교적 #활기참</h3>
+                <h2><br>ENFP 돌고래 {{$store.state.userlist[index]}}</h2>
+                <h3>#인기쟁이 #친근함<br>#사교적 #활기참<br><br>환상의짝꿍<br>#해마 #코끼리</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2221">
+            <div id="turtle" class="card" @click="flipCard('turtle')" v-else-if="userlist_boolean==2221">
               <img class="cover" src="~@/assets/mbti2/turtle.png" />
               <div class="card__face card__face--back">
-                <h2>ISTJ 거북이 {{$store.state.userlist[index]}}</h2>
-                <h3>#정직함 #성실함 #책임감 #차분함</h3>
+                <h2><br>ISTJ 거북이 {{$store.state.userlist[index]}}</h2>
+                <h3>#정직함 #성실함<br>#책임감 #차분함<br><br>환상의짝꿍<br>#앵무새 #하이에나</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2211">
+            <div id="penguin" class="card" @click="flipCard('penguin')" v-else-if="userlist_boolean==2211">
               <img class="cover" src="~@/assets/mbti2/penguin.png" />
               <div class="card__face card__face--back">
-                <h2>ISFJ 펭귄 {{$store.state.userlist[index]}}</h2>
-                <h3>#이타적 #인내심 #상상력 #성실함</h3>
+                <h2><br>ISFJ 펭귄 {{$store.state.userlist[index]}}</h2>
+                <h3>#이타적 #인내심<br>#상상력 #성실함<br><br>환상의짝꿍<br>#앵무새 #하이에나</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1221">
+            <div id="wolf" class="card" @click="flipCard('wolf')" v-else-if="userlist_boolean==1221">
               <img class="cover" src="~@/assets/mbti2/wolf.png" />
               <div class="card__face card__face--back">
-                <h2>ESTJ 늑대 {{$store.state.userlist[index]}}</h2>
-                <h3>#헌신적 #정직한 #계획적 #신뢰성</h3>
+                <h2><br>ESTJ 늑대 {{$store.state.userlist[index]}}</h2>
+                <h3>#헌신적 #정직한<br>#계획적 #신뢰성<br><br>환상의짝꿍<br>#고양이 #까마귀</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1211">
+            <div id="horse" class="card" @click="flipCard('horse')" v-else-if="userlist_boolean==1211">
               <img class="cover" src="~@/assets/mbti2/horse.png" />
               <div class="card__face card__face--back">
-                <h2>ESFJ 말 {{$store.state.userlist[index]}}</h2>
-                <h3>#책임감 #따뜻함 #사교적 #실용적</h3>
+                <h2><br>ESFJ 말 {{$store.state.userlist[index]}}</h2>
+                <h3>#책임감 #따뜻함<br>#사교적 #실용적<br><br>환상의짝꿍<br>#고양이 #까마귀</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2222">
+            <div id="crow" class="card" @click="flipCard('crow')" v-else-if="userlist_boolean==2222">
               <img class="cover" src="~@/assets/mbti2/crow.png" />
               <div class="card__face card__face--back">
-                <h2>ISTP 까마귀 {{$store.state.userlist[index]}}</h2>
-                <h3>#낙관적 #활기참 #합리적 #실용적</h3>
+                <h2><br>ISTP 까마귀 {{$store.state.userlist[index]}}</h2>
+                <h3>#낙관적 #활기참<br>#합리적 #실용적<br><br>환상의짝꿍<br>#말 #늑대</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==2212">
+            <div id="cat" class="card" @click="flipCard('cat')" v-else-if="userlist_boolean==2212">
               <img class="cover" src="~@/assets/mbti2/cat.png" />
               <div class="card__face card__face--back">
-                <h2>ISFP 고양이 {{$store.state.userlist[index]}}</h2>
-                <h3>#인기쟁이 #열정적 #상상력 #예술적</h3>
+                <h2><br>ISFP 고양이 {{$store.state.userlist[index]}}</h2>
+                <h3>#인기쟁이 #열정적<br>#상상력 #예술적<br><br>환상의짝꿍<br>#문어 #늑대</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1222">
+            <div id="hyena" class="card" @click="flipCard('hyena')" v-else-if="userlist_boolean==1222">
               <img class="cover" src="~@/assets/mbti2/hyena.png" />
               <div class="card__face card__face--back">
-                <h2>ESTP 하이에나 {{$store.state.userlist[index]}}</h2>
-                <h3>#합리적 #독창적 #사교성 #에너지</h3>
+                <h2><br>ESTP 하이에나 {{$store.state.userlist[index]}}</h2>
+                <h3>#합리적 #독창적<br>#사교성 #에너지<br><br>환상의짝꿍<br>#펭귄 #거북이</h3>
               </div>
             </div>
-            <div class="card" @click="flipCard" v-else-if="userlist_boolean==1212">
+            <div id="parrot" class="card" @click="flipCard('parrot')" v-else-if="userlist_boolean==1212">
               <img class="cover" src="~@/assets/mbti2/parrot.png" />
               <div class="card__face card__face--back">
-                <h2>ESFP 앵무새 {{$store.state.userlist[index]}}</h2>
-                <h3>#대담함 #쇼맨십 #독창적 #사교적</h3>
+                <h2><br>ESFP 앵무새 {{$store.state.userlist[index]}}</h2>
+                <h3>#대담함 #쇼맨십<br>#독창적 #사교적<br><br>환상의짝꿍<br>#펭귄 #거북이</h3>
               </div>
             </div>
          </div>
+         <h4>{{$store.state.userlist[index]}}</h4>
         </div>
-        
       </div>
-      </div>
-
+    </div>
 </template>
 
 <script>
 export default {
   data() {
       return {
-        showHasan: true
       }
   },
   methods: {
-    myMethod() {
-      if(this.showHasan == true)
-      this.showHasan = false
-      else
-      this.showHasan = true
-      console.log(this.showHasan)
-    },
+/*
    flipCard: function () {
      var card = document.querySelector('.card');
+     card.classList.toggle('is-flipped');
+   },
+*/
+   flipCard: function (id) {
+     var card = document.getElementById(id);
      card.classList.toggle('is-flipped');
    },
   },
