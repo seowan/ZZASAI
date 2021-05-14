@@ -11,7 +11,7 @@ export default {
   name: "Timer",
   data() {
     return {
-      countDown: "",
+      countDown: 1,
     };
   },
   computed: {
