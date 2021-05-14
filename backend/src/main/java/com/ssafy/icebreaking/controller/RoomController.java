@@ -30,7 +30,6 @@ public class RoomController {
 	@RequestMapping(value = "/create", method=RequestMethod.POST)
 	public String createRoom(@RequestBody RoomDto roomdto) throws Exception {
 		String result = "";
-		System.out.println(roomdto.getGame1());
 		try {
 			roomservice.insertRoominfo(roomdto);
 			result = SUCCESS;
