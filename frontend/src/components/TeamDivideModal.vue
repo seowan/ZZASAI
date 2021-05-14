@@ -74,12 +74,13 @@ export default {
           this.$store.commit("CREATE_TEAMS", {
             text: i + 1 + "팀",
             currentpeople: 0,
-            teampeople: teamPeople[i],
+            totalpeople: teamPeople[i],
+            joinlist: {},
             disabled: false,
+            score: 0,
           });
         }
 
-        console.log(this.$store.state.teams);
         console.log(this.$store.state.teams);
         this.$router.push({ name: "SelectTeam" });
       } else {

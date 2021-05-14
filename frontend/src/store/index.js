@@ -7,19 +7,30 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     programme: [],
-    username: "",
+    //현재 진행중인 컨텐츠. programme[]를 가리키는 인덱스
+    pidx: 0,
     userlist: [],
+    userinfo: {
+      username: "",
+      team: "",
+      score: 0,
+    },
     userlist_boolean: [],
     adminflag: 0,
     roomname: "",
     roomcode: "",
-    teamnumber: "",
+    // 방장이 선택한 나누려는 팀 수
+    teamnumber: 0,
+    //teams: 팀 정보
+    // text: n팀 , currentpeople: 현재 해당 팀 선택한 사람, teampeople: 해당 팀에 분배된 사람 수, disabled: 버튼 비활성화, score: 점수
     teams: [
       {
         text: "",
-        currentpeople: "",
-        teampeople: "",
-        disabled: "",
+        currentpeople: 0,
+        totalpeople: 0,
+        joinlist: {},
+        disabled: Boolean,
+        score: 0,
       },
     ],
     m: 0,
@@ -33,8 +44,8 @@ export default new Vuex.Store({
       state.programme.push(item);
     },
     CREATE_USERNAME: function(state, name) {
-      // state.username.push(name)
-      state.username = name;
+      // state.username = name;
+      state.userinfo.username = name;
     },
     CREATE_ROOMNAME: function(state, name) {
       state.roomname = name;
@@ -48,13 +59,16 @@ export default new Vuex.Store({
     CREATE_TEAMS(state, payload) {
       state.teams.push(payload);
     },
+    CREATE_USERTEAM: function(state, team) {
+      state.userinfo.team = team;
+    },
     BTN_STATUS_BLOCK(state, index, value) {
       state.teams[index].disabled = value;
     },
     SET_ADMINFLAG: function(state) {
       state.adminflag = 1;
     },
-    RESTORE_ADMINFLAG:function(state){
+    RESTORE_ADMINFLAG: function(state) {
       state.adminflag = 0;
     },
     myes: function(state) {
@@ -81,10 +95,10 @@ export default new Vuex.Store({
     ino: function(state) {
       state.i = 2;
     },
-    PUSH_USERLIST: function(state, name){
+    PUSH_USERLIST: function(state, name) {
       state.userlist.push(name);
     },
-    PUSH_USERLIST_BOOLEAN: function(state, bool){
+    PUSH_USERLIST_BOOLEAN: function(state, bool) {
       state.userlist_boolean.push(bool);
     },
   },

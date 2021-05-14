@@ -1,18 +1,38 @@
 <template>
+
   <div class="grid-wrapper">
+    <!-- <timer></timer> -->
+    <user-video
+          class="user-videos"
+          v-for="sub in subscribers"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+        />
+    <div>
+      <input type="text" v-model="name" />
+      <input type="text" v-model="team" />
+      <button @click="beAdmin">방장</button>
+      <button @click="sendInfo">완료!</button>
+    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
-    <canvas
-      @mousedown="startPainting"
-      @mouseup="stopPainting"
-      @mousemove="onMouseMove"
-      @mouseleave="stopPainting"
-      id="canvas"
-    ></canvas>
+    <div class="canvas-wrapper">
+      <div class="answer" v-if="turnToDraw">{{ answer }}</div>
+      <div class="answer" v-else>
+        <span v-for="i in answer.length" :key="i">_</span>
+      </div>
+      <canvas
+        @mousedown="startPainting"
+        @mouseup="stopPainting"
+        @mousemove="onMouseMove"
+        @mouseleave="stopPainting"
+        id="canvas"
+      ></canvas>
+    </div>
     <div class="rtc" id="right-rtc"></div>
 
     <!--2nd row-->
-    <div class="game-support" v-if="turnToDraw == true">
+    <div class="game-support" v-if="turnToDraw">
       <div class="colorPicker">
         <div
           v-for="color in colors"
@@ -21,7 +41,7 @@
           @click="strokeColorHandler(color)"
         ></div>
       </div>
-      <div class="sizePicker">
+      <div class="size-picker">
         <!--size handler 3type-->
         <div @click="strokeSizeHandler(1)">
           <div style="width:3px; height:3px;"></div>
@@ -71,8 +91,10 @@
       </div>
     </div>
 
-    <!--채팅 위치-->
-    <div v-if="turnToDraw == false" class="game-support"></div>
+    <!--채팅 위치 -> 메인 페이지로 빼는게 나을 듯 -->
+    <div v-if="turnToDraw == false" class="game-support">
+      <input type="text" v-model="text" @keyup.enter="typeMessage" />
+    </div>
   </div>
 </template>
 
@@ -80,8 +102,15 @@
 import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
+// import Timer from "@/components/Timer";
+
+import UserVideo from "@/components/UserVideo";
+
 export default {
   name: "CatchMind",
+  components: {
+    UserVideo,
+  },
   data() {
     return {
       painting: false,
@@ -100,12 +129,13 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      nickname: this.$store.state.username, //to identify user
-      roomCode: this.$store.state.roomcode,
-      roomName: this.$store.state.roomname,
-      adminFlag: this.$store.state.adminflag,
+      userinfo: this.$store.state.userinfo, //to identify user
+      isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
-      turnToDraw: true,
+      teamnumber: this.$store.state.teamnumber,
+      teams: this.$store.state.teams,
+      // turnToDraw: this.userinfo.team == this.teams[0].text,
+      turnToDraw: false, //user의 team 정하는 코드 완성되면 윗줄 코드로 바꾸기
       currentTurn: 0, //team number of current turn
 
       // 1) 서버와 연결
@@ -135,8 +165,13 @@ export default {
     console.log(this.socket);
     // console.log(this.$store.state.socket);
 
-    // 3-1) on 함수들
-    /* room and user */
+    //문제 받아오기
+    if (this.isAdmin) {
+      this.getAnswer();
+    }
+    //타이머 시작
+    
+    // 3-1) ctx 관련 정보 수신
     this.socket.on("connect", () => {
       console.log(this.socket.id);
       this.socket.emit(
@@ -147,19 +182,33 @@ export default {
       );
     });
 
+    this.socket.on("duplicated code", () => {
+      console.log("duplicated code");
+    });
+
+    // 3-1) on 함수들
+    /* room and user */
     this.socket.on("disconnected", (user) => {
       //방을 떠난 유저가 있을 때
       console.log("disconnected: ", user);
     });
-    this.socket.on("room", (room) => {
+    this.socket.on("room", (users) => {
       //유저 정보 변화가 있을 때
-      this.users = room;
+      this.users = users;
       console.log("changed user list: ", this.users);
     });
 
-    /* answer checking */
+    /* chatting */
+    this.socket.on("chat", (name, msg) => {
+      console.log(name, msg);
+    });
+
+    /* answer setting */
     this.socket.on("answer", (answer) => {
-      this.answer = answer;
+      this.answer = answer; //answer 받아오기
+    });
+    this.socket.on("correct answer", (user) => {
+      this.answerMessage(user);
     });
 
     /* painting */
@@ -172,8 +221,6 @@ export default {
     this.socket.on("cleared all", () => {
       this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     });
-
-    this.getWord();
   },
   methods: {
     /* to game play */
@@ -188,17 +235,59 @@ export default {
         },
       })
         .then((res) => {
-          this.answer = res.data.answer;
-          this.socket.emit("answer", this.answer);
+          // this.answer = res.data.answer;  //서버에서 emit해서 받을 거라 굳이 필요 없음
+          this.socket.emit("answer", res.data.answer);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    isAnswer(word) {
-      if (this.answer == word) {
-        this.socket.emit("right answer", this.answer, this.nickname);
+
+    /* to game play - chatting */
+    typeMessage() {
+      //text input for chatting - on keyup callback func
+      this.socket.emit("chat", this.userinfo.username, this.text);
+      if (this.text == this.answer) {
+        //정답이면
+        this.socket.emit("correct answer", this.userinfo);
       }
+      this.text = "";
+    },
+    answerMessage(user) {
+      //get user's team number
+      var i = 0;
+      for (var team of this.teams) {
+        if (team.text == this.user.team) break;
+        i++;
+      }
+
+      //1.정답 애니메이션
+      console.log(user);
+      //2.점수 추가
+      this.userinfo.score += 1;
+      this.teams[i] += 1;
+
+      //3.다음 턴으로 넘기기
+      this.currentTurn++;
+      if (this.currentTurn == this.teamnumber) this.currentTurn = 0;
+      //3-1.user의 순서면 그림 그리기 허용
+      this.turnToDraw =
+        this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
+      //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
+      if (i == -1) {
+        //조건 변경 필요
+        this.$store.state.userinfo = this.userinfo;
+        this.$store.state.teams = this.teams;
+
+        //페이지 이동
+      }
+
+      //4.새 문제 받아오기
+      if (this.isAdmin) {
+        this.getAnswer();
+      }
+
+      //5.새 타이머 시작
     },
     /* for painting */
     resizeHandler() {
@@ -276,7 +365,7 @@ export default {
     "left temp right";
 }
 .rtc {
-  background-color: lightslategray;
+
 }
 .rtc#left-rtc {
   grid-area: left;
@@ -284,8 +373,15 @@ export default {
 .rtc#right-rtc {
   grid-area: right;
 }
-#canvas {
+.canvas-wrapper {
   grid-area: canvas;
+}
+.answer {
+  position: absolute;
+  z-index: 1;
+  padding: 0.5em;
+}
+#canvas {
   border: 3px solid black;
   height: 100%;
   width: 100%;
@@ -301,7 +397,7 @@ export default {
   background-color: white;
   width: 30px;
   height: 30px;
-  border-radius: 10%;
+  border-radius: 50%;
   /* 자식 항목들을 정가운데로 정렬하기 위한 설정 */
   display: flex;
   justify-content: center;
@@ -317,7 +413,7 @@ export default {
   border-radius: 50%;
   float: left;
 }
-.eraser > svg {
+.eraser > div > svg {
   color: white;
   height: auto;
   width: 30px;
