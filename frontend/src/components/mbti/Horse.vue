@@ -21,7 +21,7 @@
           있다.
         </h2>
         <br />
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">
+        <button type="button" class="btn btn-dark btn-lg" v-on:click="sendInfo">
           Next
         </button>
       </div>
@@ -35,7 +35,14 @@
 export default {
   name: "Horse",
   data() {
-    return {};
+    return {
+      socket: this.$store.state.socket,
+    };  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
   },
   methods: {
     next() {
@@ -48,6 +55,12 @@ export default {
         if (index !== -1) {
          this.$store.state.userlist_boolean[index] = this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i;
         }
+    },
+    sendInfo() {
+      this.$store.state.socket.emit("mbti2", this.$store.state.roomcode, this.$store.state.username, 
+      this.$store.state.userlist,
+      this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
+      this.$router.push('/loading'); 
     },
   },
 };

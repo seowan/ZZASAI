@@ -27,11 +27,11 @@ export default {
       this.$router.push('/char-test4');
     },
     byes: function () {
-      this.$store.commit('byes')
+      this.$store.state.b = 1;
       this.$router.push('/char-test4');
     },
     bno: function () {
-      this.$store.commit('bno')
+      this.$store.state.b = 2;
       this.$router.push('/char-test4');
     },
   }

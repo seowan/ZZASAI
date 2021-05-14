@@ -1,6 +1,19 @@
 <template>
+
   <div class="grid-wrapper">
     <!-- <timer></timer> -->
+    <user-video
+          class="user-videos"
+          v-for="sub in subscribers"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+        />
+    <div>
+      <input type="text" v-model="name" />
+      <input type="text" v-model="team" />
+      <button @click="beAdmin">방장</button>
+      <button @click="sendInfo">완료!</button>
+    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <div class="canvas-wrapper">
@@ -91,11 +104,13 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 // import Timer from "@/components/Timer";
 
+import UserVideo from "@/components/UserVideo";
+
 export default {
   name: "CatchMind",
-  // components: {
-  //   Timer,
-  // },
+  components: {
+    UserVideo,
+  },
   data() {
     return {
       painting: false,
@@ -155,6 +170,21 @@ export default {
       this.getAnswer();
     }
     //타이머 시작
+    
+    // 3-1) ctx 관련 정보 수신
+    this.socket.on("connect", () => {
+      console.log(this.socket.id);
+      this.socket.emit(
+        "info",
+        this.nickname,
+        this.roomCode,
+        this.adminFlag != 0 ? true : false
+      );
+    });
+
+    this.socket.on("duplicated code", () => {
+      console.log("duplicated code");
+    });
 
     // 3-1) on 함수들
     /* room and user */
@@ -335,7 +365,7 @@ export default {
     "left temp right";
 }
 .rtc {
-  background-color: lightslategray;
+
 }
 .rtc#left-rtc {
   grid-area: left;

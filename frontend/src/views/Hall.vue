@@ -70,6 +70,7 @@
       <Drawing />
       <Exam />
     </div>
+    <Test />
     <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
@@ -80,7 +81,7 @@ import Card from "@/components/hall/Card";
 import Drawing from "@/components/hall/Drawing";
 import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
-
+import Test from "@/views/Test";
 import axios from "axios";
 import io from "socket.io-client";
 
@@ -94,6 +95,7 @@ export default {
     Drawing,
     Exam,
     RoomCode,
+    Test,
   },
   data() {
     return {
@@ -119,6 +121,7 @@ export default {
         this.adminFlag != 0 ? true : false
       );
     });
+    
   },
   methods: {
     getRoomData: function() {

@@ -18,15 +18,10 @@
           강아지와 많이 닮아있다고 할 수 있다.
         </h2>
         <br>
-        <b-button v-b-modal.modal-1 type="button" class="btn btn-dark btn-lg" v-on:click="myMethod()">Next</b-button>
-        <!--
-          <b-modal id="modal-1" title="검사 진행중 ">
-            <h4>아직 검사를 진행중인 friend가 있습니다. <br>검사를 모두 마치면 자동으로 페이지가 전환됩니다. 잠시만 기다려주세요.</h4>
-            <div class="text-center">
-              <b-spinner label="Spinning"></b-spinner>
-            </div>
-          </b-modal>
-          -->
+        <button type="button" class="btn btn-dark btn-lg" v-on:click="sendInfo">
+          Next
+        </button>
+
         </div>
         
       </div>
@@ -39,8 +34,14 @@ export default {
   name: "Dog",
   data() {
       return {
-        wait: false
-      }
+      socket: this.$store.state.socket,
+    };
+  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
   },
   methods: {
     next() {
@@ -53,6 +54,12 @@ export default {
         if (index !== -1) {
          this.$store.state.userlist_boolean[index] = this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i;
         }
+    },
+    sendInfo() {
+      this.$store.state.socket.emit("mbti2", this.$store.state.roomcode, this.$store.state.username, 
+      this.$store.state.userlist,
+      this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
+      this.$router.push('/loading'); 
     },
   },
   components: {
