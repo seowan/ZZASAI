@@ -109,6 +109,16 @@ export default {
   },
   mounted() {
     this.$store.state.socket = this.socket;
+
+    this.socket.on("connect", () => {
+      console.log(this.socket.id);
+      this.socket.emit(
+        "info",
+        this.$store.state.userinfo.username,
+        this.roomcode,
+        this.adminFlag != 0 ? true : false
+      );
+    });
   },
   methods: {
     getRoomData: function() {
