@@ -77,11 +77,6 @@
         </div>
       </div>
     </div>
-
-    <!--채팅 위치 -> 메인 페이지로 빼는게 나을 듯 -->
-    <div v-if="turnToDraw == false" class="game-support">
-      <input type="text" v-model="text" @keyup.enter="typeMessage" />
-    </div>
   </div>
 </template>
 
@@ -181,11 +176,6 @@ export default {
       console.log("changed user list: ", this.users);
     });
 
-    /* chatting */
-    this.socket.on("chat", (name, msg) => {
-      console.log(name, msg);
-    });
-
     /* answer setting */
     this.socket.on("answer", (answer) => {
       this.answer = answer; //answer 받아오기
@@ -224,17 +214,6 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-    },
-
-    /* to game play - chatting */
-    typeMessage() {
-      //text input for chatting - on keyup callback func
-      this.socket.emit("chat", this.userinfo.username, this.text);
-      if (this.text == this.answer) {
-        //정답이면
-        this.socket.emit("correct answer", this.userinfo);
-      }
-      this.text = "";
     },
     answerMessage(user) {
       //get user's team number
