@@ -8,7 +8,7 @@
 
  var CMRotate = CMRotate || ( function () {
 
-    var _public = {}, $contaier,
+    var _public = {}, $container,
         _isTouch = 'ontouchstart' in window, _isTrans3D, _cssTransform,
         PI = Math.PI / 180, _radius, _gap, _ty, _posTotal,
         _itemW, _itemH, _itemHW, _itemHH, _itemCur = 0,
@@ -31,7 +31,7 @@
      */
     function init(div, tw, th, ty, gap, radius, bg, fn) {
 
-        $contaier = document.getElementById(div);
+        $container = document.getElementById(div);
 
         _cssTransform = getCSSTransform();
         if (!_cssTransform) {
@@ -99,9 +99,11 @@
      * click event on each Plane
      */
     function onClick(event) {
+        // cm-rotate-{id} 를 찾기 위해 추가
+        var target_id = event.target.id
         var no = Number((event.currentTarget.id).substr(10, 3)),
             id = _itemArr[no].id;
-        _fn(id);
+        _fn(id, target_id);
     }
 
 
@@ -109,6 +111,7 @@
      * render
      */
     function animate() {
+       
         if (_isDispose) return;
         requestAnimationFrame( animate );
 
@@ -169,6 +172,7 @@
     }
 
     function circlePos(sita) {
+        console.log('animate')
         var cos = Math.cos(sita * PI),
             sin = Math.sin(sita * PI),
             imgX = (cos) * _radius + _centerX - _itemHW,
@@ -275,6 +279,7 @@
                 return plane;
             }
         }
+        
 
         // make new plane
         var div = document.createElement("div");
@@ -292,7 +297,9 @@
         // div.style.background = 'url(C:/ssafy/last_temp/frontend/src/assets/cards/sample/img1.jpg)';
         // div.style.backgroundImage = 'url(/img/img1.b5ed8c85.jpg)';
         movePlane(div, -5000, -5000, 0);
-        $contaier.appendChild(div);
+        $container.appendChild(div);
+
+
         plane = {plane:div, use:1, no:no, id:id};
         _itemArr[_itemCur] = plane;
         _itemCur++;
@@ -314,7 +321,7 @@
         ];
         var p;
         while ((p = properties.shift())) {
-            if (typeof $contaier.style[p] != 'undefined') {
+            if (typeof $container.style[p] != 'undefined') {
                 return p;
             }
         }

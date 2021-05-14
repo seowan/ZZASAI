@@ -85,7 +85,7 @@ import Test from "@/views/Test";
 import axios from "axios";
 import io from "socket.io-client";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -105,20 +105,33 @@ export default {
       room_data: {},
     };
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365486.png' + ')';
+  },
   mounted() {
     this.$store.state.socket = this.socket;
-    console.log(this.$store.state.socket);
-    console.log("소켓끝");
-    console.log(this.$store.state.roomcode);
+
+    this.socket.on("connect", () => {
+      console.log(this.socket.id);
+      this.socket.emit(
+        "info",
+        this.$store.state.userinfo.username,
+        this.roomcode,
+        this.adminFlag != 0 ? true : false
+      );
+    });
     
   },
   methods: {
     getRoomData: function() {
       axios({
         method: "get",
+        // url: `api/room/info/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         //url: `api/room/info/?roomcode=${this.roomcode}`,
-        //url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -155,7 +168,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
 
 body {
-  background-image: url("~@/assets/bgs/hall.jpg");
+  /* background-image: url("~@/assets/bgs/hall.jpg"); */
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-size: cover;
