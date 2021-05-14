@@ -1,18 +1,6 @@
 <template>
   <div class="grid-wrapper">
     <!-- <timer></timer> -->
-    <user-video
-      class="user-videos"
-      v-for="sub in subscribers"
-      :key="sub.stream.connection.connectionId"
-      :stream-manager="sub"
-    />
-    <div>
-      <input type="text" v-model="name" />
-      <input type="text" v-model="team" />
-      <button @click="beAdmin">방장</button>
-      <button @click="sendInfo">완료!</button>
-    </div>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <div class="canvas-wrapper">
@@ -103,13 +91,9 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 // import Timer from "@/components/Timer";
 
-import UserVideo from "@/components/UserVideo";
-
 export default {
   name: "CatchMind",
-  components: {
-    UserVideo,
-  },
+  components: {},
   data() {
     return {
       painting: false,
