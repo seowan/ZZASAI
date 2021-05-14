@@ -44,12 +44,12 @@ export default {
   created () {
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365737.jpg' + ')';
-    },
-    sendInfo() {
-      this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
-      this.$store.state.userlist, false);
-      this.$router.push('/char-test2');
-    },
+
+    this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
+    this.$store.state.userlist, false);
+    this.$router.push('/char-test2');
+
+    console.log('aslkahsdlh')
   },
 }
 
