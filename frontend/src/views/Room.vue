@@ -4,7 +4,7 @@
     <!-- RTC 넣을 곳 -->
     <div class="main">
       <!-- 메인. 여태 작성한 코드들 component화 해서 넣기 v-if사용? -->
-      <Hall />
+      <Hall v-if="hall" />
       <CatchMind />
     </div>
     <div class="right">

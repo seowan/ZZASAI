@@ -1,6 +1,5 @@
 <template>
-  <div class="grid-wrapper">
-    <Timer />
+  <div class="catchmind">
     <!--1st row-->
     <div class="canvas-wrapper">
       <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
@@ -82,11 +81,11 @@
 import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
-import Timer from "@/components/Timer";
+// import Timer from "@/components/Timer";
 
 export default {
   name: "CatchMind",
-  components: { Timer },
+  // components: { Timer },
   data() {
     return {
       painting: false,
@@ -207,28 +206,25 @@ export default {
       console.log(user);
 
       //2.점수 추가
-      for (var u of this.$store.state.userlist) {
-        if (u == user) {
-          u.score += 1;
-          break;
-        }
+      this.teams[user.team - 1].score += 1;
+      for (var u of this.teams[user.team - 1].joinlist) {
+        u.score += 1;
       }
-      this.teams[user.team - 1] += 1;
 
       //3.다음 턴으로 넘기기
       this.currentTurn++;
       if (this.currentTurn == this.teamnumber) this.currentTurn = 0;
       //3-1.user의 순서면 그림 그리기 허용
       this.turnToDraw =
-        this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
+        this.currentTurn == this.userinfo.team - 1 ? true : false;
       //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
-      // if (i == -1) {
-      //조건 변경 필요
-      this.$store.state.userinfo = this.userinfo;
-      this.$store.state.teams = this.teams;
+      if (this.currentTurn == -1) {
+        //조건 변경 필요
+        this.$store.state.userinfo = this.userinfo;
+        this.$store.state.teams = this.teams;
 
-      //페이지 이동
-      // }
+        //페이지 이동
+      }
 
       //4.새 문제 받아오기
       if (this.isAdmin) {
