@@ -2,24 +2,32 @@
   <div id="test">
     <b-row>
       <b-col>
-        <div class="leave-btn" @click="leaveSession">나가기</div>
-        <h5>{{this.$store.state.userinfo.username}}</h5>
+        <br>
         <!-- 내 비디오 -->
         <!-- <user-video class="my-video" :stream-manager="publisher" /> -->
         <!-- 전체 비디오 -->
-        <user-video
+        <div v-for="(sub,index) in subscribers" :key="sub">
+        <div v-if="index % 2 == 0">
+          {{index}}
+        <user-video 
           class="user-videos"
-          v-for="sub in subscribers"
           :key="sub.stream.connection.connectionId"
           :stream-manager="sub"
         />
+        </div>
+        </div>
       </b-col>
       <b-col>
-        <input type="text" v-model="chatMsg" /> |
-        <button @click="sendChat">chat</button>
-        <hr />
-        <div v-for="message in messages" class="chats" :key="message">
-          {{ message.author }} : {{ message.content }}
+        <br>
+        <div v-for="(sub,index) in subscribers" :key="sub">
+        <div v-if="index % 2 == 1">
+          {{index}}
+        <user-video 
+          class="user-videos"
+          :key="sub.stream.connection.connectionId"
+          :stream-manager="sub"
+        />
+        </div>
         </div>
       </b-col>
     </b-row>
