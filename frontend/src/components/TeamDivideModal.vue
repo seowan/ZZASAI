@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Teamdividemodal",
   components: {},
@@ -44,6 +45,10 @@ export default {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
     },
   },
+
+  computed: {
+    ...mapState(["teams", "userlist"]),
+  },
   methods: {
     checkFormValidity() {
       //   const valid = this.$refs.form.checkValidity();
@@ -51,7 +56,8 @@ export default {
       if (this.teamNumber >= 1 && this.teamNumber <= 10) {
         // return valid;
 
-        this.$store.commit("CREATE_TEAMNUMBER", this.teamNumber);
+        // 방장이 선택한 팀 개수 저장
+        this.$store.state.teamnumber = this.teamNumber;
 
         var teamPeople = [];
         var addPeople = this.totalPeople % this.teamNumber;
@@ -71,11 +77,10 @@ export default {
         this.$store.state.teams.splice(0);
 
         for (var i = 0; i < this.teamNumber; i++) {
-          this.$store.commit("CREATE_TEAMS", {
+          this.$store.state.teams.push({
             text: i + 1 + "팀",
             currentpeople: 0,
             totalpeople: teamPeople[i],
-            joinlist: {},
             disabled: false,
             score: 0,
           });

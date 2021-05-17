@@ -53,12 +53,6 @@ export default new Vuex.Store({
     CREATE_ROOMCODE: function(state, code) {
       state.roomcode = code;
     },
-    CREATE_TEAMNUMBER: function(state, teamnumber) {
-      state.teamnumber = teamnumber;
-    },
-    CREATE_TEAMS(state, payload) {
-      state.teams.push(payload);
-    },
     CREATE_USERTEAM: function(state, team) {
       state.userinfo.team = team;
     },
