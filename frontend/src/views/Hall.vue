@@ -7,69 +7,14 @@
     <!-- {{ order_mark }} -->
     <div class="py-3 my-5"></div>
     <!-- 여기에 flip-card 넣기 -->
-    <div v-if="order_mark == '100'" class="row justify-content-center">
-      <Exam />
+    <div class="row justify-content-center">
+      <div v-for="i in 3" :key="i" class="col-2 hall-card">
+        <Exam v-if="order_mark[i - 1] == '1'" />
+        <Drawing v-if="order_mark[i - 1] == '2'" />
+        <Card v-if="order_mark[i - 1] == '3'" />
+      </div>
     </div>
-    <div v-else-if="order_mark == '120'" class="row justify-content-center">
-      <Exam />
-      <Drawing />
-    </div>
-    <div v-else-if="order_mark == '123'" class="row justify-content-center">
-      <Exam />
-      <Drawing />
-      <Card />
-    </div>
-    <div v-else-if="order_mark == '130'" class="row justify-content-center">
-      <Exam />
-      <Card />
-    </div>
-    <div v-else-if="order_mark == '132'" class="row justify-content-center">
-      <Exam />
-      <Card />
-      <Drawing />
-    </div>
-    <div v-else-if="order_mark == '200'" class="row justify-content-center">
-      <Drawing />
-    </div>
-    <div v-else-if="order_mark == '210'" class="row justify-content-center">
-      <Drawing />
-      <Exam />
-    </div>
-    <div v-else-if="order_mark == '213'" class="row justify-content-center">
-      <Drawing />
-      <Exam />
-      <Card />
-    </div>
-    <div v-else-if="order_mark == '230'" class="row justify-content-center">
-      <Drawing />
-      <Card />
-    </div>
-    <div v-else-if="order_mark == '231'" class="row justify-content-center">
-      <Drawing />
-      <Card />
-      <Exam />
-    </div>
-    <div v-else-if="order_mark == '300'" class="row justify-content-center">
-      <Card />
-    </div>
-    <div v-else-if="order_mark == '310'" class="row justify-content-center">
-      <Card />
-      <Exam />
-    </div>
-    <div v-else-if="order_mark == '312'" class="row justify-content-center">
-      <Card />
-      <Exam />
-      <Drawing />
-    </div>
-    <div v-else-if="order_mark == '320'" class="row justify-content-center">
-      <Card />
-      <Drawing />
-    </div>
-    <div v-else class="row justify-content-center">
-      <Card />
-      <Drawing />
-      <Exam />
-    </div>
+
     <Test />
     <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
@@ -105,9 +50,10 @@ export default {
       room_data: {},
     };
   },
-  created () {
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365486.png' + ')';
+  created() {
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
     this.$store.state.socket = this.socket;
@@ -121,7 +67,6 @@ export default {
         this.adminFlag != 0 ? true : false
       );
     });
-    
   },
   methods: {
     getRoomData: function() {

@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     next() {
-      this.updateArray(this.$store.state.userlist, this.$store.state.username)
+      this.updateArray(this.$store.state.userlist, this.$store.state.userinfo.username)
       console.log(this.$store.state.userlist_boolean);
       this.$router.push("/loading");
     },
@@ -54,7 +54,7 @@ export default {
         }
     },
     sendInfo() {
-      this.$store.state.socket.emit("mbti2", this.$store.state.roomcode, this.$store.state.username, 
+      this.$store.state.socket.emit("mbti2", this.$store.state.roomcode, this.$store.state.userinfo.username, 
       this.$store.state.userlist,
       this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
       this.$router.push('/loading'); 

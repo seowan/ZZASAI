@@ -105,7 +105,7 @@ export default {
           game1: this.list2[0].id,
           game2: "",
           game3: "",
-          roomAdmin: this.$store.state.username,
+          roomAdmin: this.$store.state.userinfo.username,
           roomCode: this.$store.state.roomcode,
           roomName: this.$store.state.roomname,
         };
@@ -125,7 +125,7 @@ export default {
           // url: `${SERVER_URL}/room/create/`,
           //url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/api/room/create/`,
-          
+
           data: JSON.stringify(context),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
@@ -136,7 +136,7 @@ export default {
             console.log(res);
             alert("방 생성이 완료되었습니다!");
             this.$router.push({
-              name: "Hall",
+              name: "Room",
               params: { roomcode: this.$store.state.roomcode },
             });
           })
@@ -147,9 +147,10 @@ export default {
       }
     },
   },
-  created () {
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp4718598.jpg' + ')';
+  created() {
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp4718598.jpg" + ")";
   },
 };
 </script>
