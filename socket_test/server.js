@@ -194,10 +194,14 @@ io.on("connection", function (socket) {
   });
 
   // select team
-  // name: 유저 이름, team: 팀 이름, currentpeople: 현재 사람 수
   socket.on("select team", function (teams) {
     if (user == null) return;
     io.to(user.code).emit("select team", teams);
+  });
+  socket.on("move page to select team", function (teams) {
+    console.log("check");
+    if (user == null) return;
+    io.to(user.code).emit("move page", teams);
   });
 
   /*card function*/
