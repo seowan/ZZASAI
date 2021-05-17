@@ -1,19 +1,17 @@
 <template>
   <div id="room" class="grid-wrapper">
-    <Test class="left">
-      <!-- RTC 넣을 곳 -->
-    </Test>
+    <Test class="left" />
+    <!-- RTC 넣을 곳 -->
     <div class="main">
       <!-- 메인. 여태 작성한 코드들 component화 해서 넣기 -->
       <Hall />
+      <CatchMind />
     </div>
     <div class="right">
-      <State class="state">
-        <!-- 진행상황-->
-      </State>
-      <Chat class="chat">
-        <!-- 채팅-->
-      </Chat>
+      <!-- 진행상황-->
+      <State class="state" />
+      <!-- 채팅-->
+      <Chat class="chat" />
     </div>
   </div>
 </template>
@@ -26,6 +24,7 @@ import Hall from "@/views/Hall";
 import Test from "@/views/Test"; //이름 변경 필요할 듯
 import State from "@/components/State";
 import Chat from "@/components/Chat";
+import CatchMind from "@/components/CatchMind";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -36,6 +35,7 @@ export default {
     State,
     Chat,
     Hall,
+    CatchMind,
   },
   data() {
     return {

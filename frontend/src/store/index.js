@@ -39,6 +39,7 @@ export default new Vuex.Store({
     t: 0,
     i: 0,
     socket: null,
+    answer: "",
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {

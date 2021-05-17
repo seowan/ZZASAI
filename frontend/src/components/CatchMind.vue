@@ -3,7 +3,7 @@
     <!-- <timer></timer> -->
     <!--1st row-->
     <div class="canvas-wrapper">
-      <div class="answer" v-if="turnToDraw">{{ answer }}</div>
+      <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
       <div class="answer" v-else>
         <span v-for="i in answer.length" :key="i">_</span>
       </div>
@@ -120,7 +120,7 @@ export default {
 
       text: "",
       messages: [],
-      answer: "정답",
+      // answer: "정답",
     };
   },
   mounted() {
@@ -163,14 +163,12 @@ export default {
     });
 
     /* answer setting */
-    this.socket.on("chat", (user, msg) => {
-      console.log(user, msg);
-      if (msg == this.answer) {
-        this.answerMessage(user);
-      }
-    });
     this.socket.on("answer", (answer) => {
-      this.answer = answer; //answer 받아오기
+      this.$store.state.answer = answer; //answer 받아오기
+    });
+    this.socket.on("correct answer", (userinfo) => {
+      // console.log(userinfo);
+      this.answerMessage(userinfo);
     });
 
     /* painting */
@@ -205,18 +203,17 @@ export default {
         });
     },
     answerMessage(user) {
-      //get user's team number
-      var i = 0;
-      for (var team of this.teams) {
-        if (team.text == this.user.team) break;
-        i++;
-      }
-
       //1.정답 애니메이션
       console.log(user);
+
       //2.점수 추가
-      this.userinfo.score += 1;
-      this.teams[i] += 1;
+      for (var u of this.$store.state.userlist) {
+        if (u == user) {
+          u.score += 1;
+          break;
+        }
+      }
+      this.teams[user.team - 1] += 1;
 
       //3.다음 턴으로 넘기기
       this.currentTurn++;
@@ -225,13 +222,13 @@ export default {
       this.turnToDraw =
         this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
       //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
-      if (i == -1) {
-        //조건 변경 필요
-        this.$store.state.userinfo = this.userinfo;
-        this.$store.state.teams = this.teams;
+      // if (i == -1) {
+      //조건 변경 필요
+      this.$store.state.userinfo = this.userinfo;
+      this.$store.state.teams = this.teams;
 
-        //페이지 이동
-      }
+      //페이지 이동
+      // }
 
       //4.새 문제 받아오기
       if (this.isAdmin) {
