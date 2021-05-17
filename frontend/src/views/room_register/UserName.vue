@@ -39,7 +39,7 @@ export default {
       } else {
         this.$store.commit("CREATE_USERNAME", this.name);
         this.$router.push({
-          name: "Hall",
+          name: "Room",
           params: { roomcode: this.$store.state.roomcode },
         });
       }
