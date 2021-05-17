@@ -48,7 +48,7 @@ export default {
       totalPerson: 30,
       btnStatus: true,
       selected: "",
-      teams: this.$store.state.teams,
+      socket: this.$store.state.socket,
     };
   },
   created() {
@@ -58,6 +58,13 @@ export default {
   },
   mounted() {
     console.log("총 인원 수 :" + this.totalPerson);
+
+    // socket on 함수 mounted에 배치
+    this.socket.on("select team", (teams) => {
+      console.log(teams);
+      // this.selectTeam(teams);
+    });
+
     // console.log(this.$store.state.teams);
   },
   methods: {
@@ -79,6 +86,8 @@ export default {
       ] = this.$store.state.userinfo.username;
       this.btnStatus = false;
       // console.log(this.$store.state.teams);
+
+      this.socket.emit("select team", this.teams);
     },
     checkBtnStatus() {
       for (var i = 0; i < this.$store.state.teamnumber; i++) {
