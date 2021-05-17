@@ -205,12 +205,13 @@ io.on("connection", function (socket) {
   });
 
   /*card function*/
-  socket.on("cardselect", function (cardno, target_id, targetname) {
-    io.emit("cardselected", cardno, target_id, targetname);
+  socket.on("cardselect",function(cardno){
+    io.emit("cardselected",cardno);
   }),
-    socket.on("firstinit", function (cardlist, backgroundlist) {
-      io.emit("setinit", cardlist, backgroundlist);
-    });
+
+  socket.on("firstinit",function(cardlist,backgroundlist){
+    io.emit("setinit",cardlist,backgroundlist);
+  });
 });
 
 //4
