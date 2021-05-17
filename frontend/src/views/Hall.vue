@@ -8,7 +8,7 @@
     <div class="py-3 my-5"></div>
     <!-- 여기에 flip-card 넣기 -->
     <div class="row justify-content-center">
-      <div v-for="i in 3" :key="i" class="col-2 hall-card">
+      <div v-for="i in 3" :key="i" class="col-4 row hall-card">
         <Exam v-if="order_mark[i - 1] == '1'" />
         <Drawing v-if="order_mark[i - 1] == '2'" />
         <Card v-if="order_mark[i - 1] == '3'" />

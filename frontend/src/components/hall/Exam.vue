@@ -1,5 +1,5 @@
 <template>
-  <div class="col-2 hall-card">
+  <div class="hall-card">
     <div class="hall-card-inner">
       <div class="hall-card-front">
         <img src="@/assets/icons/exam.png" alt="Avatar" style="width:100px;height:100px;">
