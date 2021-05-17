@@ -113,7 +113,7 @@ export default {
     this.$store.state.socket = this.socket;
 
     this.socket.on("connect", () => {
-      console.log(this.socket.id);
+      // console.log(this.socket.id);
       this.socket.emit(
         "info",
         this.$store.state.userinfo.username,
@@ -137,17 +137,14 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res.data);
           this.room_data = res.data;
-          console.log(this.room_data);
           this.order_mark =
             String(this.room_data.game1) +
             String(this.room_data.game2) +
             String(this.room_data.game3);
         })
         .catch((err) => {
-          console.log(err);
-          alert("데이터를 가지고 오지 못했습니다ㅜㅜ");
+          alert("데이터를 가지고 오지 못했습니다ㅜㅜ <br/>" + `${err}`);
         });
     },
   },
@@ -194,6 +191,9 @@ body {
   border: 4px solid white;
   margin: 0 auto;
   max-width: 500px;
+
+  background: white;
+  /* opacity: 0.5; */
 }
 
 .hall-card:hover .hall-card-inner {
