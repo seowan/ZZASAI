@@ -25,9 +25,9 @@ public class RoomController {
 
 	@Autowired
 	RoomService roomservice;
-
+	
 	////////// 방 정보 DB에 저장//////////
-	@RequestMapping(value = "/create", method=RequestMethod.POST)
+	@PostMapping(value = "/create")
 	public String createRoom(@RequestBody RoomDto roomdto) throws Exception {
 		String result = "";
 		try {
