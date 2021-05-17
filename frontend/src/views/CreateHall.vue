@@ -4,7 +4,9 @@
     <h5 class="my-5" id="code_block">
       방 코드: <span style="font-weight: bold">{{ roomcode }}</span>
     </h5>
-    <div class="mb-4" style="color: pink;">시작할 컨텐츠를 왼쪽에서 오른쪽으로 순서대로 드래그하세요!</div>
+    <div class="mb-4" style="color: pink;">
+      시작할 컨텐츠를 왼쪽에서 오른쪽으로 순서대로 드래그하세요!
+    </div>
     <!-- Vue.Draggable -->
     <div class="row" style="height: 15rem;">
       <div id="box_left" class="col-3 offset-3">
@@ -25,7 +27,9 @@
           </div>
         </draggable>
       </div>
-      <div style="display: flex; align-items: center; font-weight: bold; color: white;" >
+      <div
+        style="display: flex; align-items: center; font-weight: bold; color: white;"
+      >
         >
       </div>
       <div id="box_right" class="col-3">
@@ -77,7 +81,7 @@ export default {
         { name: "카드", id: 3 },
       ],
       list2: [],
-      roomcode: '',
+      roomcode: "",
     };
   },
   methods: {
@@ -118,8 +122,8 @@ export default {
         }
         axios({
           method: "post",
-          //url: `api/room/create/`,
-          url: `http://localhost:8080/api/room/create/`,
+          url: `api/room/create/`,
+          // url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
           //url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/api/room/create/`,
@@ -138,30 +142,38 @@ export default {
             });
           })
           .catch((err) => {
-            alert("오류가 발생하였습니다. 다시 시도해주세요." + '<br /> 에러코드' + `${err}`);
+            alert(
+              "오류가 발생하였습니다. 다시 시도해주세요." +
+                "<br /> 에러코드" +
+                `${err}`
+            );
           });
       }
     },
-    getRoomInfo(){
-      var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
-      var stringLength = 8
+    getRoomInfo() {
+      var chars =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+      var stringLength = 8;
       for (var i = 0; i < stringLength; i++) {
-        var rnum = Math.floor(Math.random() * chars.length)
-        this.roomcode += chars.substring(rnum, rnum + 1)
+        var rnum = Math.floor(Math.random() * chars.length);
+        this.roomcode += chars.substring(rnum, rnum + 1);
       }
       // roomcode 저장하기
-      this.$store.commit('CREATE_ROOMCODE', this.roomcode)
-      return this.roomcode
+      this.$store.commit("CREATE_ROOMCODE", this.roomcode);
+      return this.roomcode;
     },
   },
-  beforeMount () {
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg' + ')';
-    
+  beforeMount() {
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" +
+      "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" +
+      ")";
+
     // 새로고침 감지
     // window.onbeforeunload
-    this.getRoomInfo()
-  }
+    this.getRoomInfo();
+  },
 };
 </script>
 
@@ -183,7 +195,7 @@ body {
 #code_block {
   cursor: default;
   // border: 4px solid white;
-  background-color : rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   // background-color: pink;
   color: black;
   text-decoration: underline;
