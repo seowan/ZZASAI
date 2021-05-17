@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
 
 export default {
   name: "SelectTeam",
@@ -49,6 +49,7 @@ export default {
       btnStatus: true,
       selected: "",
       socket: this.$store.state.socket,
+      teams: this.$store.state.teams,
     };
   },
   created() {
@@ -57,10 +58,11 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp5042415.jpg" + ")";
   },
   mounted() {
-    console.log("총 인원 수 :" + this.totalPerson);
+    // console.log("총 인원 수 :" + this.totalPerson);
 
     // socket on 함수 mounted에 배치
     this.socket.on("select team", (teams) => {
+      this.$store.state.teams = teams;
       console.log(teams);
       // this.selectTeam(teams);
     });
@@ -87,7 +89,13 @@ export default {
       this.btnStatus = false;
       // console.log(this.$store.state.teams);
 
-      this.socket.emit("select team", this.teams);
+      this.socket.emit("select team", this.$store.state.teams);
+
+      // 이어그리기로 이동
+      // this.$router.push({
+      //     name: "SelectTeam",
+      //     params: { roomcode: this.$store.state.roomcode },
+      //   });
     },
     checkBtnStatus() {
       for (var i = 0; i < this.$store.state.teamnumber; i++) {
@@ -99,9 +107,9 @@ export default {
       }
     },
   },
-  computed: {
-    ...mapState(["teams", "userlist"]),
-  },
+  // computed: {
+  //   ...mapState(["teams", "userlist"]),
+  // },
 };
 </script>
 
