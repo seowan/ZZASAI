@@ -1,6 +1,6 @@
 <template>
-  <div class="catchmind">
-    <!-- <timer></timer> -->
+  <div class="grid-wrapper">
+    <Timer />
     <!--1st row-->
     <div class="canvas-wrapper">
       <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
@@ -82,11 +82,11 @@
 import axios from "axios";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
-// import Timer from "@/components/Timer";
+import Timer from "@/components/Timer";
 
 export default {
   name: "CatchMind",
-  components: {},
+  components: { Timer },
   data() {
     return {
       painting: false,

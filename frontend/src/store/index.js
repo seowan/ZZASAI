@@ -12,7 +12,7 @@ export default new Vuex.Store({
     userlist: [],
     userinfo: {
       username: "",
-      team: "",
+      team: 0,
       score: 0,
     },
     userlist_boolean: [],
