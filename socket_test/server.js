@@ -61,6 +61,7 @@ io.on("connection", function (socket) {
   user = new User(socket.id, "aaa", "aaawww12", "false");
   socket.on("info", function (name, code, isAdmin) {
     user = new User(socket.id, name, code, isAdmin); //유저 정보 저장
+    console.log(user);
     if (isAdmin) {
       //방장이라면, 방 코드 유일값인지 확인
       for (var room of rooms) {

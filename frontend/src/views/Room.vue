@@ -52,7 +52,7 @@ export default {
         "info",
         this.$store.state.userinfo.username,
         this.roomcode,
-        this.adminFlag != 0 ? true : false
+        this.$store.state.adminflag != 0 ? true : false
       );
     });
   },
