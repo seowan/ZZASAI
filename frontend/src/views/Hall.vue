@@ -56,19 +56,6 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
-<<<<<<< HEAD
-    this.$store.state.socket = this.socket;
-
-    this.socket.on("connect", () => {
-      console.log(this.socket.id);
-      this.socket.emit(
-        "info",
-        this.$store.state.userinfo.username,
-        this.roomcode,
-        this.$store.state.adminflag != 0 ? true : false
-      );
-    });
-=======
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
     //   console.log(this.socket.id);
@@ -79,7 +66,6 @@ export default {
     //     this.adminFlag != 0 ? true : false
     //   );
     // });
->>>>>>> 1fd920dac00c01ae23785d6a4607cc8f720de593
   },
   methods: {
     getRoomData: function() {
