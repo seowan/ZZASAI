@@ -122,7 +122,7 @@ export default {
         }
         axios({
           method: "post",
-          url: `api/room/create/`,
+          url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
           // url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
           //url: `http://localhost:8080/api/room/create/`,
