@@ -122,16 +122,7 @@ export default {
     })
     
     //카드 선택 시 소켓통신
-    this.socket.on("cardselected",(no,target_id)=>{
-      // this.afterClickCard(no,target_id);
-      //이렇게짜면 보이지않는 카드는 삭제가 안됨!!
-      //보이지 않더라도 카드는 삭제되야함!!!!!!흠....
-      console.log(target_id);
-      console.log(no);
-      if (no != null && target_id != no) {
-        var item = document.getElementById(target_id)
-        item.remove()
-      } 
+    this.socket.on("cardselected",(no)=>{
 
       var card = document.querySelector('.card');
       if (card) {

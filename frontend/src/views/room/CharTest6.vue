@@ -138,12 +138,12 @@ export default {
       console.log("소켓");
       console.log(this.$store.state.socket);
       console.log(this.$store.state.roomcode);
-      console.log(this.$store.state.username);
+      console.log(this.$store.state.userinfo.username);
       console.log(this.$store.state.userlist);
       console.log(this.$store.state.userlist_boolean);
       console.log(this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
 
-      this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
+      this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
       this.$store.state.userlist, this.$store.state.userlist_boolean, 
       this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
       this.$router.push('/loading'); 
