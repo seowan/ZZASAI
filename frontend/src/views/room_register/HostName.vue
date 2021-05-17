@@ -46,8 +46,6 @@ export default {
   created () {
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg' + ')';
-    var input = document.querySelector("maininput")
-    input.focus()
   }
 };
 </script>
