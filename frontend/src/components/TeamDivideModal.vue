@@ -66,6 +66,8 @@ export default {
       timer: 3,
       numberState: null,
       totalPeople: "30",
+      socket: this.$store.state.socket,
+      teams: this.$store.state.teams,
     };
   },
   mounted() {},
@@ -117,7 +119,12 @@ export default {
 
         // console.log(this.$store.state.teams);
         // console.log(this.$store.state.timer);
-        this.$router.push({ name: "SelectTeam" });
+
+        this.socket.emit("move page to select team", this.teams);
+        this.$router.push({
+          name: "SelectTeam",
+          params: { roomcode: this.$store.state.roomcode },
+        });
       } else {
         alert("다시 입력하세요");
       }
