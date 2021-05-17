@@ -28,7 +28,7 @@ import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
 import Test from "@/views/Test";
 import axios from "axios";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      socket: io("localhost:3000"),
+      socket: this.$store.state.socket,
       order_mark: "",
       roomcode: this.$route.params.roomcode,
       room_data: {},
@@ -56,17 +56,16 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
-    this.$store.state.socket = this.socket;
-
-    this.socket.on("connect", () => {
-      // console.log(this.socket.id);
-      this.socket.emit(
-        "info",
-        this.$store.state.userinfo.username,
-        this.roomcode,
-        this.adminFlag != 0 ? true : false
-      );
-    });
+    // this.$store.state.socket = this.socket;
+    // this.socket.on("connect", () => {
+    //   console.log(this.socket.id);
+    //   this.socket.emit(
+    //     "info",
+    //     this.$store.state.userinfo.username,
+    //     this.roomcode,
+    //     this.adminFlag != 0 ? true : false
+    //   );
+    // });
   },
   methods: {
     getRoomData: function() {

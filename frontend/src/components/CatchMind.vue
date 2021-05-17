@@ -1,6 +1,6 @@
 <template>
   <div class="grid-wrapper">
-    <!-- <timer></timer> -->
+    <timer></timer>
     <!--1st row-->
     <div class="rtc" id="left-rtc"></div>
     <div class="canvas-wrapper">
