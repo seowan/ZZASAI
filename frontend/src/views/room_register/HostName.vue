@@ -5,6 +5,7 @@
     <div class="frame">
       <input
         class="maininput"
+        id="focusHost"
         v-model="name"
         v-focus
         placeholder="이름을 입력하세요"
@@ -27,8 +28,9 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
-        el.focus()
+      inserted: function () {
+        var input = document.getElementById("focusHost")
+        input.focus()
       },
     },
   },

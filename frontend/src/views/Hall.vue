@@ -79,7 +79,7 @@ export default {
   beforeMount: function() {
     // 진행순서 데이터 받아오기
     this.$store.state.roomcode = this.$route.params.roomcode;
-    if (this.$store.state.username == "") {
+    if (this.$store.state.userinfo.username == undefined) {
       this.$router.push({ name: "UserName" });
     } else {
       this.getRoomData();
@@ -120,7 +120,7 @@ body {
   margin: 0 auto;
   max-width: 500px;
 
-  background: white;
+  /* background: white; */
   /* opacity: 0.5; */
 }
 

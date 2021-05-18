@@ -38,12 +38,13 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push('/char-test2');
+      this.$router.push({name: 'CharTest2', params: {roomcode: this.$sotre.state.roomcode}})
     },
     sendInfo () {
       this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
       this.$store.state.userlist, false);
-      this.$router.push('/char-test2');
+      // this.$router.push('/char-test2');
+      this.$router.push({name: 'CharTest2', params: {roomcode: this.$sotre.state.roomcode}})
     }
   },
   created () {
@@ -52,9 +53,6 @@ export default {
 
     this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
     this.$store.state.userlist, false);
-    this.$router.push('/char-test2');
-
-    console.log('aslkahsdlh')
   },
 }
 

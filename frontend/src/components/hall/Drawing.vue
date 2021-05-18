@@ -4,7 +4,6 @@
       <div class="hall-card-front">
         <img
           src="@/assets/icons/pencil.png"
-          alt="Avatar"
           style="width:100px;height:100px;"
         />
       </div>

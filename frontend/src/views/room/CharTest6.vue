@@ -126,12 +126,11 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push('/char-test7');
+    this.$router.push({name: 'CharTest7', params: {roomcode: this.$sotre.state.roomcode}})
     },
     mounted() {
     this.socket.on("userboolean", (userboolean) => {
       this.$store.state.userlist_boolean = userboolean.userlist_boolean;
-      console.log("changed user list: ", this.$store.state.userlist_boolean);
     });
     },
     sendInfo() {
@@ -146,7 +145,7 @@ export default {
       this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
       this.$store.state.userlist, this.$store.state.userlist_boolean, 
       this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
-      this.$router.push('/loading'); 
+      this.$router.push({name: 'Loading', params: {roomcode: this.$sotre.state.roomcode}})
     },
   },
   components: {

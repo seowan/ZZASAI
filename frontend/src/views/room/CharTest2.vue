@@ -29,15 +29,15 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push('/char-test3');
+      this.$router.push({name: 'CharTest3', params: {roomcode: this.$sotre.state.roomcode}})
     },
     myes: function () {
       this.$store.state.m = 1;
-      this.$router.push('/char-test3');
+      this.$router.push({name: 'CharTest3', params: {roomcode: this.$sotre.state.roomcode}})
     },
     mno: function () {
       this.$store.state.m = 2;
-      this.$router.push('/char-test3');
+      this.$router.push({name: 'CharTest3', params: {roomcode: this.$sotre.state.roomcode}})
     },
   }
 }

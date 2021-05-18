@@ -21,15 +21,15 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push('/char-test6');
+      this.$router.push({name: 'CharTest6', params: {roomcode: this.$sotre.state.roomcode}})
     },
     iyes: function () {
       this.$store.state.i = 1;
-      this.$router.push('/char-test6');
+      this.$router.push({name: 'CharTest6', params: {roomcode: this.$sotre.state.roomcode}})
     },
     ino: function () {
       this.$store.state.i = 2;
-      this.$router.push('/char-test6');
+      this.$router.push({name: 'CharTest6', params: {roomcode: this.$sotre.state.roomcode}})
     },
   }
 }

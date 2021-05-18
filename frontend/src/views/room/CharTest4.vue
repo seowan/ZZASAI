@@ -24,15 +24,15 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push('/char-test5');
+      this.$router.push({name: 'CharTest5', params: {roomcode: this.$sotre.state.roomcode}})
     },
     tyes: function () {
       this.$store.state.t = 1;
-      this.$router.push('/char-test5');
+      this.$router.push({name: 'CharTest5', params: {roomcode: this.$sotre.state.roomcode}})
     },
     tno: function () {
       this.$store.state.t = 2;
-      this.$router.push('/char-test5');
+      this.$router.push({name: 'CharTest5', params: {roomcode: this.$sotre.state.roomcode}})
     },
   }
 }

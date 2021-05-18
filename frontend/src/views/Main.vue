@@ -17,7 +17,7 @@
         </div>
     </span>
     <div class="mainframe">
-      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" v-focus>      
+      <input id="focusMain" class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" v-focus>      
     </div>
     <div class="mainbuttons">
       <button class = "mainbtn" @click="toHostName">방만들기</button>
@@ -45,7 +45,10 @@ export default {
   directives: {
     focus: {
       inserted: function (el) {
-        el.focus()
+        console.log(el)
+        var input = document.getElementById("focusMain")
+        console.log(input)
+        input.focus()
       },
     },
   },
@@ -65,7 +68,7 @@ export default {
       if (this.roomcode!='' && this.roomcode.length>=8) {        
         this.$store.commit('CREATE_ROOMCODE', this.roomcode)
         this.$store.commit('RESTORE_ADMINFLAG')
-        this.$router.push({ name: 'UserName' })
+        this.$router.push({ name: 'UserName', params: {roomcode: this.roomcode} })
       } else {
         alert("정확한 입장코드를 입력해주세요!")
       }
