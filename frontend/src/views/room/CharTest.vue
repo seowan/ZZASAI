@@ -38,16 +38,19 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push({name: 'CharTest2', params: {roomcode: this.$sotre.state.roomcode}})
+      this.$router.push({name: 'CharTest2', params: {roomcode: this.$store.state.roomcode}})
     },
     sendInfo () {
       this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
       this.$store.state.userlist, false);
       // this.$router.push('/char-test2');
-      this.$router.push({name: 'CharTest2', params: {roomcode: this.$sotre.state.roomcode}})
+      this.$router.push({name: 'CharTest2', params: {roomcode: this.$store.state.roomcode}})
     }
   },
   created () {
+    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
+      this.$router.push({name: 'Main'})
+    }
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365505.png' + ')';
 

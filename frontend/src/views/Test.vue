@@ -70,13 +70,13 @@ export default {
     },
     // openvidu 서버 토큰 받기
     getToken: function(sessionId) {
-      console.log("토큰 받기 시작");
+      // console.log("토큰 받기 시작");
       return this.createSession(sessionId).then((sessionId) =>
         this.createToken(sessionId)
       );
     },
     createSession: function(sessionId) {
-      console.log("세션 생성");
+      // console.log("세션 생성");
       return new Promise((resolve, reject) => {
         axios
           .post(
@@ -92,7 +92,7 @@ export default {
             }
           )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             return response.data;
           })
           .then((data) => resolve(data.id))
@@ -174,12 +174,9 @@ export default {
         var data = JSON.parse(sub.stream.connection.data);
         temp.push(data.clientData);
         bootemp.push(false);
-        console.log("여기에요");
       }
       this.$store.state.userlist = temp;
       this.$store.state.userlist_boolean = bootemp;
-      console.log(this.$store.state.userlist)
-      console.log(this.$store.state.userlist_boolean)
     });
 
     this.session.on("streamDestroyed", ({ stream }) => {
@@ -190,8 +187,8 @@ export default {
     });
 
     this.session.on("signal:my-chat", (event) => {
-      console.log("메시지 :", event.data);
-      console.log("작성자 :", event.from);
+      // console.log("메시지 :", event.data);
+      // console.log("작성자 :", event.from);
 
       let msg = { author: "", content: "" };
       msg.author = event.from.data.split('":"')[1].slice(0, -2);
@@ -223,7 +220,7 @@ export default {
           this.session.publish(this.publisher);
           this.$store.state.userlist.push(this.$store.state.userinfo.username);
           this.$store.state.userlist_boolean.push(false);
-          console.log("끝");
+          // console.log("끝");
           })
         .catch((err) => console.log("세션 커넥트 에러", err.code, err.message));
     });

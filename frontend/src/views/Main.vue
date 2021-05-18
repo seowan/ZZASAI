@@ -44,10 +44,8 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
-        console.log(el)
+      inserted: function () {
         var input = document.getElementById("focusMain")
-        console.log(input)
         input.focus()
       },
     },

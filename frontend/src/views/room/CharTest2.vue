@@ -24,7 +24,6 @@ export default {
   mounted() {
     this.socket.on("userboolean", (userboolean) => {
       this.$store.state.userlist_boolean = userboolean.userlist_boolean;
-      console.log("changed user list: ", this.$store.state.userlist_boolean);
     });
   },
   methods: {

@@ -70,15 +70,17 @@ export default {
             String(this.room_data.game3);
         })
         .catch((err) => {
-          alert("데이터를 가지고 오지 못했습니다ㅜㅜ <br/>" + `${err}`);
+          alert("데이터를 가지고 오지 못했습니다ㅜㅜ\n" + `${err}`);
         });
     },
   },
   beforeMount: function() {
     // 진행순서 데이터 받아오기
     this.$store.state.roomcode = this.$route.params.roomcode;
-    if (this.$store.state.userinfo.username == undefined) {
-      this.$router.push({ name: "UserName" });
+    if (this.$store.state.roomcode == undefined) {
+      this.$router.push({ name: "Main" });
+    } else if (this.$store.state.userinfo.username == undefined) {
+      this.$router.push({name: 'UserName'})
     } else {
       this.getRoomData();
     }
