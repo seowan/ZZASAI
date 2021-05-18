@@ -21,7 +21,7 @@
           그렇다.
         </h2>
         <br />
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">
+        <button type="button" class="btn btn-dark btn-lg" v-on:click="sendInfo">
           Next
         </button>
       </div>
@@ -35,11 +35,32 @@
 export default {
   name: "Fox",
   data() {
-    return {};
+    return {
+      socket: this.$store.state.socket,
+    };  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
   },
   methods: {
     next() {
-      this.$router.push("/char-test7");
+      this.updateArray(this.$store.state.userlist, this.$store.state.userinfo.username)
+      console.log(this.$store.state.userlist_boolean);
+      this.$router.push("/loading");
+    },
+    updateArray(myArray, oldValue){
+        const index = myArray.indexOf(oldValue);
+        if (index !== -1) {
+         this.$store.state.userlist_boolean[index] = this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i;
+        }
+    },
+    sendInfo() {
+      this.$store.state.socket.emit("mbti2", this.$store.state.roomcode, this.$store.state.userinfo.username, 
+      this.$store.state.userlist,
+      this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
+      this.$router.push('/loading'); 
     },
   },
 };

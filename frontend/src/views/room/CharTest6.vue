@@ -127,7 +127,27 @@ export default {
   methods: {
     next() {
       this.$router.push('/char-test7');
-    }
+    },
+    mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
+    },
+    sendInfo() {
+      console.log("소켓");
+      console.log(this.$store.state.socket);
+      console.log(this.$store.state.roomcode);
+      console.log(this.$store.state.userinfo.username);
+      console.log(this.$store.state.userlist);
+      console.log(this.$store.state.userlist_boolean);
+      console.log(this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
+
+      this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
+      this.$store.state.userlist, this.$store.state.userlist_boolean, 
+      this.$store.state.m*1000+this.$store.state.b*100+this.$store.state.t*10+this.$store.state.i);
+      this.$router.push('/loading'); 
+    },
   },
   components: {
     Cat, Cheetah, Crow, Dog, Dolphin, Elephant, Fox, Hippocampus, Horse, Hyena, Lizard, Octopus, Parrot, Penguin, Turtle, Wolf

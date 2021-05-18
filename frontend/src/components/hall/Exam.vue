@@ -5,7 +5,7 @@
         <img src="@/assets/icons/exam.png" alt="Avatar" style="width:100px;height:100px;">
       </div>
       <div class="hall-card-back">
-        <h2 class="hall-card-text">성향테스트</h2>
+        <h2 class="hall-card-text">성향검사</h2>
       </div>
     </div>
   </div>
@@ -13,10 +13,8 @@
 
 <script>
 export default {
-  name: 'Exam',
-}
+  name: "Exam",
+};
 </script>
 
-<style>
-
-</style>
+<style scoped></style>

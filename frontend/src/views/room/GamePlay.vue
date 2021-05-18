@@ -13,6 +13,10 @@ export default {
   components: {
     CatchMind,
   },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp4718591.jpg' + ')'
+  },
 };
 </script>
 

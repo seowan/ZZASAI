@@ -16,21 +16,46 @@
         <h4> 아주 높습니다 </h4>
         <h4> 신뢰도 9.99% </h4>
         <br>
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="next">검사 시작</button>
+        <button type="button" class="btn btn-dark btn-lg" v-on:click="sendInfo">검사 시작</button>
         </div>
       </div>
     </div>
-  
 </template>
 
 <script>
 export default {
   name: 'CharTest',
+  data(){
+    return{
+      socket: this.$store.state.socket,
+    };
+  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
+  },
   methods: {
     next() {
       this.$router.push('/char-test2');
+    },
+    sendInfo () {
+      this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.username, 
+      this.$store.state.userlist, false);
+      this.$router.push('/char-test2');
     }
-  }
+  },
+  created () {
+    var body = document.body
+    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365505.png' + ')';
+
+    this.$store.state.socket.emit("mbti", this.$store.state.roomcode, this.$store.state.userinfo.username, 
+    this.$store.state.userlist, false);
+    this.$router.push('/char-test2');
+
+    console.log('aslkahsdlh')
+  },
 }
 
 </script>

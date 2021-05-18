@@ -19,16 +19,32 @@
         <span>.</span>
         <span>.</span>
         </p>
+
     </div>
 </template>
 
 <script>
 export default {
-
+  data(){
+    return{
+      socket: this.$store.state.socket,
+    };
+  },
+  mounted() {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    },
+    this.socket.on("mbtifinish", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      this.$router.push('/char-test7');
+    },
+    ));
+    },
 }
 </script>
 
-<style>
+<style scoped>
 div p{
     background-color: white;
     opacity: 0.5;

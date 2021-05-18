@@ -5,12 +5,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Timer",
   data() {
     return {
-      countDown: 3,
+      countDown: this.$store.state.timer,
     };
+  },
+  computed: {
+    ...mapState(["teams"]),
   },
   methods: {
     countDownTimer() {

@@ -1,78 +1,242 @@
 <template>
   <!-- 질문 카드 게임 -->
-  <div id="card-play">
-    <h3> 질문 카드 게임 </h3>
-    <div id="test">test</div>
+  <div id="card-play" class="my-0 py-0">
+    <div style="background-image: "></div>
+    <!-- <h3> 질문 카드 게임 </h3> -->
+    <div v-if="cardImageFront" class="scene scene--card my-0 py-0">
+      <div class="card" @click="flipCard">
+        <img class="card__face card__face--front" :src="cardImageFront" />
+        <img class="card__face card__face--back" :src="cardImageBack" />
+      </div>
+    </div>
     <div id="rotate-div" class="chand"></div>
   </div>
 </template>
 
 <script>
-import CMRotate from '@/assets/js/CMRotate.js'
+import CMRotate from "@/assets/js/CMRotate.js";
+import axios from "axios";
+
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+var backgroundImages = [];
+// var target = document.getElementById("rotate-div")
+
 export default {
-  name: 'CardPlay',
-  methods: {
-
+  name: "CardPlay",
+  data: function() {
+    return {
+      cards: {},
+      selected_card_no: null,
+      selected_card_front: null,
+      selected_card_back: null,
+      selected_card_id: null,
+      socket: this.$store.state.socket,
+      checkflag: 0,
+    };
   },
-  created () {
-    window.onload = function () {
+  computed: {
+    cardImageFront() {
+      return this.selected_card_front;
+    },
+    cardImageBack() {
+      return this.selected_card_back;
+    },
+  },
+  methods: {
+    clickCard(no, target_id) {
+      this.socket.emit("cardselect", no, target_id, this.cards[no].cardname);
+    },
+    // afterClickCard(no, target_id){
+    //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
 
-            var backgroundImages = ["cards/sample/img1.jpg", "images/img2.jpg", "images/img3.jpg", "images/img4.jpg", "images/img5.jpg",
-                                    "images/img6.jpg", "images/img7.jpg", "images/img8.jpg", "images/img9.jpg", "images/img10.jpg",
-                                    "images/img11.jpg", "images/img12.jpg", "images/img13.jpg", "images/img14.jpg", "images/img15.jpg",
-                                    "images/img16.jpg", "images/img17.jpg", "images/img18.jpg"];
+    //   if (this.selected_card_no != null && this.selected_card_no != no) {
+    //     // var item = document.getElementById('cm-rotate-' + this.selected_card_id)
+    //     var item = document.getElementById(this.selected_card_id)
+    //     console.log("delete");
+    //     item.remove()
+    //   }
 
-            CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
+    //   var card = document.querySelector('.card');
+    //   if (card) {
+    //     card.classList.remove('is-flipped')
+    //   }
 
-            function clickFn(no) {
-                alert('click no - ' + (no + 1));
-            }
+    //   this.selected_card_no = no
+    //   this.selected_card_front = this.cards[no]["cardurl_front"]
+    //   this.selected_card_id = target_id
+    //   this.selected_card_back = this.cards[no]["cardurl_back"]
+
+    // },
+    flipCard() {
+      var card = document.querySelector(".card");
+      card.classList.toggle("is-flipped");
+    },
+    async getData() {
+      await axios({
+        method: "get",
+        // url: `${SERVER_URL}/api/card/list/`,
+        url: `/api/card/list/`,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          var i;
+          for (i = 0; i < res.data.length; i++) {
+            backgroundImages.push(res.data[i]["cardurl_front"]);
+          }
+          this.cards = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("오류가 발생했습니다. 다시 시도하세요");
+        });
+    },
+  },
+  created() {
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp5642739.jpg" + ")";
+  },
+  async mounted() {
+    await this.getData();
+    //방장일경우 처음 한번만 카드 리스트 넘겨줌
+    if (this.$store.state.adminflag == 1 && this.checkflag == 0) {
+      CMRotate.init(
+        "rotate-div",
+        200,
+        300,
+        50,
+        30,
+        200,
+        backgroundImages,
+        this.clickCard
+      );
+      this.checkflag = 1;
+      //소켓
+      this.socket.emit("firstinit", this.cards, backgroundImages);
     }
-  }
-}
+
+    //처음 한번만 다른 사람들이 카드 리스트를 받는다
+    this.socket.on("setinit", (cards, backgroundImages) => {
+      if (this.$store.state.adminflag == 0) {
+        this.cards = cards;
+        this.backgroundImages = backgroundImages;
+        CMRotate.init(
+          "rotate-div",
+          200,
+          300,
+          50,
+          30,
+          200,
+          this.backgroundImages,
+          this.clickCard
+        );
+      }
+    });
+
+    //카드 선택 시 소켓통신
+    this.socket.on("cardselected", (no) => {
+      var card = document.querySelector(".card");
+      if (card) {
+        card.classList.remove("is-flipped");
+      }
+
+      this.selected_card_front = this.cards[no]["cardurl_front"];
+      this.selected_card_back = this.cards[no]["cardurl_back"];
+    });
+    // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
+  },
+};
 </script>
 
-<style type="text/css">
-html, body {
-    width:100%;
-    height:100%;
-    margin: 0;
-    padding: 0;
+<style type="text/css" scoped>
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* position: relative; */
 }
 
-* {
+/* * {
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
-}
+} */
 
 #rotate-div {
-    overflow: hidden;
-    /* position: relative; */
-    width:100%;
-    height:100%;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 a {
-    color: #ff0000;
-    text-decoration: none;
+  color: #ff0000;
+  text-decoration: none;
 }
 a:hover {
-    color: #000;
+  color: #000;
 }
 
 .chand {
-    /* cursor: url(images/hand.cur), move; */
+  /* cursor: url(../../assets/cards/sample/hand.cur), move; */
 }
 .chand:active {
-    /* cursor: url(images/hand-h.cur), move; */
+  /* cursor: url(../../assets/cards/sample/hand-h.cur), move; */
 }
-#test{
-    width: 300px;
-    height:300px;
-    background:url('C:/ssafy/LAST/s04p31a205/frontend/src/assets/cards/sample/img1.jpg');
+
+/* card flip */
+.scene {
+  position: absolute;
+  left: 40%;
+  /* 200px 260px */
+  width: 20%;
+  height: 55%;
+  /* border: 1px solid #CCC; */
+  margin: 40px 0;
+  perspective: 600px;
+}
+
+.card {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+.card.is-flipped {
+  transform: rotateY(-180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 260px;
+  /* color: white; */
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  /* background: red; */
+}
+
+.card__face--back {
+  /* background: blue; */
+  transform: rotateY(180deg);
 }
 </style>
