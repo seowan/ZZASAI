@@ -55,10 +55,8 @@ export default {
     getRoomData: function() {
       axios({
         method: "get",
-        // url: `api/room/info/?roomcode=${this.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        //url: `api/room/info/?roomcode=${this.roomcode}`,
-        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
