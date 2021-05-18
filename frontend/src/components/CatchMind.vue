@@ -80,7 +80,7 @@
 
 <script>
 import axios from "axios";
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 // import Timer from "@/components/Timer";
 
@@ -189,9 +189,9 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        // url: `api/room/info/?roomcode=${this.roomcode}`,
+        url: `api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `${SERVER_URL}/api/catchmind/answer`,
+        // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
