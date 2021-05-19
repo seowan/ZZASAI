@@ -65,7 +65,8 @@ import draggable from "vuedraggable";
 import HelpIcon from "@/components/HelpIcon";
 
 import axios from "axios";
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.SERVER_URL;
 
 export default {
   name: "CreateHall",
@@ -122,11 +123,8 @@ export default {
         }
         axios({
           method: "post",
-          url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
-          // url: `http://localhost:8080/api/room/create/`,
-          // url: `${SERVER_URL}/room/create/`,
-          //url: `http://localhost:8080/api/room/create/`,
-          // url: `${SERVER_URL}/api/room/create/`,
+          // url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
+          url: `${SERVER_URL}/room/create/`,
 
           data: JSON.stringify(context),
           headers: {
@@ -143,9 +141,7 @@ export default {
           })
           .catch((err) => {
             alert(
-              "오류가 발생하였습니다. 다시 시도해주세요." +
-                "<br /> 에러코드" +
-                `${err}`
+              "오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`
             );
           });
       }
@@ -165,13 +161,8 @@ export default {
   },
   beforeMount() {
     var body = document.body;
-    body.style.backgroundImage =
-      "url(" +
-      "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" +
-      ")";
-
-    // 새로고침 감지
-    // window.onbeforeunload
+    body.style.backgroundImage = "url(" + "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" + ")";
+    this.$store.commit('CREATE_PROGRAMME', "")  // 진행순서 초기화
     this.getRoomInfo();
   },
 };

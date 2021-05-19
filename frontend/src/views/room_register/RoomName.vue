@@ -3,7 +3,7 @@
     <!-- 이 페이지 불필요한 요소 정리완료 - 이송영 -->
     <span class="title">짜사이</span>
     <div class="frame">
-      <input class="maininput" v-focus v-model="name" placeholder="방 제목을 입력하세요" @keyup.enter="toCreateHall">
+      <input id="focusRoom" class="maininput" v-focus v-model="name" placeholder="방 제목을 입력하세요" @keyup.enter="toCreateHall">
     </div>
     <div class="buttons">
       <button class = "mainbtn" id="createroom" @click="toCreateHall">확인</button>
@@ -21,8 +21,9 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
-        el.focus()
+      inserted: function () {
+        var input = document.getElementById("focusRoom")
+        input.focus()
       },
     },
   },

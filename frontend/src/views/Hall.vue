@@ -8,7 +8,7 @@
     <div class="py-3 my-5"></div>
     <!-- 여기에 flip-card 넣기 -->
     <div class="row justify-content-center">
-      <div v-for="i in 3" :key="i" class="col-2 hall-card">
+      <div v-for="i in 3" :key="i" class="col-4 row hall-card">
         <Exam v-if="order_mark[i - 1] == '1'" />
         <Drawing v-if="order_mark[i - 1] == '2'" />
         <Card v-if="order_mark[i - 1] == '3'" />
@@ -30,7 +30,7 @@ import Test from "@/views/Test";
 import axios from "axios";
 // import io from "socket.io-client";
 
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -71,9 +71,9 @@ export default {
     getRoomData: function() {
       axios({
         method: "get",
-        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -84,17 +84,20 @@ export default {
             String(this.room_data.game1) +
             String(this.room_data.game2) +
             String(this.room_data.game3);
+          this.$store.commit('CREATE_PROGRAMME', this.order_mark)
         })
         .catch((err) => {
-          alert("데이터를 가지고 오지 못했습니다ㅜㅜ <br/>" + `${err}`);
+          alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
         });
     },
   },
   beforeMount: function() {
     // 진행순서 데이터 받아오기
     this.$store.state.roomcode = this.$route.params.roomcode;
-    if (this.$store.state.username == "") {
-      this.$router.push({ name: "UserName" });
+    if (this.$store.state.roomcode == undefined) {
+      this.$router.push({ name: "Main" });
+    } else if (this.$store.state.userinfo.username == "") {
+      this.$router.push({name: 'UserName'})
     } else {
       this.getRoomData();
     }
@@ -134,7 +137,7 @@ body {
   margin: 0 auto;
   max-width: 500px;
 
-  background: white;
+  /* background: white; */
   /* opacity: 0.5; */
 }
 

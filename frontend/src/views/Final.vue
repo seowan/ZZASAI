@@ -65,6 +65,9 @@ export default {
     },
   },
   created () {
+    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
+      this.$router.push({name: 'Main'})
+    }
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp6365447.png' + ')';
   },
