@@ -3,9 +3,10 @@
 var express = require("express");
 const { emit } = require("process");
 var app = express();
-var http = require("http").Server(app); //1
-var io = require("socket.io")(http, { cors: { origin: "*" } }); //1. **allow all cors**
+var https = require("https").Server(app); //1
+var io = require("socket.io")(https, { cors: { origin: "*" } }); //1. **allow all cors**
 
+var nsp = io.of("/ws");
 const User = class {
   constructor(id, name, code, isAdmin) {
     this.id = id;
@@ -52,7 +53,8 @@ const Room = class {
 
 var rooms = [];
 
-io.on("connection", function (socket) {
+// io.on("connection", function (socket) {
+nsp.on("connection", function (socket) {
   //3. interact with clients
   //3-1. client connected
   console.log("user connected: ", socket.id);
@@ -201,16 +203,15 @@ io.on("connection", function (socket) {
   });
 
   /*card function*/
-  socket.on("cardselect",function(cardno){
-    io.emit("cardselected",cardno);
+  socket.on("cardselect", function (cardno) {
+    io.emit("cardselected", cardno);
   }),
-
-  socket.on("firstinit",function(cardlist,backgroundlist){
-    io.emit("setinit",cardlist,backgroundlist);
-  });
+    socket.on("firstinit", function (cardlist, backgroundlist) {
+      io.emit("setinit", cardlist, backgroundlist);
+    });
 });
 
 //4
-http.listen(3000, function () {
+https.listen(3000, function () {
   console.log("server on!");
 });
