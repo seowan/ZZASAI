@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-input-number>시작</b-button>
+    <button v-if="this.$store.state.adminflag == 1" class="mainbtn" v-b-modal.modal-input-number>시작</button>
     <b-modal
       id="modal-input-number"
       ref="modal"

@@ -30,6 +30,11 @@ export default {
       socket: this.$store.state.socket,
     };
   },
+  created () {
+    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
+      this.$router.push({name: 'Main'})
+    }
+  },
   mounted() {
     this.socket.on("userboolean", (userboolean) => {
       this.$store.state.userlist_boolean = userboolean.userlist_boolean;

@@ -5,6 +5,7 @@
     <div class="frame">
       <input
         class="maininput"
+        id="focusUser"
         v-model="name"
         placeholder="이름을 입력하세요"
         @keyup.enter="toRoomName"
@@ -27,8 +28,9 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
-        el.focus()
+      inserted: function () {
+        var input = document.getElementById("focusUser")
+        input.focus()
       },
     },
   },
@@ -46,6 +48,7 @@ export default {
     },
   },
   created () {
+    this.$store.state.roomcode =  this.$route.params.roomcode
     var body = document.body
     body.style.backgroundImage = 'url(' + 'https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg' + ')';
   }

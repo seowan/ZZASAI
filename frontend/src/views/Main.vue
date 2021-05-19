@@ -17,7 +17,7 @@
         </div>
     </span>
     <div class="mainframe">
-      <input class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" v-focus>      
+      <input id="focusMain" class="maininput" v-model="roomcode" placeholder="입장코드를 입력하세요" @keyup.enter="toUserName" v-focus>      
     </div>
     <div class="mainbuttons">
       <button class = "mainbtn" @click="toHostName">방만들기</button>
@@ -27,6 +27,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'Main',
   data(){
@@ -44,8 +48,9 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
-        el.focus()
+      inserted: function () {
+        var input = document.getElementById("focusMain")
+        input.focus()
       },
     },
   },
@@ -55,6 +60,24 @@ export default {
     }
   },
   methods:{
+    checkRoomcode () {
+       axios({
+        method: "get",
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/room/codecheck/?roomcode=${this.roomcode}`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          console.log(res)
+          return res
+        })
+        .catch((err) => {
+          alert("서버에서 오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+        });
+    },
     movemain:function(){
       location.href="/"
     },
@@ -62,10 +85,10 @@ export default {
       this.$router.push({ name: 'HostName' })
     },
     toUserName:function(){
-      if (this.roomcode!='' && this.roomcode.length>=8) {        
+      if (this.checkRoomcode() === true) {        
         this.$store.commit('CREATE_ROOMCODE', this.roomcode)
         this.$store.commit('RESTORE_ADMINFLAG')
-        this.$router.push({ name: 'UserName' })
+        this.$router.push({ name: 'UserName', params: {roomcode: this.roomcode} })
       } else {
         alert("정확한 입장코드를 입력해주세요!")
       }
