@@ -27,6 +27,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'Main',
   data(){
@@ -56,6 +60,24 @@ export default {
     }
   },
   methods:{
+    checkRoomcode () {
+       axios({
+        method: "get",
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/room/codecheck/?roomcode=${this.roomcode}`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          console.log(res)
+          return res
+        })
+        .catch((err) => {
+          alert("서버에서 오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+        });
+    },
     movemain:function(){
       location.href="/"
     },
@@ -63,7 +85,7 @@ export default {
       this.$router.push({ name: 'HostName' })
     },
     toUserName:function(){
-      if (this.roomcode!='' && this.roomcode.length>=8) {        
+      if (this.checkRoomcode() === true) {        
         this.$store.commit('CREATE_ROOMCODE', this.roomcode)
         this.$store.commit('RESTORE_ADMINFLAG')
         this.$router.push({ name: 'UserName', params: {roomcode: this.roomcode} })

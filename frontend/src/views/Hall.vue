@@ -27,7 +27,7 @@ import RoomCode from "@/components/RoomCode";
 import axios from "axios";
 // import io from "socket.io-client";
 
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -55,9 +55,9 @@ export default {
     getRoomData: function() {
       axios({
         method: "get",
-        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        // url: `${SERVER_URL}/api/room/info/?roomcode=${this.roomcode}`,
+        url: `${SERVER_URL}/room/info/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -70,16 +70,19 @@ export default {
             String(this.room_data.game3);
         })
         .catch((err) => {
-          alert("데이터를 가지고 오지 못했습니다ㅜㅜ\n" + `${err}`);
+          alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
         });
     },
   },
   beforeMount: function() {
     // 진행순서 데이터 받아오기
+    
     this.$store.state.roomcode = this.$route.params.roomcode;
+    console.log(this.$store.state.userinfo.username)
+    console.log(this.$store.state.roomcode)
     if (this.$store.state.roomcode == undefined) {
       this.$router.push({ name: "Main" });
-    } else if (this.$store.state.userinfo.username == undefined) {
+    } else if (this.$store.state.userinfo.username == "") {
       this.$router.push({name: 'UserName'})
     } else {
       this.getRoomData();

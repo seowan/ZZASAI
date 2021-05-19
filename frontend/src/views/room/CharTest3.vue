@@ -1,16 +1,16 @@
 <template>
-  <!-- 캐릭터 테스트 -->
-  <div>
-    <h1> 캐릭터(성향) 테스트 </h1>
-    <div class="py-3 my-2"></div>
-    <h1>2/4</h1>
-    <br><br>
-    <h1>데스노트를 보고 '만약 나에게 데스노트가 있다면'을 상상해본적이 있는가?</h1>
-    <br>
-    <b-button type="button" variant="primary" class="btn btn-lg" v-on:click="byes()">그렇다</b-button>
-    <b-button type="button" variant="danger" class="btn btn-lg" v-on:click="bno()">아니다</b-button>
-
+  <div id="char-test-3">
+    <h1 id="char-test-title"> 캐릭터(성향) 테스트 </h1>
+    <div class="py-5 my-2" style="color:white; visibility: hidden;">
+      .<br/>.
+    </div>
+    <div style="color: black;">
+      <h1 class="mb-5">Q2. 데스노트를 보고 '만약 나에게 데스노트가 있다면'을 상상해본적이 있는가?</h1>
+      <button class="char-select-btn" @click="byes()">그렇다</button>
+      <button class="char-select-btn" @click="bno()">아니다</button>
   </div>
+</div>
+
   
 </template>
 
@@ -24,15 +24,15 @@ export default {
   },
   methods: {
     next() {
-      this.$router.push({name: 'CharTest4', params: {roomcode: this.$sotre.state.roomcode}})
+      this.$router.push({name: 'CharTest4', params: {roomcode: this.$store.state.roomcode}})
     },
     byes: function () {
       this.$store.state.b = 1;
-      this.$router.push({name: 'CharTest4', params: {roomcode: this.$sotre.state.roomcode}})
+      this.$router.push({name: 'CharTest4', params: {roomcode: this.$store.state.roomcode}})
     },
     bno: function () {
       this.$store.state.b = 2;
-      this.$router.push({name: 'CharTest4', params: {roomcode: this.$sotre.state.roomcode}})
+      this.$router.push({name: 'CharTest4', params: {roomcode: this.$store.state.roomcode}})
     },
   }
 }
@@ -40,5 +40,7 @@ export default {
 </script>
 
 <style>
-
+#char-test-3 {
+  color: black;
+}
 </style>

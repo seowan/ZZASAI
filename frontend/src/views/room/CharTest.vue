@@ -1,22 +1,22 @@
 <template>
   <!-- 캐릭터 테스트 -->
   <div id="char-test">
-    <h1> 성격유형검사 ( 동물편 ) </h1>
+    <h1 id="char-test-title"> 성격유형검사 ( 동물편 ) </h1>
     <!--<img src="~@/assets/bgs/mbti.png" alt="mbti image" />-->
-    <div class="py-1 my-4"></div>
-      <div class="row">
-        <div class="col offset-md-2">
-        <img src="~@/assets/mbti/animal.png" alt="mbti image"/>
+    <div class="py-1 my-4" ></div>
+      <div class="row" style="height: 80%;">
+        <div class="col-4 offset-md-2">
+          <img src="~@/assets/mbti/animal.png" alt="mbti image" style="width: 100%;"/>
         </div>
-        <div class="col-7">
+        <div class="col-4" style="color: black;">
           <br><br><br>
-        <h1> 신뢰 기반 검사 </h1>
-        <br>
-        <h4> 해당 검사는 신뢰도가 </h4>
-        <h4> 아주 높습니다 </h4>
-        <h4> 신뢰도 9.99% </h4>
-        <br>
-        <button type="button" class="btn btn-dark btn-lg" v-on:click="sendInfo">검사 시작</button>
+          <h2> 신뢰 기반 검사 </h2>
+          <br>
+          <h4> 해당 검사는 신뢰도가 </h4>
+          <h4> 아주 높습니다 </h4>
+          <h4> 신뢰도 9.99% </h4>
+          <br>
+        <button class="mainbtn" v-on:click="sendInfo">검사 시작</button>
         </div>
       </div>
     </div>
@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+#char-test {
+  color: white;
+}
+
 .col img{
 position: absolute; top:0; left: 0;
 width: 140%;
