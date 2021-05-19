@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    programme: [],
+    programme: "",
     //현재 진행중인 컨텐츠. programme[]를 가리키는 인덱스
     pidx: 0,
     userlist: [],
@@ -42,7 +42,7 @@ export default new Vuex.Store({
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {
-      state.programme.push(item);
+      state.programme = item
     },
     CREATE_USERNAME: function(state, name) {
       // state.username = name;
