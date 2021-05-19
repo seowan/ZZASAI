@@ -23,6 +23,15 @@
       <button class = "mainbtn" @click="toHostName">방만들기</button>
       <button v-if="roomcode_input" class = "mainbtn"  v-show="enter_room" @click="toUserName">입장하기</button>      
     </div>
+    <!-- Modal -->
+    <b-modal v-model="wrongModalShow" hide-footer hide-header>
+      <div class="my-5" style="font-weight: bold; text-align: center;">올바른 입장코드를 입력해주세요!</div>
+      <b-button class="mt-3" variant="outline-warning" block style="font-weight: bold;" @click="hideModal">확인</b-button>
+    </b-modal>
+    <b-modal v-model="errorModalShow" hide-footer hide-header>
+      <div class="my-5" style="font-weight: bold; text-align: center;">서버에서 오류가 발생하였습니다. 다시 시도해주세요.</div>
+      <b-button class="mt-3" variant="outline-warning" block style="font-weight: bold;" @click="hideModal">확인</b-button>
+    </b-modal>
   </div>
 </template>
 
@@ -42,8 +51,10 @@ export default {
       create_show : false,
       enter_room : true,
       create_room : true,
-      enter_show : false,
-      userName: ''
+      userName: '',
+      // modal
+      errorModalShow: false,
+      wrongModalShow: false,
     }
   },
   directives: {
@@ -60,8 +71,19 @@ export default {
     }
   },
   methods:{
-    checkRoomcode () {
-       axios({
+    hideModal () {
+      this.errorModalShow = false
+      this.wrongModalShow = false
+    },
+    movemain:function(){
+      location.href="/"
+    },
+    toHostName:function(){
+      this.$router.push({ name: 'HostName' })
+    },
+    toUserName: function(){
+      // checkRoomcode()
+      axios({
         method: "get",
         // url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
@@ -71,30 +93,23 @@ export default {
         },
       })
         .then((res) => {
-          console.log(res)
-          return res
+          if (res.data ==  true) {        
+            this.$store.commit('CREATE_ROOMCODE', this.roomcode)
+            this.$store.commit('RESTORE_ADMINFLAG')
+            this.$router.push({ name: 'UserName', params: {roomcode: this.roomcode} })
+          } else {
+            this.wrongModalShow = true
+          }
         })
         .catch((err) => {
-          alert("서버에서 오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+          console.log(err)
+          this.errorModalShow = true
         });
-    },
-    movemain:function(){
-      location.href="/"
-    },
-    toHostName:function(){
-      this.$router.push({ name: 'HostName' })
-    },
-    toUserName:function(){
-      if (this.checkRoomcode() === true) {        
-        this.$store.commit('CREATE_ROOMCODE', this.roomcode)
-        this.$store.commit('RESTORE_ADMINFLAG')
-        this.$router.push({ name: 'UserName', params: {roomcode: this.roomcode} })
-      } else {
-        alert("정확한 입장코드를 입력해주세요!")
-      }
     },
   },
   created () {
+    // 메인페이지로 재접속시 vuex-persistedstate로 저장중인 roomcode 정보 삭제 
+    this.$store.commit('CREATE_ROOMCODE', '')
     var body = document.body
     // body.background = 'url(' + '../assets/bgs/bg-pattern.png' + ')';
     // body.background = 'linear-gradient(to left,#7b4397,#dc2430)'

@@ -10,6 +10,11 @@
       </div>
     </div>
     <div id="rotate-div" class="chand"></div>
+    <b-modal v-model="errorModalShow" hide-footer hide-header>
+      <div class="my-5" style="font-weight: bold; text-align: center;">카드 업로드 중 오류가 발생했습니다.</div>
+      <b-button class="mt-3" variant="outline-danger" block onClick="window.location.reload()" style="font-weight: bold;">다시 시도하기</b-button>
+      <b-button v-if="this.$store.state.adminflag" class="mt-2" variant="outline-warning" block @click="toHall" style="font-weight: bold;">대기방으로 이동</b-button>
+    </b-modal>
   </div>
 </template>
 
@@ -17,7 +22,7 @@
 import CMRotate from "@/assets/js/CMRotate.js";
 import axios from "axios";
 
-// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = [];
 // var target = document.getElementById("rotate-div")
 
@@ -32,6 +37,7 @@ export default {
       selected_card_id: null,
       socket: this.$store.state.socket,
       checkflag: 0,
+      errorModalShow: false,
     };
   },
   computed: {
@@ -45,6 +51,34 @@ export default {
   methods: {
     clickCard(no, target_id) {
       this.socket.emit("cardselect", no, target_id, this.cards[no].cardname);
+    },
+    flipCard() {
+      var card = document.querySelector(".card");
+      card.classList.toggle("is-flipped");
+    },
+    async getData() {
+      await axios({
+        method: "get",
+        url: `${SERVER_URL}/card/list/`,
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => {
+          var i;
+          for (i = 0; i < res.data.length; i++) {
+            backgroundImages.push(res.data[i]["cardurl_front"]);
+          }
+          this.cards = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.errorModalShow = true
+        });
+    },
+    toHall () {
+      this.$router.push({name: 'Hall', params: { roomcode: this.$route.params.roomcode }})
     },
     // afterClickCard(no, target_id){
     //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
@@ -67,32 +101,6 @@ export default {
     //   this.selected_card_back = this.cards[no]["cardurl_back"]
 
     // },
-    flipCard() {
-      var card = document.querySelector(".card");
-      card.classList.toggle("is-flipped");
-    },
-    async getData() {
-      await axios({
-        method: "get",
-        // url: `${SERVER_URL}/api/card/list/`,
-        url: `/api/card/list/`,
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => {
-          var i;
-          for (i = 0; i < res.data.length; i++) {
-            backgroundImages.push(res.data[i]["cardurl_front"]);
-          }
-          this.cards = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("오류가 발생했습니다. 다시 시도하세요");
-        });
-    },
   },
   created() {
     if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {

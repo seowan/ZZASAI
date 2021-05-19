@@ -162,7 +162,7 @@ export default {
   beforeMount() {
     var body = document.body;
     body.style.backgroundImage = "url(" + "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" + ")";
-
+    this.$store.commit('CREATE_PROGRAMME', "")  // 진행순서 초기화
     this.getRoomInfo();
   },
 };

@@ -84,6 +84,7 @@ export default {
             String(this.room_data.game1) +
             String(this.room_data.game2) +
             String(this.room_data.game3);
+          this.$store.commit('CREATE_PROGRAMME', this.order_mark)
         })
         .catch((err) => {
           alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
@@ -92,10 +93,7 @@ export default {
   },
   beforeMount: function() {
     // 진행순서 데이터 받아오기
-    
     this.$store.state.roomcode = this.$route.params.roomcode;
-    console.log(this.$store.state.userinfo.username)
-    console.log(this.$store.state.roomcode)
     if (this.$store.state.roomcode == undefined) {
       this.$router.push({ name: "Main" });
     } else if (this.$store.state.userinfo.username == "") {
