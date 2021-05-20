@@ -21,6 +21,7 @@
             :state="numberState"
             placeholder="ex) 4"
             required
+            autofocus
           ></b-form-input>
         </b-form-group>
         <div>
@@ -65,7 +66,7 @@ export default {
       teamNumber: "",
       timer: 3,
       numberState: null,
-      totalPeople: "30",
+      totalPeople: "10",
       socket: this.$store.state.socket,
       teams: this.$store.state.teams,
     };

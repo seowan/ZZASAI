@@ -2,32 +2,32 @@
   <div id="test">
     <b-row>
       <b-col>
-        <br>
+        <br />
         <!-- 내 비디오 -->
         <!-- <user-video class="my-video" :stream-manager="publisher" /> -->
         <!-- 전체 비디오 -->
-        <div v-for="(sub,index) in subscribers" :key="sub">
-        <div v-if="index % 2 == 0">
-          {{index}}
-        <user-video 
-          class="user-videos"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-        />
-        </div>
+        <div v-for="(sub, index) in subscribers" :key="sub">
+          <div v-if="index % 2 == 0">
+            {{ index }}
+            <user-video
+              class="user-videos"
+              :key="sub.stream.connection.connectionId"
+              :stream-manager="sub"
+            />
+          </div>
         </div>
       </b-col>
       <b-col>
-        <br>
-        <div v-for="(sub,index) in subscribers" :key="sub">
-        <div v-if="index % 2 == 1">
-          {{index}}
-        <user-video 
-          class="user-videos"
-          :key="sub.stream.connection.connectionId"
-          :stream-manager="sub"
-        />
-        </div>
+        <br />
+        <div v-for="(sub, index) in subscribers" :key="sub">
+          <div v-if="index % 2 == 1">
+            {{ index }}
+            <user-video
+              class="user-videos"
+              :key="sub.stream.connection.connectionId"
+              :stream-manager="sub"
+            />
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -41,8 +41,8 @@ import UserVideo from "@/components/UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
-//const OPENVIDU_SERVER_URL = "https://k4a205.p.ssafy.io";
+// const OPENVIDU_SERVER_URL = "https://" + location.hostname + ":4443";
+const OPENVIDU_SERVER_URL = "https://k4a205.p.ssafy.io";
 const OPENVIDU_SERVER_SECRET = "MY_SECRET";
 
 export default {
@@ -65,8 +65,8 @@ export default {
     };
   },
   methods: {
-    push_userlist: function(name){
-      this.$store.commit('PUSH_USERLIST', name)
+    push_userlist: function(name) {
+      this.$store.commit("PUSH_USERLIST", name);
     },
     // openvidu 서버 토큰 받기
     getToken: function(sessionId) {
@@ -161,15 +161,15 @@ export default {
     this.$store.state.userlist.push(this.$store.state.userinfo.username);
     // openvidu 객체 생성
     this.OV = new OpenVidu();
-    
+
     // 세션 초기화
     this.session = this.OV.initSession();
 
     this.session.on("streamCreated", ({ stream }) => {
       let subscriber = this.session.subscribe(stream);
       this.subscribers.push(subscriber);
-      var temp = []
-      var bootemp = []
+      var temp = [];
+      var bootemp = [];
       for (var sub of this.subscribers) {
         var data = JSON.parse(sub.stream.connection.data);
         temp.push(data.clientData);
@@ -221,7 +221,7 @@ export default {
           this.$store.state.userlist.push(this.$store.state.userinfo.username);
           this.$store.state.userlist_boolean.push(false);
           // console.log("끝");
-          })
+        })
         .catch((err) => console.log("세션 커넥트 에러", err.code, err.message));
     });
   },

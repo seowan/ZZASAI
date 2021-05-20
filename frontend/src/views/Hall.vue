@@ -2,9 +2,6 @@
   <!-- 메인 홀 -->
   <div id="hall">
     <RoomCode :roomcode="roomcode" />
-    <!-- <CodeShareBtn :roomcode="roomcode" /> -->
-    <!-- {{ room_data }} -->
-    <!-- {{ order_mark }} -->
     <div class="py-3 my-5"></div>
     <!-- 여기에 flip-card 넣기 -->
     <div class="row justify-content-center">
@@ -14,33 +11,25 @@
         <Card v-if="order_mark[i - 1] == '3'" />
       </div>
     </div>
-
-    <Test />
-    <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
 
 <script>
 import Card from "@/components/hall/Card";
-// import CodeShareBtn from '@/components/CodeShareBtn'
 import Drawing from "@/components/hall/Drawing";
 import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
-import Test from "@/views/Test";
 import axios from "axios";
-// import io from "socket.io-client";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
   components: {
     Card,
-    // CodeShareBtn,
     Drawing,
     Exam,
     RoomCode,
-    Test,
   },
   data() {
     return {
@@ -56,11 +45,18 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
+    // if (this.$store.state.adminFlag) {
+    //   this.socket.emit(
+    //     this.$store.state.userinfo.username,
+    //     this.roomcode,
+    //     this.adminFlag != 0 ? true : false
+    //   );
+    // }
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
     //   console.log(this.socket.id);
     //   this.socket.emit(
-    //     "info",
+    //     "info",  // 처음 연결되었을 때 서버에게 알려주기 위함
     //     this.$store.state.userinfo.username,
     //     this.roomcode,
     //     this.adminFlag != 0 ? true : false
@@ -69,11 +65,12 @@ export default {
   },
   methods: {
     getRoomData: function() {
+      // console.log(`${SERVER_URL}/room/info/?roomcode=${this.roomcode}`);
       axios({
         method: "get",
         // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `${SERVER_URL}/room/info/?roomcode=${this.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.$store.state.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -84,10 +81,14 @@ export default {
             String(this.room_data.game1) +
             String(this.room_data.game2) +
             String(this.room_data.game3);
-          this.$store.commit('CREATE_PROGRAMME', this.order_mark)
+          // this.$store.commit('CREATE_PROGRAMME', 'this.order_mark')
         })
         .catch((err) => {
-          alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+          alert(
+            "오류가 발생하였습니다. 다시 시도해주세요.\n" +
+              "에러코드: " +
+              `${err}`
+          );
         });
     },
   },
@@ -97,7 +98,7 @@ export default {
     if (this.$store.state.roomcode == undefined) {
       this.$router.push({ name: "Main" });
     } else if (this.$store.state.userinfo.username == "") {
-      this.$router.push({name: 'UserName'})
+      this.$router.push({ name: "UserName" });
     } else {
       this.getRoomData();
     }

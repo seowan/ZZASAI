@@ -13,12 +13,16 @@ export default {
   components: {
     CatchMind,
   },
-  created () {
-    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
-      this.$router.push({name: 'Main'})
+  created() {
+    if (
+      this.$store.state.roomcode == undefined ||
+      this.$store.state.userinfo.username == undefined
+    ) {
+      this.$router.push({ name: "Main" });
     }
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapercave.com/wp/wp4718591.jpg' + ')'
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp4718591.jpg" + ")";
   },
 };
 </script>
