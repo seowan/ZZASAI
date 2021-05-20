@@ -24,6 +24,9 @@ export default {
     /* chatting */
     this.socket.on("chat", (user, msg) => {
       // console.log(name, msg);
+      if (msg == this.$store.state.answer) {
+        this.socket.emit("correct answer", user);
+      }
       var chatLog = document.getElementById("chatLog");
       chatLog.append(user.username + ": " + msg + "\n");
       chatLog.scrollTop = chatLog.scrollHeight;

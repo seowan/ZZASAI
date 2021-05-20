@@ -1,9 +1,8 @@
 <template>
   <div class="catchmind">
-    <!-- <timer></timer> -->
     <!--1st row-->
     <div class="canvas-wrapper">
-      <div class="answer" v-if="turnToDraw">{{ answer }}</div>
+      <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
       <div class="answer" v-else>
         <span v-for="i in answer.length" :key="i">_</span>
       </div>
@@ -86,7 +85,7 @@ import axios from "axios";
 
 export default {
   name: "CatchMind",
-  components: {},
+  // components: { Timer },
   data() {
     return {
       painting: false,
@@ -110,9 +109,12 @@ export default {
       users: [], //all user list
       teamnumber: this.$store.state.teamnumber,
       teams: this.$store.state.teams,
-      // turnToDraw: this.userinfo.team == this.teams[0].text,
-      turnToDraw: true, //user의 team 정하는 코드 완성되면 윗줄 코드로 바꾸기
-      currentTurn: 0, //team number of current turn
+      useridx: this.teams[this.userinfo.team - 1].joinlist.indexOf(
+        this.userinfo
+      ),
+      turnToDraw: true, // able/unable to draw
+      currentUser: 0, //user index of current turn
+      currentTeam: 0, //team index of current turn
 
       // 1) 서버와 연결
       // socket: io("localhost:3000"), //url:port
@@ -120,7 +122,7 @@ export default {
 
       text: "",
       messages: [],
-      answer: "정답",
+      // answer: "정답",
     };
   },
   mounted() {
@@ -162,15 +164,36 @@ export default {
       console.log("changed user list: ", this.users);
     });
 
-    /* answer setting */
-    this.socket.on("chat", (user, msg) => {
-      console.log(user, msg);
-      if (msg == this.answer) {
-        this.answerMessage(user);
+    /* game syncing */
+    this.socket.on("new game", () => {
+      if (this.currentTeam == this.userinfo.team - 1) {
+        //자기 팀이 그림 그릴 차례
+        if (this.currentUser == this.useridx) {
+          this.turnToDraw = true;
+        }
       }
     });
+    this.socket.on("start game", (totalTime) => {
+      console.log(totalTime); //total time limit of team
+      //timer starts
+    });
+    this.socket.on("timer", (user, time) => {
+      console.log(user, time); //time limit of each player
+      this.currentUser++;
+      //timer starts with time
+    });
+    this.socket.on("end game", () => {
+      console.log("end game"); //game end. nobody got the answer
+      //animation
+    });
+
+    /* answer setting */
     this.socket.on("answer", (answer) => {
-      this.answer = answer; //answer 받아오기
+      this.$store.state.answer = answer; //answer 받아오기
+    });
+    this.socket.on("correct answer", (userinfo) => {
+      // console.log(userinfo);
+      this.answerMessage(userinfo);
     });
 
     /* painting */
@@ -205,32 +228,25 @@ export default {
         });
     },
     answerMessage(user) {
-      //get user's team number
-      var i = 0;
-      for (var team of this.teams) {
-        if (team.text == this.user.team) break;
-        i++;
-      }
-
       //1.정답 애니메이션
       console.log(user);
+      var teamidx = user.team - 1; //team index of user
       //2.점수 추가
-      this.userinfo.score += 1;
-      this.teams[i] += 1;
+      this.teams[teamidx].score += 1;
+      for (var u of this.teams[teamidx].joinlist) {
+        u.score += 1;
+      }
 
       //3.다음 턴으로 넘기기
-      this.currentTurn++;
-      if (this.currentTurn == this.teamnumber) this.currentTurn = 0;
-      //3-1.user의 순서면 그림 그리기 허용
-      this.turnToDraw =
-        this.teams[this.currentTurn].text == this.userinfo.team ? true : false;
-      //3-2.정해진 문제 수만큼 풀이가 끝났으면 종료
-      if (i == -1) {
-        //조건 변경 필요
+      this.currentTeam++;
+      this.currentUser = 0;
+      //3-1.정해진 문제 수만큼 풀이가 끝났으면 종료
+      if (this.currentTeam == this.teamnumber) {
+        // 현재) 모든 팀이 1번씩 그리면 끝남
         this.$store.state.userinfo = this.userinfo;
         this.$store.state.teams = this.teams;
-
         //페이지 이동
+        return;
       }
 
       //4.새 문제 받아오기

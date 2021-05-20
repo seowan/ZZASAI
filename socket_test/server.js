@@ -131,12 +131,26 @@ nsp.on("connection", function (socket) {
     io.to(user.code).emit("chat", name, msg);
   });
 
+  /* game syncing */
+  socket.on("start game", (team, time) => {
+    //emit - timer start(total, first player)
+    io.to(user.code).emit("start game", time * team.currentpeople);
+
+    //emit - timer per player. using for loop
+    for (var u of team.joinlist) {
+      io.to(user.code).emit("timer", u, time); //userinfo, time per person
+    }
+    //emit - timer end(total)
+    io.to(user.code).emit("end game");
+  });
+
   /* checking answer */
   socket.on("answer", function (answer) {
     //방장이 정답을 back에서 받아와서 서버에 알림
     if (user == null) return;
     //back에서 받아온 정답을 모두에게 알림
     io.to(user.code).emit("answer", answer);
+    io.to(user.code).emit("new game");
   });
   socket.on("correct answer", function (userinfo) {
     io.to(user.code).emit("correct answer", userinfo);
@@ -196,10 +210,14 @@ nsp.on("connection", function (socket) {
   });
 
   // select team
-  // name: 유저 이름, team: 팀 이름, currentpeople: 현재 사람 수
   socket.on("select team", function (teams) {
     if (user == null) return;
     io.to(user.code).emit("select team", teams);
+  });
+  socket.on("move page to select team", function (teams) {
+    console.log("check");
+    if (user == null) return;
+    io.to(user.code).emit("move page", teams);
   });
 
   /*card function*/

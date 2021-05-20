@@ -56,11 +56,18 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
+    if (this.$store.state.adminFlag) {
+        this.socket.emit(
+          this.$store.state.userinfo.username,
+          this.roomcode,
+          this.adminFlag != 0 ? true : false,
+        );
+    }
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
     //   console.log(this.socket.id);
     //   this.socket.emit(
-    //     "info",
+    //     "info",  // 처음 연결되었을 때 서버에게 알려주기 위함
     //     this.$store.state.userinfo.username,
     //     this.roomcode,
     //     this.adminFlag != 0 ? true : false

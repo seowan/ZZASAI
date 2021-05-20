@@ -6,13 +6,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    // list
     programme: "",
     //현재 진행중인 컨텐츠. programme[]를 가리키는 인덱스
     pidx: 0,
     userlist: [],
     userinfo: {
       username: "",
-      team: "",
+      team: 0,
       score: 0,
     },
     userlist_boolean: [],
@@ -39,6 +40,7 @@ export default new Vuex.Store({
     t: 0,
     i: 0,
     socket: null,
+    answer: "",
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {
