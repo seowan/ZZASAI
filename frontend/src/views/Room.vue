@@ -135,14 +135,14 @@ body {
 }
 .left {
   grid-area: left;
-  background: red;
+  /* background: red; */
 }
 .right {
-  background: violet;
+  /* background: violet; */
 }
 .main {
   grid-area: main;
-  background: yellow;
+  /* background: yellow; */
 }
 .state {
   grid-area: state;
@@ -150,6 +150,6 @@ body {
 }
 .chat {
   grid-area: chat;
-  background: blue;
+  /* background: blue; */
 }
 </style>

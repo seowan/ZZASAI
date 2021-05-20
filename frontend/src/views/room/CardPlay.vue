@@ -70,8 +70,9 @@ export default {
       this.socket.emit("cardselect", no, target_id, this.cards[no].cardname);
     },
     flipCard() {
-      var card = document.querySelector(".card");
-      card.classList.toggle("is-flipped");
+      // var card = document.querySelector(".card");
+      // card.classList.toggle("is-flipped");
+      this.socket.emit("cardflip");
     },
     async getData() {
       await axios({
@@ -180,6 +181,11 @@ export default {
       this.selected_card_front = this.cards[no]["cardurl_front"];
       this.selected_card_back = this.cards[no]["cardurl_back"];
     });
+
+    this.socket.on("cardflipstart",()=> { 
+      var card = document.querySelector(".card");
+      card.classList.toggle("is-flipped");
+    })
     // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
   },
 };
