@@ -1,19 +1,19 @@
 // server.js
 
 // https pem키 연결
-var fs = require("fs");
+// var fs = require("fs");
 
-var options = {
-  key: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/cert.pem"),
-  ca: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/chain.pem"),
-};
+// var options = {
+//   key: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/privkey.pem"),
+//   cert: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/cert.pem"),
+//   ca: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/chain.pem"),
+// };
 
 var express = require("express");
 const { emit } = require("process");
 var app = express();
-// var https = require("http").Server(app); //1
-var https = require("https").Server(options, app); //1
+var https = require("http").Server(app); //1
+// var https = require("https").Server(options, app); //1
 var io = require("socket.io")(https, { cors: { origin: "*" } }); //1. **allow all cors**
 
 const User = class {
@@ -141,29 +141,29 @@ io.on("connection", function (socket) {
   });
 
   /* program syncing */
-  socket.on("p:hall", () => {
+  socket.on("prohall", () => {
     if (user == null) return;
     console.log("program: hall");
-    io.to(user.code).emit("p:hall");
+    io.to(user.code).emit("prohall");
   });
-  socket.on("p:chartest", () => {
+  socket.on("prochartest", () => {
     if (user == null) return;
     console.log("program: chartest");
-    io.to(user.code).emit("p:chartest");
+    io.to(user.code).emit("prochartest");
   });
-  socket.on("p:catchmind", () => {
+  socket.on("procatchmind", () => {
     if (user == null) return;
     console.log("program: catchmind");
-    io.to(user.code).emit("p:catchmind");
+    io.to(user.code).emit("procatchmind");
   });
-  socket.on("p:cardplay", () => {
+  socket.on("procardplay", () => {
     if (user == null) return;
     console.log("program: cardplay");
-    io.to(user.code).emit("p:cardplay");
+    io.to(user.code).emit("procardplay");
   });
-  socket.on("p:final", () => {
+  socket.on("profinal", () => {
     if (user == null) return;
-    io.to(user.code).emit("p:final");
+    io.to(user.code).emit("profinal");
   });
 
   /* game syncing */
@@ -249,10 +249,10 @@ io.on("connection", function (socket) {
     if (user == null) return;
     io.to(user.code).emit("select team", teams);
   });
-  socket.on("move page to select team", function (teams) {
+  socket.on("move page to select team", function (teams, teamNumber, timer) {
     console.log("check");
     if (user == null) return;
-    io.to(user.code).emit("move page", teams);
+    io.to(user.code).emit("move page", teams, teamNumber, timer);
   });
 
   // move main page
