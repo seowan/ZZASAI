@@ -39,9 +39,9 @@
 import CMRotate from "@/assets/js/CMRotate.js";
 import axios from "axios";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = [];
-// var target = document.getElementById("rotate-div")
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
 
 export default {
   name: "CardPlay",
@@ -76,7 +76,8 @@ export default {
     async getData() {
       await axios({
         method: "get",
-        url: `${SERVER_URL}/card/list/`,
+        // url: `${SERVER_URL}/card/list/`,
+        url: 'https://k4a205.p.ssafy.io:8080/api/card/list/',
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
