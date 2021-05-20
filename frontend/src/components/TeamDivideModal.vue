@@ -1,6 +1,12 @@
 <template>
   <div>
-    <button v-if="this.$store.state.adminflag == 1" class="mainbtn" v-b-modal.modal-input-number>시작</button>
+    <button
+      v-if="this.$store.state.adminflag == 1"
+      class="mainbtn"
+      v-b-modal.modal-input-number
+    >
+      시작
+    </button>
     <b-modal
       id="modal-input-number"
       ref="modal"
@@ -66,12 +72,14 @@ export default {
       teamNumber: "",
       timer: 3,
       numberState: null,
-      totalPeople: "10",
+      totalPeople: this.$store.state.userlist.length,
       socket: this.$store.state.socket,
       teams: this.$store.state.teams,
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.totalPeople);
+  },
   watch: {
     teamNumber() {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
@@ -81,7 +89,7 @@ export default {
     checkFormValidity() {
       //   const valid = this.$refs.form.checkValidity();
       //   this.numberState = valid;
-      if (this.teamNumber >= 1 && this.teamNumber <= 10) {
+      if (this.teamNumber <= this.totalPeople) {
         // return valid;
 
         // 방장이 선택한 팀 개수 저장
@@ -122,10 +130,10 @@ export default {
         // console.log(this.$store.state.timer);
 
         this.socket.emit("move page to select team", this.teams);
-        this.$router.push({
-          name: "SelectTeam",
-          params: { roomcode: this.$store.state.roomcode },
-        });
+        // this.$router.push({
+        //   name: "SelectTeam",
+        //   params: { roomcode: this.$store.state.roomcode },
+        // });
       } else {
         alert("다시 입력하세요");
       }

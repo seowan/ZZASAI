@@ -140,6 +140,32 @@ io.on("connection", function (socket) {
     io.to(user.code).emit("chat", name, msg);
   });
 
+  /* program syncing */
+  socket.on("p:hall", () => {
+    if (user == null) return;
+    console.log("program: hall");
+    io.to(user.code).emit("p:hall");
+  });
+  socket.on("p:chartest", () => {
+    if (user == null) return;
+    console.log("program: chartest");
+    io.to(user.code).emit("p:chartest");
+  });
+  socket.on("p:catchmind", () => {
+    if (user == null) return;
+    console.log("program: catchmind");
+    io.to(user.code).emit("p:catchmind");
+  });
+  socket.on("p:cardplay", () => {
+    if (user == null) return;
+    console.log("program: cardplay");
+    io.to(user.code).emit("p:cardplay");
+  });
+  socket.on("p:final", () => {
+    if (user == null) return;
+    io.to(user.code).emit("p:final");
+  });
+
   /* game syncing */
   socket.on("start game", (team, time) => {
     //emit - timer start(total, first player)
@@ -229,12 +255,22 @@ io.on("connection", function (socket) {
     io.to(user.code).emit("move page", teams);
   });
 
+  // move main page
+  socket.on("move page to room", function (pidx) {
+    console.log("move page");
+    if (user == null) return;
+    io.emit("move room page", pidx);
+  });
+
   /*card function*/
   socket.on("cardselect", function (cardno) {
     io.emit("cardselected", cardno);
   }),
     socket.on("firstinit", function (cardlist, backgroundlist) {
       io.emit("setinit", cardlist, backgroundlist);
+    }),
+    socket.on("cardflip", function () {
+      io.emit("cardflipstart");
     });
 });
 

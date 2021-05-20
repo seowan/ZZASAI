@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       // userlist 배열 길이로 값 변경
-      totalPerson: 30,
+      totalPerson: this.$store.state.userlist.length,
       btnStatus: true,
       selected: "",
       socket: this.$store.state.socket,
@@ -92,8 +92,9 @@ export default {
       this.$store.state.teams[index].currentpeople += 1;
       // 해당 팀의 참여자 정보 저장
       var cnt = this.$store.state.teams[index].currentpeople;
-      this.$store.state.teams[index].joinlist["member" + cnt] =
-        this.$store.state.userinfo.username;
+      this.$store.state.teams[index].joinlist[
+        "member" + cnt
+      ] = this.$store.state.userinfo.username;
       this.btnStatus = false;
       // console.log(this.$store.state.teams);
       this.checkBtnStatus();
@@ -101,6 +102,7 @@ export default {
       this.socket.emit("select team", this.$store.state.teams);
 
       // 이어그리기로 컴포넌트 전환
+      this.checkSelecedPeople();
     },
     checkBtnStatus() {
       for (var i = 0; i < this.$store.state.teamnumber; i++) {
@@ -110,6 +112,16 @@ export default {
           this.$store.state.teams[i].disabled = true;
 
           this.socket.emit("select team", this.$store.state.teams);
+        }
+      }
+    },
+    checkSelecedPeople() {
+      var currentpeople = 0;
+      for (var i = 0; i < this.$store.state.teamnumber; i++) {
+        currentpeople =
+          currentpeople + this.$store.state.teams[i].currentpeople;
+        if (currentpeople === this.$store.state.userlist.length) {
+          this.socket.emit("p:catchmind");
         }
       }
     },

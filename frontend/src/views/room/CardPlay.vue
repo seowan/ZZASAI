@@ -39,13 +39,12 @@
 import CMRotate from "@/assets/js/CMRotate.js";
 import axios from "axios";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 var backgroundImages = [];
-// var target = document.getElementById("rotate-div")
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CardPlay",
-  data: function () {
+  data: function() {
     return {
       cards: {},
       selected_card_no: null,
@@ -70,13 +69,15 @@ export default {
       this.socket.emit("cardselect", no, target_id, this.cards[no].cardname);
     },
     flipCard() {
-      var card = document.querySelector(".card");
-      card.classList.toggle("is-flipped");
+      // var card = document.querySelector(".card");
+      // card.classList.toggle("is-flipped");
+      this.socket.emit("cardflip");
     },
     async getData() {
       await axios({
         method: "get",
-        url: `${SERVER_URL}/card/list/`,
+        // url: `${SERVER_URL}/card/list/`,
+        url: "https://k4a205.p.ssafy.io:8080/api/card/list/",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
@@ -95,10 +96,12 @@ export default {
         });
     },
     toHall() {
-      this.$router.push({
-        name: "Hall",
-        params: { roomcode: this.$route.params.roomcode },
-      });
+      // this.$router.push({
+      //   name: "Hall",
+      //   params: { roomcode: this.$route.params.roomcode },
+      // });
+      var pidx = 0;
+      this.socket.emit("move page to room", pidx);
     },
     // afterClickCard(no, target_id){
     //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
@@ -179,6 +182,11 @@ export default {
 
       this.selected_card_front = this.cards[no]["cardurl_front"];
       this.selected_card_back = this.cards[no]["cardurl_back"];
+    });
+
+    this.socket.on("cardflipstart", () => {
+      var card = document.querySelector(".card");
+      card.classList.toggle("is-flipped");
     });
     // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
   },

@@ -28,9 +28,9 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function () {
-        var input = document.getElementById("focusUser")
-        input.focus()
+      inserted: function() {
+        var input = document.getElementById("focusUser");
+        input.focus();
       },
     },
   },
@@ -39,7 +39,8 @@ export default {
       if (this.name.length < 2) {
         alert("이름은 2글자 이상이어야 합니다!");
       } else {
-        this.$store.commit("CREATE_USERNAME", this.name);
+        // this.$store.commit("CREATE_USERNAME", this.name);
+        this.$store.state.userinfo.username = this.name;
         this.$router.push({
           name: "Room",
           params: { roomcode: this.$store.state.roomcode },
@@ -47,11 +48,14 @@ export default {
       }
     },
   },
-  created () {
-    this.$store.state.roomcode =  this.$route.params.roomcode
-    var body = document.body
-    body.style.backgroundImage = 'url(' + 'https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg' + ')';
-  }
+  created() {
+    this.$store.state.roomcode = this.$route.params.roomcode;
+    var body = document.body;
+    body.style.backgroundImage =
+      "url(" +
+      "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" +
+      ")";
+  },
 };
 </script>
 
