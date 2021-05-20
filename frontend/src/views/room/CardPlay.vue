@@ -42,7 +42,6 @@ import axios from "axios";
 var backgroundImages = [];
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
-
 export default {
   name: "CardPlay",
   data: function() {
@@ -78,7 +77,7 @@ export default {
       await axios({
         method: "get",
         // url: `${SERVER_URL}/card/list/`,
-        url: 'https://k4a205.p.ssafy.io:8080/api/card/list/',
+        url: "https://k4a205.p.ssafy.io:8080/api/card/list/",
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
@@ -97,10 +96,12 @@ export default {
         });
     },
     toHall() {
-      this.$router.push({
-        name: "Hall",
-        params: { roomcode: this.$route.params.roomcode },
-      });
+      // this.$router.push({
+      //   name: "Hall",
+      //   params: { roomcode: this.$route.params.roomcode },
+      // });
+      var pidx = 0;
+      this.socket.emit("move page to room", pidx);
     },
     // afterClickCard(no, target_id){
     //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
@@ -183,10 +184,10 @@ export default {
       this.selected_card_back = this.cards[no]["cardurl_back"];
     });
 
-    this.socket.on("cardflipstart",()=> { 
+    this.socket.on("cardflipstart", () => {
       var card = document.querySelector(".card");
       card.classList.toggle("is-flipped");
-    })
+    });
     // CMRotate.init('rotate-div', 200, 300, 100, 12, 600, backgroundImages, clickFn);
   },
 };

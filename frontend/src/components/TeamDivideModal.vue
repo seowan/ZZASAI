@@ -89,7 +89,7 @@ export default {
     checkFormValidity() {
       //   const valid = this.$refs.form.checkValidity();
       //   this.numberState = valid;
-      if (this.teamNumber >= 1 && this.teamNumber <= 10) {
+      if (this.teamNumber <= this.totalPeople) {
         // return valid;
 
         // 방장이 선택한 팀 개수 저장

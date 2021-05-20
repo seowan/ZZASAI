@@ -18,13 +18,39 @@
     </div>
     <b-modal id="to-hall-modal" title="대기실로 이동하시겠습니까?" hide-footer>
       <div style="font-weight: bold; text-align: center;"></div>
-      <b-button class="mt-3" variant="outline-danger" block @click="toHall" style="font-weight: bold;">확인</b-button>
-      <b-button class="mt-3" variant="outline-primary" block @click="$bvModal.hide('to-hall-modal')">취소</b-button>
+      <b-button
+        class="mt-3"
+        variant="outline-danger"
+        block
+        @click="toHall"
+        style="font-weight: bold;"
+        >확인</b-button
+      >
+      <b-button
+        class="mt-3"
+        variant="outline-primary"
+        block
+        @click="$bvModal.hide('to-hall-modal')"
+        >취소</b-button
+      >
     </b-modal>
     <b-modal id="to-main-modal" title="방을 나가시겠습니까?" hide-footer>
       <div style="font-weight: bold; text-align: center;"></div>
-      <b-button class="mt-3" variant="outline-danger" block @click="toMain" style="font-weight: bold;">확인</b-button>
-      <b-button class="mt-3" variant="outline-primary" block @click="$bvModal.hide('to-main-modal')">취소</b-button>
+      <b-button
+        class="mt-3"
+        variant="outline-danger"
+        block
+        @click="toMain"
+        style="font-weight: bold;"
+        >확인</b-button
+      >
+      <b-button
+        class="mt-3"
+        variant="outline-primary"
+        block
+        @click="$bvModal.hide('to-main-modal')"
+        >취소</b-button
+      >
     </b-modal>
   </div>
 </template>
@@ -32,19 +58,28 @@
 <script>
 export default {
   name: "Navbar",
+  components: {},
+  data() {
+    return {
+      socket: this.$store.state.socket,
+    };
+  },
   methods: {
-    toHall () {
-      this.$bvModal.hide('to-hall-modal')
-      this.$router.push({
-        name: "Room",
-        params: { roomcode: this.$store.state.roomcode },
-      });
+    toHall() {
+      this.$bvModal.hide("to-hall-modal");
+      // this.$router.push({
+      //   name: "Room",
+      //   params: { roomcode: this.$store.state.roomcode },
+      // });
+
+      var pidx = 0;
+      this.socket.emit("move page to room", pidx);
     },
-    toHome () {
+    toHome() {
       location.href = "/";
     },
-    toMain () {
-      this.$bvModal.hide('to-main-modal')
+    toMain() {
+      this.$bvModal.hide("to-main-modal");
       location.href = "/";
     },
   },
