@@ -75,10 +75,6 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
-    console.log("userlist: " + this.$store.state.userlist);
-    console.log("길이:" + this.$store.state.userlist.length);
-    console.log("전체인원: " + this.totalPeople);
-
     this.socket.on("connect", () => {
       // console.log(this.socket.id);
       this.socket.emit(
@@ -89,8 +85,15 @@ export default {
       );
     });
 
-    this.socket.on("move page", (teams) => {
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      // console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
+
+    this.socket.on("move page", (teams, teamNumber, timer) => {
       this.$store.state.teams = teams;
+      this.$store.state.teamnumber = teamNumber;
+      this.$store.state.timer = timer;
       this.$store.state.pidx = 4;
       // console.log("teams: " + teams);
       //   this.$router.push({
@@ -104,25 +107,30 @@ export default {
       this.$store.state.pidx = pidx;
     });
 
-    this.socket.on("p:hall", () => {
+    this.socket.on("prohall", () => {
       this.$store.state.pidx = 0;
+      console.log(this.$store.state.pidx);
     });
-    this.socket.on("p:chartest", () => {
+    this.socket.on("prochartest", () => {
       this.$store.state.pidx = 1;
+      console.log(this.$store.state.pidx);
     });
-    this.socket.on("p:catchmind", () => {
+    this.socket.on("procatchmind", () => {
       this.$store.state.pidx = 2;
+      console.log(this.$store.state.pidx);
     });
-    this.socket.on("p:cardplay", () => {
+    this.socket.on("procardplay", () => {
       this.$store.state.pidx = 3;
+      console.log(this.$store.state.pidx);
     });
-    this.socket.on("p:final", () => {
+    this.socket.on("profinal", () => {
       this.$store.state.pidx = 9;
+      console.log(this.$store.state.pidx);
     });
   },
   methods: {},
   computed: {
-    ...mapState(["pidx", "userlist"]),
+    ...mapState(["pidx", "userlist_boolean"]),
   },
 };
 </script>

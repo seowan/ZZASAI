@@ -140,7 +140,7 @@ export default {
         })
           .then(() => {
             alert("방 생성이 완료되었습니다!");
-            this.$store.commit('SET_ADMINFLAG')
+            this.$store.commit("SET_ADMINFLAG");
             this.$router.push({
               name: "Room",
               params: { roomcode: this.$store.state.roomcode },

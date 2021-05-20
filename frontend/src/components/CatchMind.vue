@@ -104,7 +104,7 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      userinfo: this.$store.state.userinfo, //to identify user
+      userinfo: [],
       isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
       teamnumber: this.$store.state.teamnumber,
@@ -122,10 +122,11 @@ export default {
 
       text: "",
       messages: [],
-      // answer: "정답",
+      answer: "정답",
     };
   },
   mounted() {
+    this.userinfo = this.$store.state.userinfo; //to identify user
     //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
