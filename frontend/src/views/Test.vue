@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     push_userlist: function(name) {
-      console.log("name: " + name);
       this.$store.commit("PUSH_USERLIST", name);
     },
     // openvidu 서버 토큰 받기

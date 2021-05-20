@@ -53,8 +53,8 @@ export default {
   },
   data() {
     return {
-      socket: io("localhost:3000"),
-      // socket: io("https://k4a205.p.ssafy.io:3000"),
+      // socket: io("localhost:3000"),
+      socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
       totalPeople: this.$store.state.userlist,
@@ -75,10 +75,6 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
-    console.log("userlist: " + this.$store.state.userlist);
-    console.log("길이:" + this.$store.state.userlist.length);
-    console.log("전체인원: " + this.totalPeople);
-
     this.socket.on("connect", () => {
       // console.log(this.socket.id);
       this.socket.emit(
@@ -91,7 +87,7 @@ export default {
 
     this.socket.on("userboolean", (userboolean) => {
       this.$store.state.userlist_boolean = userboolean.userlist_boolean;
-      console.log("changed user list: ", this.$store.state.userlist_boolean);
+      // console.log("changed user list: ", this.$store.state.userlist_boolean);
     });
 
     this.socket.on("move page", (teams, teamNumber, timer) => {

@@ -104,7 +104,7 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      userinfo: this.$store.state.userinfo, //to identify user
+      userinfo: [],
       isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
       teamnumber: this.$store.state.teamnumber,
@@ -122,10 +122,11 @@ export default {
 
       text: "",
       messages: [],
-      // answer: "정답",
+      answer: "정답",
     };
   },
   mounted() {
+    this.userinfo = this.$store.state.userinfo; //to identify user
     //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -212,8 +213,8 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {
           "Access-Control-Allow-Origin": "*",
