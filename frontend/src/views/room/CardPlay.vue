@@ -45,7 +45,7 @@ var backgroundImages = [];
 
 export default {
   name: "CardPlay",
-  data: function () {
+  data: function() {
     return {
       cards: {},
       selected_card_no: null,
