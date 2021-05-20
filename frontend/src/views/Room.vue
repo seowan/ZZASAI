@@ -4,8 +4,11 @@
     <!-- RTC 넣을 곳 -->
     <div class="main">
       <!-- 메인. 여태 작성한 코드들 component화 해서 넣기 v-if사용? -->
-      <Hall />
-      <CatchMind />
+      <Hall v-if="$store.state.pidx == program.Hall" />
+      <CardPlay v-else-if="$store.state.pidx == program.CardPlay" />
+      <CharTest v-else-if="$store.state.pidx == program.CharTest" />
+      <CatchMind v-else-if="$store.state.pidx == program.CatchMind" />
+      <Final v-else-if="$store.state.pidx == program.Final" />
     </div>
     <div class="right">
       <!-- 진행상황-->
@@ -24,7 +27,10 @@ import Hall from "@/views/Hall";
 import Test from "@/views/Test"; //이름 변경 필요할 듯
 import State from "@/components/State";
 import Chat from "@/components/Chat";
+import CardPlay from "@/views/room/CardPlay";
+import CharTest from "@/views/room/CharTest";
 import CatchMind from "@/components/CatchMind";
+import Final from "@/views/Final";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -35,12 +41,24 @@ export default {
     State,
     Chat,
     Hall,
+    CardPlay,
+    CharTest,
     CatchMind,
+    Final,
   },
   data() {
     return {
       socket: io("localhost:3000"),
       roomcode: this.$route.params.roomcode,
+      pidx: 2,
+      program: {
+        Hall: 0,
+        CharTest: 1,
+        CatchMind: 2,
+        CardPlay: 3,
+        SelectTeam: 4,
+        Final: 9,
+      },
     };
   },
   created() {
