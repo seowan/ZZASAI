@@ -172,7 +172,6 @@
     }
 
     function circlePos(sita) {
-        console.log('animate')
         var cos = Math.cos(sita * PI),
             sin = Math.sin(sita * PI),
             imgX = (cos) * _radius + _centerX - _itemHW,
