@@ -12,8 +12,16 @@
       <router-link to="/select-team">팀 선택</router-link> |
       <router-link to="/final">마지막 페이지</router-link>
     </div> -->
-    <div v-if="this.$store.state.roomcode && this.$store.state.userinfo.username">
-      <button v-if="this.$store.state.adminflag" class="mainbtn" v-b-modal.to-hall-modal>대기실</button>
+    <div
+      v-if="this.$store.state.roomcode && this.$store.state.userinfo.username"
+    >
+      <button
+        v-if="this.$store.state.adminflag"
+        class="mainbtn"
+        v-b-modal.to-hall-modal
+      >
+        대기실
+      </button>
       <button class="mainbtn" v-b-modal.to-main-modal>방 나가기</button>
     </div>
     <b-modal id="to-hall-modal" title="대기실로 이동하시겠습니까?" hide-footer>
@@ -62,6 +70,7 @@ export default {
   data() {
     return {
       socket: this.$store.state.socket,
+      pidx: 0,
     };
   },
   methods: {
@@ -72,8 +81,7 @@ export default {
       //   params: { roomcode: this.$store.state.roomcode },
       // });
 
-      var pidx = 0;
-      this.socket.emit("move page to room", pidx);
+      this.socket.emit("move page to room", this.pidx);
     },
     toHome() {
       location.href = "/";

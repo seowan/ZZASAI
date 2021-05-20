@@ -24,7 +24,7 @@ export default {
   methods: {
     toCardPlay() {
       var socket = this.$store.state.socket;
-      socket.emit("p:cardplay");
+      socket.emit("procardplay");
       // this.$router.push({name: 'CardPlay', params: {roomcode: this.$store.state.roomcode}})
     },
   },

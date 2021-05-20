@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       // userlist 배열 길이로 값 변경
-      totalPerson: this.$store.state.userlist.length,
+      totalPeople: 0,
       btnStatus: true,
       selected: "",
       socket: this.$store.state.socket,
@@ -69,7 +69,11 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp5042415.jpg" + ")";
   },
   mounted() {
-    // console.log("총 인원 수 :" + this.totalPerson);
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      // console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
+    this.totalPeople = this.$store.state.userlist_boolean.length;
 
     // socket on 함수 mounted에 배치
     this.socket.on("select team", (teams) => {
@@ -120,8 +124,8 @@ export default {
       for (var i = 0; i < this.$store.state.teamnumber; i++) {
         currentpeople =
           currentpeople + this.$store.state.teams[i].currentpeople;
-        if (currentpeople === this.$store.state.userlist.length) {
-          this.socket.emit("p:catchmind");
+        if (currentpeople === this.totalPeople) {
+          this.socket.emit("procatchmind");
         }
       }
     },
@@ -132,7 +136,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-#team-btn {
-}
-</style>
+<style lang="scss" scoped></style>
