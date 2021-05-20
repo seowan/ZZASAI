@@ -128,8 +128,8 @@ export default {
         }
         axios({
           method: "post",
-          url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
-          // url: `http://localhost:8080/api/room/create/`,
+          // url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
+          url: `http://localhost:8080/api/room/create/`,
           // url: `${SERVER_URL}/room/create/`,
 
           data: JSON.stringify(context),
@@ -140,7 +140,7 @@ export default {
         })
           .then(() => {
             alert("방 생성이 완료되었습니다!");
-            this.$store.commit('SET_ADMINFLAG')
+            this.$store.commit("SET_ADMINFLAG");
             this.$router.push({
               name: "Room",
               params: { roomcode: this.$store.state.roomcode },

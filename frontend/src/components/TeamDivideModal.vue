@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Teamdividemodal",
   components: {},
@@ -72,24 +74,35 @@ export default {
       teamNumber: "",
       timer: 3,
       numberState: null,
-      totalPeople: this.$store.state.userlist.length,
+      totalPeople: 0,
       socket: this.$store.state.socket,
       teams: this.$store.state.teams,
     };
   },
   mounted() {
-    console.log(this.totalPeople);
+    this.socket.on("userboolean", (userboolean) => {
+      this.$store.state.userlist_boolean = userboolean.userlist_boolean;
+      console.log("changed user list: ", this.$store.state.userlist_boolean);
+    });
+
+    this.totalPeople = this.$store.state.userlist_boolean.length;
+    console.log(this.$store.state.userlist_boolean.length);
   },
   watch: {
     teamNumber() {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
     },
   },
+  computed: {
+    ...mapState(["userlist_boolean"]),
+  },
   methods: {
     checkFormValidity() {
+      this.totalPeople = this.$store.state.userlist_boolean.length;
+      console.log(this.$store.state.userlist_boolean.length);
       //   const valid = this.$refs.form.checkValidity();
       //   this.numberState = valid;
-      if (this.teamNumber <= this.totalPeople) {
+      if (this.teamNumber <= this.totalPeople && this.teamNumber > 1) {
         // return valid;
 
         // 방장이 선택한 팀 개수 저장
@@ -129,7 +142,12 @@ export default {
         // console.log(this.$store.state.teams);
         // console.log(this.$store.state.timer);
 
-        this.socket.emit("move page to select team", this.teams);
+        this.socket.emit(
+          "move page to select team",
+          this.teams,
+          this.teamNumber,
+          this.timer
+        );
         // this.$router.push({
         //   name: "SelectTeam",
         //   params: { roomcode: this.$store.state.roomcode },

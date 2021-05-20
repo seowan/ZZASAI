@@ -24,7 +24,7 @@ export default {
   methods: {
     toCharTest() {
       var socket = this.$store.state.socket;
-      socket.emit("p:chartest");
+      socket.emit("prochartest");
       // this.$router.push({
       //   name: "CharTest",
       //   params: { roomcode: this.$store.state.roomcode },

@@ -8,7 +8,6 @@
         <!-- 전체 비디오 -->
         <div v-for="(sub, index) in subscribers" :key="sub">
           <div v-if="index % 2 == 0">
-            {{ index }}
             <user-video
               class="user-videos"
               :key="sub.stream.connection.connectionId"
@@ -21,7 +20,6 @@
         <br />
         <div v-for="(sub, index) in subscribers" :key="sub">
           <div v-if="index % 2 == 1">
-            {{ index }}
             <user-video
               class="user-videos"
               :key="sub.stream.connection.connectionId"
@@ -66,6 +64,7 @@ export default {
   },
   methods: {
     push_userlist: function(name) {
+      console.log("name: " + name);
       this.$store.commit("PUSH_USERLIST", name);
     },
     // openvidu 서버 토큰 받기
