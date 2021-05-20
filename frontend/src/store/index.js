@@ -44,7 +44,7 @@ export default new Vuex.Store({
   },
   mutations: {
     CREATE_PROGRAMME: function(state, item) {
-      state.programme = item
+      state.programme = item;
     },
     CREATE_USERNAME: function(state, name) {
       // state.username = name;
@@ -97,6 +97,12 @@ export default new Vuex.Store({
     },
     PUSH_USERLIST_BOOLEAN: function(state, bool) {
       state.userlist_boolean.push(bool);
+    },
+    SET_PIDX: function(state, pidx) {
+      state.pidx = pidx;
+    },
+    CREATE_TEAM: function(state, payload) {
+      state.teams = payload;
     },
   },
   actions: {},

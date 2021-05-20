@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       // userlist 배열 길이로 값 변경
-      totalPerson: 30,
+      totalPerson: this.$store.state.userlist.length,
       btnStatus: true,
       selected: "",
       socket: this.$store.state.socket,
@@ -92,8 +92,9 @@ export default {
       this.$store.state.teams[index].currentpeople += 1;
       // 해당 팀의 참여자 정보 저장
       var cnt = this.$store.state.teams[index].currentpeople;
-      this.$store.state.teams[index].joinlist["member" + cnt] =
-        this.$store.state.userinfo.username;
+      this.$store.state.teams[index].joinlist[
+        "member" + cnt
+      ] = this.$store.state.userinfo.username;
       this.btnStatus = false;
       // console.log(this.$store.state.teams);
       this.checkBtnStatus();
