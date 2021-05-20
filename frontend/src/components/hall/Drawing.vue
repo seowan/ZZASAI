@@ -8,7 +8,7 @@
         />
       </div>
       <div class="hall-card-back">
-        <h2 class="hall-card-text">캐치마인드</h2>
+        <h2 class="hall-card-text">이어그리기</h2>
         <TeamDivideModal
           v-if="isModalViewed && adminflag == 1"
           @close-modal="isModalViewed = false"
