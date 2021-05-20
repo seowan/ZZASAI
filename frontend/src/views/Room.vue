@@ -53,8 +53,8 @@ export default {
   },
   data() {
     return {
-      socket: io("localhost:3000"),
-      // socket: io("https://k4a205.p.ssafy.io:3000"),
+      // socket: io("localhost:3000"),
+      socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
       totalPeople: this.$store.state.userlist,
@@ -97,6 +97,11 @@ export default {
       //     name: "SelectTeam",
       //     params: { roomcode: this.$store.state.roomcode },
       //   });
+    });
+
+    this.socket.on("move room page", (pidx) => {
+      console.log("move socket on: " + pidx);
+      this.$store.state.pidx = pidx;
     });
 
     this.socket.on("p:hall", () => {

@@ -102,6 +102,7 @@ export default {
       this.socket.emit("select team", this.$store.state.teams);
 
       // 이어그리기로 컴포넌트 전환
+      this.checkSelecedPeople();
     },
     checkBtnStatus() {
       for (var i = 0; i < this.$store.state.teamnumber; i++) {
@@ -111,6 +112,16 @@ export default {
           this.$store.state.teams[i].disabled = true;
 
           this.socket.emit("select team", this.$store.state.teams);
+        }
+      }
+    },
+    checkSelecedPeople() {
+      var currentpeople = 0;
+      for (var i = 0; i < this.$store.state.teamnumber; i++) {
+        currentpeople =
+          currentpeople + this.$store.state.teams[i].currentpeople;
+        if (currentpeople === this.$store.state.userlist.length) {
+          this.socket.emit("p:catchmind");
         }
       }
     },

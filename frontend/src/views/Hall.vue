@@ -68,8 +68,8 @@ export default {
       // console.log(`${SERVER_URL}/room/info/?roomcode=${this.roomcode}`);
       axios({
         method: "get",
-        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.$store.state.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
