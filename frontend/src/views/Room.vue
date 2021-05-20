@@ -48,8 +48,8 @@ export default {
   },
   data() {
     return {
-      socket: io("http://localhost:3000"),
-      // socket: io("https://k4a205.p.ssafy.io:3000"),
+      // socket: io("http://localhost:3000"),
+      socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
       pidx: 2,
