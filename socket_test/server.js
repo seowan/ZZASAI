@@ -3,7 +3,7 @@
 var express = require("express");
 const { emit } = require("process");
 var app = express();
-var https = require("https").Server(app); //1
+var https = require("http").Server(app); //1
 var io = require("socket.io")(https, { cors: { origin: "*" } }); //1. **allow all cors**
 
 var nsp = io.of("/ws");
