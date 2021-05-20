@@ -15,7 +15,6 @@
       </div>
     </div>
 
-    <Test />
     <!-- <h2 class="pt-5" style="font-family: 'Single Day', cursive;">호스트가 진행순서를 정하고 있습니다. 잠시만 기다려 주세요</h2> -->
   </div>
 </template>
@@ -26,7 +25,6 @@ import Card from "@/components/hall/Card";
 import Drawing from "@/components/hall/Drawing";
 import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
-import Test from "@/views/Test";
 import axios from "axios";
 // import io from "socket.io-client";
 
@@ -40,7 +38,6 @@ export default {
     Drawing,
     Exam,
     RoomCode,
-    Test,
   },
   data() {
     return {
@@ -57,11 +54,11 @@ export default {
   },
   mounted() {
     if (this.$store.state.adminFlag) {
-        this.socket.emit(
-          this.$store.state.userinfo.username,
-          this.roomcode,
-          this.adminFlag != 0 ? true : false,
-        );
+      this.socket.emit(
+        this.$store.state.userinfo.username,
+        this.roomcode,
+        this.adminFlag != 0 ? true : false
+      );
     }
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
@@ -76,6 +73,7 @@ export default {
   },
   methods: {
     getRoomData: function() {
+      // console.log(`${SERVER_URL}/room/info/?roomcode=${this.roomcode}`);
       axios({
         method: "get",
         // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
@@ -86,15 +84,20 @@ export default {
         },
       })
         .then((res) => {
+          console.log(res);
           this.room_data = res.data;
           this.order_mark =
             String(this.room_data.game1) +
             String(this.room_data.game2) +
             String(this.room_data.game3);
-          this.$store.commit('CREATE_PROGRAMME', this.order_mark)
+          // this.$store.commit("CREATE_PROGRAMME", this.order_mark);
         })
         .catch((err) => {
-          alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+          alert(
+            "오류가 발생하였습니다. 다시 시도해주세요.\n" +
+              "에러코드: " +
+              `${err}`
+          );
         });
     },
   },
@@ -104,7 +107,7 @@ export default {
     if (this.$store.state.roomcode == undefined) {
       this.$router.push({ name: "Main" });
     } else if (this.$store.state.userinfo.username == "") {
-      this.$router.push({name: 'UserName'})
+      this.$router.push({ name: "UserName" });
     } else {
       this.getRoomData();
     }
