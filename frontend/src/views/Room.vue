@@ -7,6 +7,7 @@
       <Hall v-if="pidx == program.Hall" />
       <CardPlay v-else-if="pidx == program.CardPlay" />
       <CharTest v-else-if="pidx == program.CharTest" />
+      <SelectTeam v-else-if="pidx == program.SelectTeam" />
       <CatchMind v-else-if="pidx == program.CatchMind" />
       <Final v-else-if="pidx == program.Final" />
     </div>
@@ -30,6 +31,7 @@ import Chat from "@/components/Chat";
 import CardPlay from "@/views/room/CardPlay";
 import CharTest from "@/views/room/CharTest";
 import CatchMind from "@/components/CatchMind";
+import SelectTeam from "@/views/SelectTeam";
 import Final from "@/views/Final";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL;
@@ -44,12 +46,13 @@ export default {
     CardPlay,
     CharTest,
     CatchMind,
+    SelectTeam,
     Final,
   },
   data() {
     return {
-      socket: io("localhost:3000"),
-      //   socket: io("https://k4a205.p.ssafy.io:3000"),
+      // socket: io("localhost:3000"),
+      socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
       pidx: 0,
@@ -82,7 +85,7 @@ export default {
 
     this.socket.on("move page", (teams) => {
       this.$store.state.teams = teams;
-      this.pidx = 4;
+      this.$store.state.pidx = 4;
       // console.log("teams: " + teams);
       //   this.$router.push({
       //     name: "SelectTeam",

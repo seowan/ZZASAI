@@ -128,10 +128,10 @@ export default {
         // console.log(this.$store.state.timer);
 
         this.socket.emit("move page to select team", this.teams);
-        // this.$router.push({
-        //   name: "SelectTeam",
-        //   params: { roomcode: this.$store.state.roomcode },
-        // });
+        this.$router.push({
+          name: "SelectTeam",
+          params: { roomcode: this.$store.state.roomcode },
+        });
       } else {
         alert("다시 입력하세요");
       }

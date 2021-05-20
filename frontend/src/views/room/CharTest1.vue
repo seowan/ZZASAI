@@ -52,7 +52,7 @@ export default {
       this.$store.state.socket.emit(
         "mbti",
         this.$store.state.roomcode,
-        this.$store.state.username,
+        this.$store.state.userinfo.username,
         this.$store.state.userlist,
         false
       );
@@ -62,7 +62,7 @@ export default {
   created() {
     if (
       this.$store.state.roomcode == undefined ||
-      this.$store.state.username == undefined
+      this.$store.state.userinfo.username == undefined
     ) {
       this.$router.push({ name: "Main" });
     }
