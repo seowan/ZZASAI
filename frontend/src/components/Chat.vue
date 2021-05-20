@@ -1,8 +1,14 @@
 <template>
   <div>
-    <textarea name="chatLog" id="chatLog" readonly></textarea>
-    <div>
-      <input type="text" v-model="text" @keyup.enter="typeMessage" />
+    <b-form-textarea
+        class="chatlog my-3"
+        id="chatLog"
+        name="chatLog"
+        plaintext
+    ></b-form-textarea>
+    <!-- <textarea name="chatLog" id="chatLog" readonly></textarea> -->
+    <div style="text-align: left;">
+      <input class="maininput chatinput" type="text" v-model="text" @keyup.enter="typeMessage" />
     </div>
   </div>
 </template>
@@ -44,8 +50,18 @@ export default {
 </script>
 
 <style scoped>
-#chatLog {
+.chatlog {
   width: 50%;
-  height: 200px;
+  height: 400px;
+  background-color: white;
+  border : 3px solid pink;
+  padding: 9px;
+}
+
+.chatinput {
+  width: 50%;
+  height: 15%;
+  text-align: left;
+  padding-left: 15px;
 }
 </style>

@@ -286,6 +286,7 @@
         div.style.width = _itemW + 'px';
         div.style.height = _itemH + 'px';
         div.style.position = 'absolute';
+        div.style.right = "88%"
         div.style.background = 'url(' + _bgArr[id] + ')';
         div.style.backgroundSize = '100% 100%';
         div.style.backgroundRepeat = 'no-repeat';
