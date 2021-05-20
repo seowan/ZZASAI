@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 // const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -108,30 +108,40 @@ export default {
     },
     toUserName: function() {
       // checkRoomcode()
-      axios({
-        method: "get",
-        url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
-        // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => {
-          if (res.data == true) {
-            this.$store.commit("CREATE_ROOMCODE", this.roomcode);
-            this.$store.commit("RESTORE_ADMINFLAG");
-            this.$router.push({
-              name: "UserName",
-              params: { roomcode: this.roomcode },
-            });
-          } else {
-            this.wrongModalShow = true;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          this.errorModalShow = true;
+      // axios({
+      //   method: "get",
+      //   url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+      //   // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+      //   headers: {
+      //     "Access-Control-Allow-Origin": "*",
+      //   },
+      // })
+      //   .then((res) => {
+      //     if (res.data == true) {
+      //       this.$store.commit("CREATE_ROOMCODE", this.roomcode);
+      //       this.$store.commit("RESTORE_ADMINFLAG");
+      //       this.$router.push({
+      //         name: "UserName",
+      //         params: { roomcode: this.roomcode },
+      //       });
+      //     } else {
+      //       this.wrongModalShow = true;
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     this.errorModalShow = true;
+      //   });
+      if (this.roomcode.length == 8) {
+        this.$store.commit("CREATE_ROOMCODE", this.roomcode);
+        this.$store.commit("RESTORE_ADMINFLAG");
+        this.$router.push({
+          name: "UserName",
+          params: { roomcode: this.roomcode },
         });
+      } else {
+        this.errorModalShow = true;
+      }
     },
   },
   created() {
