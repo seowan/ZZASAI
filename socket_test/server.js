@@ -1,12 +1,21 @@
 // server.js
 
+// https pem키 연결
+var fs = require("fs");
+
+var options = {
+  key: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/cert.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/live/k4a205.p.ssafy.io/chain.pem"),
+};
+
 var express = require("express");
 const { emit } = require("process");
 var app = express();
-var https = require("http").Server(app); //1
+// var https = require("http").Server(app); //1
+var https = require("https").Server(options, app); //1
 var io = require("socket.io")(https, { cors: { origin: "*" } }); //1. **allow all cors**
 
-var nsp = io.of("/ws");
 const User = class {
   constructor(id, name, code, isAdmin) {
     this.id = id;

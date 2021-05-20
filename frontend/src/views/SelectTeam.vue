@@ -49,6 +49,7 @@ export default {
   components: {},
   data() {
     return {
+      // userlist 배열 길이로 값 변경
       totalPerson: 30,
       btnStatus: true,
       selected: "",
@@ -57,8 +58,11 @@ export default {
     };
   },
   created() {
-    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
-      this.$router.push({name: 'Main'})
+    if (
+      this.$store.state.roomcode == undefined ||
+      this.$store.state.userinfo.username == undefined
+    ) {
+      this.$router.push({ name: "Main" });
     }
     var body = document.body;
     body.style.backgroundImage =
@@ -88,9 +92,8 @@ export default {
       this.$store.state.teams[index].currentpeople += 1;
       // 해당 팀의 참여자 정보 저장
       var cnt = this.$store.state.teams[index].currentpeople;
-      this.$store.state.teams[index].joinlist[
-        "member" + cnt
-      ] = this.$store.state.userinfo.username;
+      this.$store.state.teams[index].joinlist["member" + cnt] =
+        this.$store.state.userinfo.username;
       this.btnStatus = false;
       // console.log(this.$store.state.teams);
       this.checkBtnStatus();

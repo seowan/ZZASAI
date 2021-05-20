@@ -28,18 +28,18 @@
       <div class="size-picker">
         <!--size handler 3type-->
         <div @click="strokeSizeHandler(1)">
-          <div style="width:3px; height:3px;"></div>
+          <div style="width: 3px; height: 3px"></div>
         </div>
         <div @click="strokeSizeHandler(8)">
-          <div style="width:9px; height:9px;"></div>
+          <div style="width: 9px; height: 9px"></div>
         </div>
         <div @click="strokeSizeHandler(15)">
-          <div style="width:15px; height:15px;"></div>
+          <div style="width: 15px; height: 15px"></div>
         </div>
       </div>
       <!--모두 지우기-->
       <div class="eraser">
-        <div class="clearAll" @click="clearAll" style="float:right;">
+        <div class="clearAll" @click="clearAll" style="float: right">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -58,7 +58,7 @@
           </svg>
         </div>
         <!--지우개 버튼-->
-        <div @click="strokeColorHandler('white')" style="float:right;">
+        <div @click="strokeColorHandler('white')" style="float: right">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -212,7 +212,7 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        url: `api/room/info/?roomcode=${this.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {

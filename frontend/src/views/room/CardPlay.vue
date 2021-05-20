@@ -11,9 +11,26 @@
     </div>
     <div id="rotate-div" class="chand"></div>
     <b-modal v-model="errorModalShow" hide-footer hide-header>
-      <div class="my-5" style="font-weight: bold; text-align: center;">카드 업로드 중 오류가 발생했습니다.</div>
-      <b-button class="mt-3" variant="outline-danger" block onClick="window.location.reload()" style="font-weight: bold;">다시 시도하기</b-button>
-      <b-button v-if="this.$store.state.adminflag" class="mt-2" variant="outline-warning" block @click="toHall" style="font-weight: bold;">대기방으로 이동</b-button>
+      <div class="my-5" style="font-weight: bold; text-align: center">
+        카드 업로드 중 오류가 발생했습니다.
+      </div>
+      <b-button
+        class="mt-3"
+        variant="outline-danger"
+        block
+        onClick="window.location.reload()"
+        style="font-weight: bold"
+        >다시 시도하기</b-button
+      >
+      <b-button
+        v-if="this.$store.state.adminflag"
+        class="mt-2"
+        variant="outline-warning"
+        block
+        @click="toHall"
+        style="font-weight: bold"
+        >대기방으로 이동</b-button
+      >
     </b-modal>
   </div>
 </template>
@@ -28,7 +45,7 @@ var backgroundImages = [];
 
 export default {
   name: "CardPlay",
-  data: function() {
+  data: function () {
     return {
       cards: {},
       selected_card_no: null,
@@ -74,11 +91,14 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.errorModalShow = true
+          this.errorModalShow = true;
         });
     },
-    toHall () {
-      this.$router.push({name: 'Hall', params: { roomcode: this.$route.params.roomcode }})
+    toHall() {
+      this.$router.push({
+        name: "Hall",
+        params: { roomcode: this.$route.params.roomcode },
+      });
     },
     // afterClickCard(no, target_id){
     //   // 선택하면 기존 카드는 background 리스트에서 삭제하기!
@@ -103,8 +123,11 @@ export default {
     // },
   },
   created() {
-    if (this.$store.state.roomcode == undefined || this.$store.state.username == undefined) {
-      this.$router.push({name: 'Main'})
+    if (
+      this.$store.state.roomcode == undefined ||
+      this.$store.state.userinfo.username == undefined
+    ) {
+      this.$router.push({ name: "Main" });
     }
     var body = document.body;
     body.style.backgroundImage =

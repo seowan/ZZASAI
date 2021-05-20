@@ -21,7 +21,7 @@ import Exam from "@/components/hall/Exam";
 import RoomCode from "@/components/RoomCode";
 import axios from "axios";
 
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "Hall",
@@ -41,7 +41,8 @@ export default {
   },
   created() {
     var body = document.body;
-    body.style.backgroundImage = "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
+    body.style.backgroundImage =
+      "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
     // if (this.$store.state.adminFlag) {
@@ -51,8 +52,6 @@ export default {
     //     this.adminFlag != 0 ? true : false
     //   );
     // }
-
-
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
     //   console.log(this.socket.id);
@@ -71,7 +70,7 @@ export default {
         method: "get",
         // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
         // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
-        url: `${SERVER_URL}/room/info/?roomcode=${this.$store.state.roomcode}`,
+        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.$store.state.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
@@ -81,7 +80,7 @@ export default {
           this.order_mark =
             String(this.room_data.game1) +
             String(this.room_data.game2) +
-            String(this.room_data.game3);          
+            String(this.room_data.game3);
           // this.$store.commit('CREATE_PROGRAMME', 'this.order_mark')
         })
         .catch((err) => {

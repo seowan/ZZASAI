@@ -4,13 +4,13 @@
     <h5 class="my-5" id="code_block">
       방 코드: <span style="font-weight: bold">{{ roomcode }}</span>
     </h5>
-    <div class="mb-4" style="color: pink;">
+    <div class="mb-4" style="color: pink">
       시작할 컨텐츠를 왼쪽에서 오른쪽으로 순서대로 드래그하세요!
     </div>
     <!-- Vue.Draggable -->
-    <div class="row" style="height: 15rem;">
+    <div class="row" style="height: 15rem">
       <div id="box_left" class="col-3 offset-3">
-        <h3 style="color: white;">컨텐츠</h3>
+        <h3 style="color: white">컨텐츠</h3>
         <draggable
           class="list-group"
           :list="list1"
@@ -28,12 +28,17 @@
         </draggable>
       </div>
       <div
-        style="display: flex; align-items: center; font-weight: bold; color: white;"
+        style="
+          display: flex;
+          align-items: center;
+          font-weight: bold;
+          color: white;
+        "
       >
         >
       </div>
       <div id="box_right" class="col-3">
-        <h3 style="color: white;">진행순서</h3>
+        <h3 style="color: white">진행순서</h3>
         <draggable
           class="list-group"
           :list="list2"
@@ -65,7 +70,7 @@ import draggable from "vuedraggable";
 import HelpIcon from "@/components/HelpIcon";
 
 import axios from "axios";
-const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 // const SERVER_URL = process.env.SERVER_URL;
 
 export default {
@@ -123,8 +128,9 @@ export default {
         }
         axios({
           method: "post",
-          // url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
-          url: `${SERVER_URL}/room/create/`,
+          url: `https://k4a205.p.ssafy.io:8080/api/room/create/`,
+          // url: `http://localhost:8080/api/room/create/`,
+          // url: `${SERVER_URL}/room/create/`,
 
           data: JSON.stringify(context),
           headers: {
@@ -163,8 +169,11 @@ export default {
   },
   beforeMount() {
     var body = document.body;
-    body.style.backgroundImage = "url(" + "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" + ")";
-    this.$store.commit('CREATE_PROGRAMME', "")  // 진행순서 초기화
+    body.style.backgroundImage =
+      "url(" +
+      "https://wallpapermemory.com/uploads/418/adventure-time-wallpaper-hd-1920x1080-333459.jpg" +
+      ")";
+    this.$store.commit("CREATE_PROGRAMME", ""); // 진행순서 초기화
     this.getRoomInfo();
   },
 };
