@@ -110,8 +110,8 @@ export default {
       // checkRoomcode()
       axios({
         method: "get",
-        url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
-        // url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/room/codecheck/?roomcode=${this.roomcode}`,
         headers: {
           "Access-Control-Allow-Origin": "*",
         },
