@@ -4,12 +4,12 @@
     <!-- RTC 넣을 곳 -->
     <div class="main">
       <!-- 메인. 여태 작성한 코드들 component화 해서 넣기 v-if사용? -->
-      <Hall v-if="pidx == program.Hall" />
-      <CardPlay v-else-if="pidx == program.CardPlay" />
-      <CharTest v-else-if="pidx == program.CharTest" />
-      <SelectTeam v-else-if="pidx == program.SelectTeam" />
-      <CatchMind v-else-if="pidx == program.CatchMind" />
-      <Final v-else-if="pidx == program.Final" />
+      <Hall v-if="this.$store.state.pidx == program.Hall" />
+      <CardPlay v-else-if="this.$store.state.pidx == program.CardPlay" />
+      <CharTest v-else-if="this.$store.state.pidx == program.CharTest" />
+      <SelectTeam v-else-if="this.$store.state.pidx == program.SelectTeam" />
+      <CatchMind v-else-if="this.$store.state.pidx == program.CatchMind" />
+      <Final v-else-if="this.$store.state.pidx == program.Final" />
     </div>
     <div class="right">
       <!-- 진행상황-->
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import io from "socket.io-client";
 
 import Hall from "@/views/Hall";
@@ -55,7 +57,7 @@ export default {
       // socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
-      pidx: 0,
+      totalPeople: this.$store.state.userlist,
       program: {
         Hall: 0,
         CharTest: 1,
@@ -73,6 +75,10 @@ export default {
       "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
+    console.log("userlist: " + this.$store.state.userlist);
+    console.log("길이:" + this.$store.state.userlist.length);
+    console.log("전체인원: " + this.totalPeople);
+
     this.socket.on("connect", () => {
       // console.log(this.socket.id);
       this.socket.emit(
@@ -94,22 +100,25 @@ export default {
     });
 
     this.socket.on("p:hall", () => {
-      this.pidx = 0;
+      this.$store.state.pidx = 0;
     });
     this.socket.on("p:chartest", () => {
-      this.pidx = 1;
+      this.$store.state.pidx = 1;
     });
     this.socket.on("p:catchmind", () => {
-      this.pidx = 2;
+      this.$store.state.pidx = 2;
     });
     this.socket.on("p:cardplay", () => {
-      this.pidx = 3;
+      this.$store.state.pidx = 3;
     });
     this.socket.on("p:final", () => {
-      this.pidx = 9;
+      this.$store.state.pidx = 9;
     });
   },
   methods: {},
+  computed: {
+    ...mapState(["pidx", "userlist"]),
+  },
 };
 </script>
 

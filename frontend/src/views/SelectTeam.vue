@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       // userlist 배열 길이로 값 변경
-      totalPerson: 30,
+      totalPerson: this.$store.state.userlist.length,
       btnStatus: true,
       selected: "",
       socket: this.$store.state.socket,

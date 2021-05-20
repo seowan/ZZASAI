@@ -72,12 +72,14 @@ export default {
       teamNumber: "",
       timer: 3,
       numberState: null,
-      totalPeople: "10",
+      totalPeople: this.$store.state.userlist.length,
       socket: this.$store.state.socket,
       teams: this.$store.state.teams,
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.totalPeople);
+  },
   watch: {
     teamNumber() {
       return (this.teamNumber = this.teamNumber.replace(/[^0-9]/g, ""));
@@ -128,10 +130,10 @@ export default {
         // console.log(this.$store.state.timer);
 
         this.socket.emit("move page to select team", this.teams);
-        this.$router.push({
-          name: "SelectTeam",
-          params: { roomcode: this.$store.state.roomcode },
-        });
+        // this.$router.push({
+        //   name: "SelectTeam",
+        //   params: { roomcode: this.$store.state.roomcode },
+        // });
       } else {
         alert("다시 입력하세요");
       }
