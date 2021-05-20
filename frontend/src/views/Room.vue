@@ -4,11 +4,11 @@
     <!-- RTC 넣을 곳 -->
     <div class="main">
       <!-- 메인. 여태 작성한 코드들 component화 해서 넣기 v-if사용? -->
-      <Hall v-if="$store.state.pidx == program.Hall" />
-      <CardPlay v-else-if="$store.state.pidx == program.CardPlay" />
-      <CharTest v-else-if="$store.state.pidx == program.CharTest" />
-      <CatchMind v-else-if="$store.state.pidx == program.CatchMind" />
-      <Final v-else-if="$store.state.pidx == program.Final" />
+      <Hall v-if="pidx == program.Hall" />
+      <CardPlay v-else-if="pidx == program.CardPlay" />
+      <CharTest v-else-if="pidx == program.CharTest" />
+      <CatchMind v-else-if="pidx == program.CatchMind" />
+      <Final v-else-if="pidx == program.Final" />
     </div>
     <div class="right">
       <!-- 진행상황-->
@@ -48,11 +48,11 @@ export default {
   },
   data() {
     return {
-      // socket: io("http://localhost:3000"),
-      socket: io("https://k4a205.p.ssafy.io:3000"),
+      socket: io("localhost:3000"),
+      //   socket: io("https://k4a205.p.ssafy.io:3000"),
       // socket: io(),
       roomcode: this.$route.params.roomcode,
-      pidx: 2,
+      pidx: 0,
       program: {
         Hall: 0,
         CharTest: 1,
@@ -82,11 +82,28 @@ export default {
 
     this.socket.on("move page", (teams) => {
       this.$store.state.teams = teams;
+      this.pidx = 4;
       // console.log("teams: " + teams);
-      this.$router.push({
-        name: "SelectTeam",
-        params: { roomcode: this.$store.state.roomcode },
-      });
+      //   this.$router.push({
+      //     name: "SelectTeam",
+      //     params: { roomcode: this.$store.state.roomcode },
+      //   });
+    });
+
+    this.socket.on("p:hall", () => {
+      this.pidx = 0;
+    });
+    this.socket.on("p:chartest", () => {
+      this.pidx = 1;
+    });
+    this.socket.on("p:catchmind", () => {
+      this.pidx = 2;
+    });
+    this.socket.on("p:cardplay", () => {
+      this.pidx = 3;
+    });
+    this.socket.on("p:final", () => {
+      this.pidx = 9;
     });
   },
   methods: {},

@@ -1,6 +1,12 @@
 <template>
   <div>
-    <button v-if="this.$store.state.adminflag == 1" class="mainbtn" v-b-modal.modal-input-number>시작</button>
+    <button
+      v-if="this.$store.state.adminflag == 1"
+      class="mainbtn"
+      v-b-modal.modal-input-number
+    >
+      시작
+    </button>
     <b-modal
       id="modal-input-number"
       ref="modal"
@@ -122,10 +128,10 @@ export default {
         // console.log(this.$store.state.timer);
 
         this.socket.emit("move page to select team", this.teams);
-        this.$router.push({
-          name: "SelectTeam",
-          params: { roomcode: this.$store.state.roomcode },
-        });
+        // this.$router.push({
+        //   name: "SelectTeam",
+        //   params: { roomcode: this.$store.state.roomcode },
+        // });
       } else {
         alert("다시 입력하세요");
       }
