@@ -53,8 +53,8 @@ const Room = class {
 
 var rooms = [];
 
-// io.on("connection", function (socket) {
-nsp.on("connection", function (socket) {
+io.on("connection", function (socket) {
+  // nsp.on("connection", function (socket) {
   //3. interact with clients
   //3-1. client connected
   console.log("user connected: ", socket.id);

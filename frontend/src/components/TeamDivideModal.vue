@@ -21,6 +21,7 @@
             :state="numberState"
             placeholder="ex) 4"
             required
+            autofocus
           ></b-form-input>
         </b-form-group>
         <div>

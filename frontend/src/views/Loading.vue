@@ -42,7 +42,7 @@ export default {
     },
     this.socket.on("mbtifinish", (userboolean) => {
       this.$store.state.userlist_boolean = userboolean.userlist_boolean;
-      this.$router.push('/char-test7');
+      this.$router.push({name: 'CharTest7', params: {roomcode: this.$store.state.roomcode}})
     },
     ));
     },

@@ -2,9 +2,6 @@
   <!-- 메인 홀 -->
   <div id="hall">
     <RoomCode :roomcode="roomcode" />
-    <!-- <CodeShareBtn :roomcode="roomcode" /> -->
-    <!-- {{ room_data }} -->
-    <!-- {{ order_mark }} -->
     <div class="py-3 my-5"></div>
     <!-- 여기에 flip-card 넣기 -->
     <div class="row justify-content-center">
@@ -44,17 +41,18 @@ export default {
   },
   created() {
     var body = document.body;
-    body.style.backgroundImage =
-      "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
+    body.style.backgroundImage = "url(" + "https://wallpapercave.com/wp/wp6365486.png" + ")";
   },
   mounted() {
     // if (this.$store.state.adminFlag) {
-    //     this.socket.emit(
-    //       this.$store.state.userinfo.username,
-    //       this.roomcode,
-    //       this.adminFlag != 0 ? true : false,
-    //     );
+    //   this.socket.emit(
+    //     this.$store.state.userinfo.username,
+    //     this.roomcode,
+    //     this.adminFlag != 0 ? true : false
+    //   );
     // }
+
+
     // this.$store.state.socket = this.socket;
     // this.socket.on("connect", () => {
     //   console.log(this.socket.id);
@@ -68,6 +66,7 @@ export default {
   },
   methods: {
     getRoomData: function() {
+      // console.log(`${SERVER_URL}/room/info/?roomcode=${this.roomcode}`);
       axios({
         method: "get",
         // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
@@ -82,12 +81,16 @@ export default {
           this.order_mark =
             String(this.room_data.game1) +
             String(this.room_data.game2) +
-            String(this.room_data.game3);
+            String(this.room_data.game3);          
+          // this.$store.commit('CREATE_PROGRAMME', 'this.order_mark')
         })
         .catch((err) => {
-          alert("오류가 발생하였습니다. 다시 시도해주세요.\n" + "에러코드: " + `${err}`);
+          alert(
+            "오류가 발생하였습니다. 다시 시도해주세요.\n" +
+              "에러코드: " +
+              `${err}`
+          );
         });
-      this.$store.commit('CREATE_PROGRAMME', this.order_mark)
     },
   },
   beforeMount: function() {
@@ -96,7 +99,7 @@ export default {
     if (this.$store.state.roomcode == undefined) {
       this.$router.push({ name: "Main" });
     } else if (this.$store.state.userinfo.username == "") {
-      this.$router.push({name: 'UserName'})
+      this.$router.push({ name: "UserName" });
     } else {
       this.getRoomData();
     }

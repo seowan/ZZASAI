@@ -1,18 +1,20 @@
 <template>
   <div>
-    <div>
+    <div class="mb-5">
       <center>
-        현재 {{ teams.length }} 개의 팀이 개설되었습니다.
-        <tbody>
-          <tr v-for="(text, index) in teams" :key="index">
-            <th scope="row">{{ index + 1 }}팀</th>
+        <h4 class="mb-5">현재 {{ teams.length }} 개의 팀이 개설되었습니다.</h4>
+        <h3>
+          <tbody>
+            <tr v-for="(text, index) in teams" :key="index">
+              <th scope="row">{{ index + 1 }}팀</th>
 
-            <td>
-              {{ teams[index].currentpeople }} /
-              {{ teams[index].totalpeople }}명
-            </td>
-          </tr>
-        </tbody>
+              <td class="pl-3">
+                {{ teams[index].currentpeople }} /
+                {{ teams[index].totalpeople }}명
+              </td>
+            </tr>
+          </tbody>
+        </h3>
       </center>
     </div>
     <div v-if="this.btnStatus">
@@ -20,21 +22,21 @@
         id="team-btn"
         v-model="selected"
         :options="teams"
-        button-variant="outline-primary"
         size="lg"
         name="team"
         value-field="text"
         disabled-field="disabled"
         buttons
+        button-variant="outline-info"
       >
       </b-form-radio-group>
     </div>
-    <div class="mt-3">
+    <div v-show="selected" class="mt-3">
       선택한 팀: <strong>{{ selected }}</strong>
     </div>
 
-    <button @click="selectTeam" v-if="this.btnStatus">
-      팀 선택 완료
+    <button class="mainbtn" @click="selectTeam" v-if="this.btnStatus">
+      확인
     </button>
   </div>
 </template>
@@ -115,4 +117,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#team-btn {
+}
+</style>
