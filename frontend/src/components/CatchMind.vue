@@ -2,7 +2,9 @@
   <div class="catchmind">
     <!--1st row-->
     <div class="canvas-wrapper">
-      <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
+      <div class="answer" v-if="this.currentTeam == this.userinfo.team - 1">
+        {{ $store.state.answer }}
+      </div>
       <div class="answer" v-else>
         <span v-for="i in $store.state.answer.length" :key="i">_</span>
       </div>
@@ -171,9 +173,9 @@ export default {
     this.socket.on("new game", () => {
       if (this.currentTeam == this.userinfo.team - 1) {
         //자기 팀이 그림 그릴 차례
-        this.turnToDraw = true;
-        // if (this.currentUser == this.useridx) {
-        // }
+        if (this.currentUser == this.useridx) {
+          this.turnToDraw = true;
+        }
       } else {
         this.turnToDraw = false;
       }
@@ -217,8 +219,8 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        // url: `https://k4a205.p.ssafy.io:8080/api/catchmind/answer`,
-        url: `http://localhost:8080/api/catchmind/answer`,
+        url: `https://k4a205.p.ssafy.io:8080/api/catchmind/answer`,
+        // url: `http://localhost:8080/api/catchmind/answer`,
         // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -234,28 +236,34 @@ export default {
     },
     answerMessage(user) {
       //1.정답 애니메이션
-      console.log(user);
       var teamidx = user.team - 1; //team index of user
+      console.log(this.teams);
       //2.점수 추가
       this.teams[teamidx].score += 1;
-      for (var u of this.teams[teamidx].joinlist) {
-        u.score += 1;
-      }
 
       //3.다음 턴으로 넘기기
       this.currentTeam++;
       this.currentUser = 0;
+      this.clearAll();
       //3-1.정해진 문제 수만큼 풀이가 끝났으면 종료
-      if (this.currentTeam == this.teamnumber) {
+      if (this.currentTeam >= this.teamnumber) {
         // 현재) 모든 팀이 1번씩 그리면 끝남
         this.$store.state.userinfo = this.userinfo;
         this.$store.state.teams = this.teams;
+        console.log("catchmind finished");
         //페이지 이동
+        alert("게임이 끝났습니다!\n 대기실로 이동해주세요");
         return;
       }
 
       //4.새 문제 받아오기
       if (this.isAdmin) {
+        console.log("isAdmin");
+        this.socket.emit(
+          "chat",
+          { username: "System" },
+          "새로운 문제를 시작합니다."
+        );
         this.getAnswer();
       }
 

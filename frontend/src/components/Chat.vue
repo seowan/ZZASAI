@@ -49,7 +49,7 @@ export default {
       if (this.text == this.$store.state.answer) {
         this.socket.emit("correct answer", this.userinfo);
         var msg = this.userinfo.username + "님이 정답을 맞혔습니다!";
-        this.socket.emit("chat", this.userinfo, msg);
+        this.socket.emit("chat", { username: "System" }, msg);
       }
       this.text = "";
     },
