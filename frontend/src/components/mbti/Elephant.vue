@@ -2,29 +2,28 @@
   <!-- 캐릭터 테스트 -->
   <div>
     <h2 id="char-test-title">성격분류가 완료되었습니다.</h2>
-    <div class="row py-5">
-      <div class="col-4 offset-md-2">
-        <img style="width: 80%;" src="~@/assets/mbti/elephant.png" alt="mbti image" />
+    <div class="row pt-3">
+      <div class="col">
+        <img style="width: 100%;" src="~@/assets/mbti/elephant.png" alt="mbti image" />
       </div>
-      <div class="col-5 my-5">
-        <h3><br />코끼리는 공감능력이 뛰어난 동물 중 하나다.</h3>
+      <div class="col my-5 mr-3" style="color: black;">
+        <h5><br />코끼리는 공감능력이 뛰어난 동물 중 하나다.</h5>
         <br />
-        <h3>
+        <h5>
           코로 물을 뿌려 다른 코끼리의 상처에 묻은 먼지를 대신 닦아주거나 동료
           코끼리가 죽으면 눈물도 흘릴 줄 아는 것.
-        </h3>
+        </h5>
         <br />
-        <h3>
+        <h5>
           INFP 역시 둘째가라면 서러운 공감능력자 중 한 명인 만큼 코끼리와 INFP
           둘 중 누가 더 공감지수가 높을지 자못 궁금해진다.
-        </h3>
-        <br />
-        <button type="button" class="char-select-btn" v-on:click="sendInfo">
+        </h5>
+         </div>
+    </div>
+<button type="button" class="char-select-btn" v-on:click="sendInfo">
           Next
         </button>
-      </div>
-    </div>
-
+     
     <!--<button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>-->
   </div>
 </template>

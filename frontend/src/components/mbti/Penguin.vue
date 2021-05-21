@@ -2,28 +2,28 @@
   <!-- 캐릭터 테스트 -->
   <div>
     <h2 id="char-test-title">성격분류가 완료되었습니다.</h2>
-    <div class="row py-5">
-      <div class="col-4 offset-md-2">
-        <img style="width: 80%;" src="~@/assets/mbti/penguin.png" alt="mbti image" />
+    <div class="row pt-3">
+      <div class="col">
+        <img style="width: 100%; height: 100%;" src="~@/assets/mbti/penguin.png" alt="mbti image" />
       </div>
-      <div class="col-5 my-5">
-        <h3><br />ISFJ는 동물로 치면 펭귄이라 할 수 있다.</h3>
+      <div class="col my-5 mr-3" style="color: black;">
+        <h5><br />ISFJ는 동물로 치면 펭귄이라 할 수 있다.</h5>
         <br />
-        <h3>
+        <h5>
           추위를 이겨 내기 위해 서로 감싸 안는 펭귄처럼 사람을 잘 배려하고,
           기억력이 좋아서 매년 마다 같은 자리로 다시 돌아오는 펭귄같이 기념일
           하나 놓치지 않고 잘 기억한다는 점에서 그렇다.
-        </h3>
+        </h5>
         <br />
-        <h3>
+        <h5>
           또 일부일처제로 한 사람에게 헌신적이라는 부분에서 ‘빼박’ ISFJ다.
-        </h3>
-        <br />
-        <button type="button" class="char-select-btn" v-on:click="sendInfo">
-          Next
-        </button>
+        </h5>
+       
       </div>
     </div>
+     <button type="button" class="char-select-btn" v-on:click="sendInfo">
+          Next
+        </button>
   </div>
 </template>
 

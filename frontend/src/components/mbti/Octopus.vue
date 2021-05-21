@@ -2,31 +2,30 @@
   <!-- 캐릭터 테스트 -->
   <div>
     <h2 id="char-test-title">성격분류가 완료되었습니다.</h2>
-    <div class="row py-5">
-      <div class="col-4 offset-md-2">
-        <img style="width: 80%;" src="~@/assets/mbti/octops.png" alt="mbti image" />
+    <div class="row pt-3">
+      <div class="col">
+        <img style="width: 100%;" src="~@/assets/mbti/octops.png" alt="mbti image" />
       </div>
-      <div class="col-5 my-5">
-        <h3><br />문어는 지능이 높기로 유명하다.</h3>
+      <div class="col mr-3 my-5" style="color: black;">
+        <h5><br />문어는 지능이 높기로 유명하다.</h5>
         <br />
-        <h3>
+        <h5>
           통발에 갇히더라도 탈출에 성공하고, 간단한 수학 문제를 풀기도 한다.
           심지어 월드컵 시즌엔 ‘점쟁이 문어’로 불리며 게임의 승패도 맞추기도
           했다.
-        </h3>
+        </h5>
         <br />
-        <h3>
+        <h5>
           문어는 타깃이 생기면 그 누구보다 전략적으로 빨리 접근하기 때문에 사냥
           성공률도 상당히 높은데 목표가 생기면 그 누구보다 빨리 달려간다는
           점에서 INTJ와 비슷하다고 볼 수 있다.
-        </h3>
-        <br />
-        <button type="button" class="char-select-btn" v-on:click="sendInfo">
+        </h5>
+     </div>
+    </div>
+       <button type="button" class="char-select-btn" v-on:click="sendInfo">
           Next
         </button>
-      </div>
-    </div>
-
+  
     <!--<button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>-->
   </div>
 </template>

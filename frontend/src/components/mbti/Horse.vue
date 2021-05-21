@@ -2,12 +2,12 @@
   <!-- 캐릭터 테스트 -->
   <div>
     <h2 id="char-test-title">성격검사가 완료되었습니다.</h2>
-    <div class="row py-5">
-      <div class="col-3 offset-md-2">
-        <img src="~@/assets/mbti/horse.png" alt="mbti image" style="width: 80%;"/>
+    <div class="row pt-3">
+      <div class="col">
+        <img src="~@/assets/mbti/horse.png" alt="mbti image" style="width: 100%;"/>
       </div>
-      <div class="col-5 my-5">
-        <h3>
+      <div class="col mr-3 my-5" style="color: black;">
+        <h5>
           충성심이 강한 말은 사람과 떼어 놓을 수 없는 동물이다.
           <br><br>
           말은 말을 타고 있는 사람과 교감이 가능한데
@@ -21,13 +21,14 @@
           </small>
           <br><br>
           ESFJ의 모습을 엿볼 수 있다.
-        </h3>
-        <button class="char-select-btn" v-on:click="sendInfo">
+        </h5>
+        
+      </div>
+      
+    </div>
+<button class="char-select-btn" v-on:click="sendInfo">
           Next
         </button>
-      </div>
-    </div>
-
     <!--<button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>-->
   </div>
 </template>

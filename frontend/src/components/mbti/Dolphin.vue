@@ -2,30 +2,30 @@
   <!-- 캐릭터 테스트 -->
   <div>
     <h2 id="char-test-title">성격분류가 완료되었습니다.</h2>
-    <div class="row py-5">
-      <div class="col-4 offset-md-2">
-        <img style="width: 80%;" src="~@/assets/mbti/dolphin.png" alt="mbti image" />
+    <div class="row pt-3">
+      <div class="col">
+        <img style="width: 100%;" src="~@/assets/mbti/dolphin.png" alt="mbti image" />
       </div>
-      <div class="col-5 my-5">
-        <h3><br />돌고래는 창의적인 방법으로 물고기를 잡는다.</h3>
+      <div class="col my-5 mr-3" style="color: black;">
+        <h5><br />돌고래는 창의적인 방법으로 물고기를 잡는다.</h5>
         <br />
-        <h3>
+        <h5>
           먹잇감이 눈치 채지 못하도록 위장하기 위해 해초로 코를 가리기도 하는
           것.
-        </h3>
+        </h5>
         <br />
-        <h3>
+        <h5>
           바다 위로 텀블링을 하며 사람들의 관심을 유발하고 돌고래 소리를 내며
           장난을 치는 돌고래야말로 항상 업 되어 있는 ENFP에게 잘 매치되는 동물이
           아닐는지?
-        </h3>
-        <br />
+        </h5>
+
+      </div>
+      
+    </div>
         <button type="button" class="char-select-btn" v-on:click="sendInfo">
           Next
         </button>
-      </div>
-    </div>
-
     <!--<button type="button" class="btn btn-dark btn-lg" v-on:click="next">Next</button>-->
   </div>
 </template>
