@@ -81,7 +81,7 @@ export default {
       //   params: { roomcode: this.$store.state.roomcode },
       // });
 
-      this.socket.emit("move page to room", this.pidx);
+      this.socket.emit("move page to room");
     },
     toHome() {
       location.href = "/";

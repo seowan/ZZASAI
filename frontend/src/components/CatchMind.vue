@@ -4,7 +4,7 @@
     <div class="canvas-wrapper">
       <div class="answer" v-if="turnToDraw">{{ $store.state.answer }}</div>
       <div class="answer" v-else>
-        <span v-for="i in answer.length" :key="i">_</span>
+        <span v-for="i in $store.state.answer.length" :key="i">_</span>
       </div>
       <canvas
         @mousedown="startPainting"
@@ -104,18 +104,15 @@ export default {
       ],
 
       //user, 그림 그리는 순서
-      userinfo: [],
+      userinfo: this.$store.state.userinfo, //to identify user
       isAdmin: this.$store.state.adminflag != 0 ? true : false,
       users: [], //all user list
       teamnumber: this.$store.state.teamnumber,
       teams: this.$store.state.teams,
-      useridx: this.teams[this.userinfo.team - 1].joinlist.indexOf(
-        this.userinfo
-      ),
-      turnToDraw: true, // able/unable to draw
+      turnToDraw: false, // able/unable to draw
       currentUser: 0, //user index of current turn
       currentTeam: 0, //team index of current turn
-
+      useridx: 0,
       // 1) 서버와 연결
       // socket: io("localhost:3000"), //url:port
       socket: this.$store.state.socket,
@@ -126,7 +123,6 @@ export default {
     };
   },
   mounted() {
-    this.userinfo = this.$store.state.userinfo; //to identify user
     //set initial condition of canvas
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -165,13 +161,21 @@ export default {
       console.log("changed user list: ", this.users);
     });
 
+    var jl = this.teams[this.userinfo.team - 1].joinlist;
+    for (var i in jl) {
+      if (jl[i].username == this.userinfo.username) {
+        this.useridx = i;
+      }
+    }
     /* game syncing */
     this.socket.on("new game", () => {
       if (this.currentTeam == this.userinfo.team - 1) {
         //자기 팀이 그림 그릴 차례
-        if (this.currentUser == this.useridx) {
-          this.turnToDraw = true;
-        }
+        this.turnToDraw = true;
+        // if (this.currentUser == this.useridx) {
+        // }
+      } else {
+        this.turnToDraw = false;
       }
     });
     this.socket.on("start game", (totalTime) => {
@@ -213,8 +217,8 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
-        // url: `http://localhost:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        url: `http://localhost:8080/api/catchmind/answer`,
         // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {
           "Access-Control-Allow-Origin": "*",

@@ -183,11 +183,13 @@ io.on("connection", function (socket) {
   socket.on("answer", function (answer) {
     //방장이 정답을 back에서 받아와서 서버에 알림
     if (user == null) return;
+    console.log(answer);
     //back에서 받아온 정답을 모두에게 알림
     io.to(user.code).emit("answer", answer);
     io.to(user.code).emit("new game");
   });
   socket.on("correct answer", function (userinfo) {
+    console.log("정답: ", userinfo);
     io.to(user.code).emit("correct answer", userinfo);
   });
 
@@ -256,10 +258,10 @@ io.on("connection", function (socket) {
   });
 
   // move main page
-  socket.on("move page to room", function (pidx) {
+  socket.on("move page to room", function () {
     console.log("move page");
     if (user == null) return;
-    io.emit("move room page", pidx);
+    io.to(user.code).emit("move room page");
   });
 
   /*card function*/

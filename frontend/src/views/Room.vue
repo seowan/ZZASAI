@@ -102,9 +102,9 @@ export default {
       //   });
     });
 
-    this.socket.on("move room page", (pidx) => {
-      console.log("move socket on: " + pidx);
-      this.$store.state.pidx = pidx;
+    this.socket.on("move room page", () => {
+      this.$store.state.pidx = 0;
+      console.log("move socket on: ");
     });
 
     this.socket.on("prohall", () => {

@@ -1,14 +1,19 @@
 <template>
   <div>
     <b-form-textarea
-        class="chatlog my-3"
-        id="chatLog"
-        name="chatLog"
-        plaintext
+      class="chatlog my-3"
+      id="chatLog"
+      name="chatLog"
+      plaintext
     ></b-form-textarea>
     <!-- <textarea name="chatLog" id="chatLog" readonly></textarea> -->
     <div style="text-align: left;">
-      <input class="maininput chatinput" type="text" v-model="text" @keyup.enter="typeMessage" />
+      <input
+        class="maininput chatinput"
+        type="text"
+        v-model="text"
+        @keyup.enter="typeMessage"
+      />
     </div>
   </div>
 </template>
@@ -30,9 +35,6 @@ export default {
     /* chatting */
     this.socket.on("chat", (user, msg) => {
       // console.log(name, msg);
-      if (msg == this.$store.state.answer) {
-        this.socket.emit("correct answer", user);
-      }
       var chatLog = document.getElementById("chatLog");
       chatLog.append(user.username + ": " + msg + "\n");
       chatLog.scrollTop = chatLog.scrollHeight;
@@ -43,6 +45,12 @@ export default {
     typeMessage() {
       //text input for chatting - on keyup callback func\
       this.socket.emit("chat", this.userinfo, this.text);
+
+      if (this.text == this.$store.state.answer) {
+        this.socket.emit("correct answer", this.userinfo);
+        var msg = this.userinfo.username + "님이 정답을 맞혔습니다!";
+        this.socket.emit("chat", this.userinfo, msg);
+      }
       this.text = "";
     },
   },
@@ -54,7 +62,7 @@ export default {
   width: 50%;
   height: 400px;
   background-color: white;
-  border : 3px solid pink;
+  border: 3px solid pink;
   padding: 9px;
 }
 
