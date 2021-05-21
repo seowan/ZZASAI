@@ -20,8 +20,9 @@ import com.ssafy.icebreaking.model.service.CatchMindService;
 
 //@CrossOrigin(origins= {"http://localhost:3000"})
 //@CrossOrigin(origins= {"http://k4a205.p.ssafy.io"})
+@CrossOrigin(origins= {"*"})
 @RestController
-@RequestMapping("/catchmind")
+@RequestMapping("/api/catchmind")
 public class CatchMindController {
 	public static final Logger logger = LoggerFactory.getLogger(CatchMindController.class);
 	private static final String SUCCESS = "success";

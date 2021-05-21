@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.icebreaking.model.mapper.RoomMapper">
+	<insert id="insertRoominfo" parameterType="RoomDto">
+		insert into room
+		(roomcode,roomname,roomadmin,game1,game2,game3) values
+		(#{roomCode},#{roomName},#{roomAdmin},#{Game1},#{Game2},#{Game3})
+	</insert>
+
+	<select id="returnRoominfo" parameterType="String"
+		resultType="RoomDto">
+		select roomcode as roomCode,roomname as roomName, roomadmin
+		as roomAdmin, game1 as Game1, game2 as Game2, game3 as Game3
+		from room
+		where roomcode=#{roomcode}
+	</select>
+
+	<select id="roomcodeCheck" parameterType="String"
+		resultType="Int">
+		select count(*) from room where roomcode=#{roomcode};
+	</select>
+</mapper>
