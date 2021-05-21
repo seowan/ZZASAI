@@ -30,7 +30,7 @@
             autofocus
           ></b-form-input>
         </b-form-group>
-        <div>
+        <!-- <div>
           <b-form-group
             label="한 사람에게 주어지는 시간을 선택하세요"
             v-slot="{ ariaDescribedby }"
@@ -57,7 +57,7 @@
               >5초</b-form-radio
             >
           </b-form-group>
-        </div>
+        </div> -->
       </form>
     </b-modal>
   </div>

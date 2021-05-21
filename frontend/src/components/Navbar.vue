@@ -80,7 +80,11 @@ export default {
       //   name: "Room",
       //   params: { roomcode: this.$store.state.roomcode },
       // });
+      if (this.socket === null) {
+        this.socket = this.$store.state.socket;
+      }
 
+      console.log(this.socket);
       this.socket.emit("move page to room");
     },
     toHome() {
