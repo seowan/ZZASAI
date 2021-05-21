@@ -217,7 +217,7 @@ export default {
     getAnswer() {
       axios({
         method: "get",
-        // url: `https://k4a205.p.ssafy.io:8080/api/room/info/?roomcode=${this.roomcode}`,
+        // url: `https://k4a205.p.ssafy.io:8080/api/catchmind/answer`,
         url: `http://localhost:8080/api/catchmind/answer`,
         // url: `${SERVER_URL}/api/catchmind/answer`,
         headers: {
